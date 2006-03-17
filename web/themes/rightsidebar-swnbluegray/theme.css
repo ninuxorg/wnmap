@@ -1,0 +1,239 @@
+@import "../rightsidebar.css";
+
+body {
+	font-family: Bitstream Vera Sans, Verdana;
+	font-size: 8pt;
+	background-color: #3b3b3b;
+}
+
+h1, h2 {
+	border-bottom: 1px solid #333;
+}
+
+#header {
+	background: url("images/logo_bg.png");
+}
+
+h1 {
+	background: url("images/logo.png") no-repeat bottom right;
+}
+
+h1 span {
+	display: none;
+}
+
+h2 span {
+	display: none;
+}
+
+#pageTitle {
+	background: url("images/title_bg.png");
+}
+
+h2 {
+	background: url("images/title.png") no-repeat center left;
+}
+
+#mapColumn {
+	border-right: 1px solid #333;
+	background-color: #666;
+}
+
+#sideColumn {
+	 background-color: #3b3b3b;
+}
+.sideItemTitle {
+	background: #2d2d2d url("images/side_item_title_bg.png") repeat-x;
+}
+
+.sideItemTitle h3 {
+	font-size: 10pt;
+	font-weight: bold;
+	color: #b6b6b6;
+	padding: 3px;
+}
+
+.sideItemContent {
+	color: #999;
+}
+.sideItemContent a {
+	color: #999;
+}
+input.text {
+	background-color: #4a4a4a;
+	border: 1px solid #363636;
+	width: 235px;
+	color: #999;
+	padding: 3px;
+}
+
+form {
+	margin: 0px;
+}
+
+.buttonBox {
+	text-align: right;
+	margin-right: 0px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+input.submit {
+}
+
+input.checkbox {
+	background-color: #4a4a4a;
+	border: 1px solid #363636;
+}
+
+ul.nobullets li {
+	padding-bottom: 3px;
+}
+
+
+#tabs {
+	border-top: 1px solid #333;
+	background: url("images/tab_switcher_bg.png") repeat-x;
+	height: 31px;
+}
+
+#tabs ul.tabSwitcher {
+	border-bottom: 1px solid black;
+}
+
+#tabs ul.tabSwitcher li {
+        background-color: #333333;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+}
+
+#tabs ul.tabSwitcher li.selected, ul.tabSwitcher li:hover {
+        background-color: #3b3b3b;
+}
+#tabs ul.tabSwitcher li.selected {
+        border-bottom: 1px solid #3b3b3b;
+}
+#tabs ul.tabSwitcher li.selected a {
+        color: #999;
+}
+#tabs ul.tabSwitcher li a {
+        color: #515151;
+	font-weight: bold;
+        text-decoration: none;
+}
+
+#footer {
+	border-top: 1px solid #333;
+	background-color: #4d4d4d;
+	padding: 10px;
+	color: #bfbfbf;
+}
+#footer a {
+	color: inherit;
+}
+
+
+#nodeList, #markerList {
+	list-style: none;
+	padding-left: 10px;
+}
+
+#nodeList li, #markerList li {
+	padding-bottom: 10px;
+}
+
+/* does this even work? */
+#nodeList li:last-child, #markerList li:last-child {
+	padding-bottom: 0px !important;
+}
+
+#nodeList li a, #markerList li a {
+	color: #999;
+	text-decoration: none;
+}
+
+.nodeitem-active {
+	background: url('/images/marker_active_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-potential {
+	background: url('/images/marker_potential_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-marker {
+	background: url('/images/marker_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+
+#accountInfo {
+	color: white;
+}
+
+#accountInfo a {
+	color: white;
+	text-decoration: none;
+}
+
+#accountInfo a:hover {
+	text-decoration: underline;
+}
+
+.InfoWindowContent hr {
+	height: 1px;
+	border: 0px;
+	background-color: black;
+	margin: 0px !important;
+}
+
+.zoomLink {
+	font-size: 7pt;
+	color: #CC9900 !important;
+}
+
+.addressLink {
+	color: #999;
+}
+
+.marker_balloon .title {
+	font-weight: bold;
+	font-size: 10pt;
+	padding-bottom: 10px;
+}
+.marker_balloon .position {
+	padding-bottom: 10px;
+}
+
+.marker_balloon .title a {
+	font-weight: normal;
+	font-size: 8pt;
+	padding-left: 1em;
+}
+.marker_balloon .subText {
+	padding-bottom: 10px;
+}
+.marker_balloon .stepTitle {
+	font-weight: bold;
+}
+.marker_balloon .exampleText {
+	font-size: x-small;
+}
+.marker_balloon form {
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+.marker_balloon .buttonBox {
+	text-align: right;
+	padding: 10px 0px 10px 10px;
+}
+.marker_balloon .buttonBox a {
+	margin-left: 1em;
+}
+
+ul { 
+	margin-left: 0px;
+}
+

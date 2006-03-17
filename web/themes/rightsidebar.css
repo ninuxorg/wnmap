@@ -1,0 +1,100 @@
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+#header {
+	width: 100%;
+}
+
+h1 {
+	height: 92px;
+	margin: 0px;
+}
+
+h2 {
+	margin: 0px;
+	height: 37px;
+}
+
+#mapColumn {
+	margin-right: 260px;
+	height: 700px;
+	overflow: hidden;
+}
+
+#sideColumn {
+	position: absolute;
+	width: 260px;
+	top: 131px;
+	right: 0px;
+}
+
+.sideItemTitle {
+	height: 24px;
+}
+ 
+.sideItemTitle h3 {
+	margin: 0px;
+}
+
+.sideItemContent {
+	padding: 8px;
+}
+
+ul.nobullets {
+	list-style: none;
+	padding-left: 0px;
+	margin: 0px;
+}
+
+
+#tabs ul.tabSwitcher {
+	height: 26px;
+	margin-left: 0px;
+	padding-left: 5px;
+	padding-top: 5px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+	padding-bottom: 0px;
+}
+
+#tabs ul.tabSwitcher li {
+	display: block;
+	float: left;
+	padding-top: 6px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-right: 2px;
+	height: 19px;
+}
+
+#accountInfo {
+	float: right;
+	height: 37px;
+}
+
+#login {
+	display: none;
+}
+
+.InfoWindowContent {
+	width: 300px;
+}
+
+
+input.editor {
+	width: 100%;
+}
+
+.tooltip {
+	white-space: nowrap;
+}
+.tabContent {
+	overflow: auto;
+}
+
+.marker_balloon {
+	width: 300px;
+}

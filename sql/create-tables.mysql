@@ -1,0 +1,14 @@
+CREATE TABLE nodes (
+  id int(11) NOT NULL auto_increment,
+  createdOn timestamp(14) NOT NULL,
+  status int(11) NOT NULL default '0',
+  adminHash varchar(100) NOT NULL default '',
+  lat double NOT NULL default '0',
+  lng double NOT NULL default '0',
+  streetAddress varchar(255) NOT NULL default '',
+  userRealName varchar(100) NOT NULL default '',
+  userEmail varchar(100) NOT NULL default '',
+  nodeName varchar(100) NOT NULL default '',
+  nodeDescription varchar(100) NOT NULL default '',
+  PRIMARY KEY  (id)
+) TYPE=MyISAM;

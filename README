@@ -1,0 +1,14 @@
+SeattleWireless Map - http://eric.extremeboredom.net/projects/swnmap
+by Eric Butler <eric@extremeboredom.net>
+
+INSTALLATION
+============
+
+1) Create a mysql database, use the create-tables.mysql script in the sql/
+   directory to set it up.
+
+2) Copy everything in 'web' to wherever
+
+3) Edit the 'config.php.dist' file and then rename it to 'config.php'
+
+4) That should be it.
