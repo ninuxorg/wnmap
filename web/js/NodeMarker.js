@@ -220,7 +220,7 @@ function NodeMarker (name, description, state, lng, lat)
 			var opacity = .70;
 			className ="tooltip";
 			tooltip.className ="tooltip";
-			tooltip.style.position = 'absolute';
+			tooltip.style.position = 'relative';
 			tooltip.style.background = 'white';
 			tooltip.style.border = '1px solid black';
 			tooltip.style.padding = '2px';
