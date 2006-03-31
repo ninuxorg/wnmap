@@ -6,6 +6,11 @@ var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
 function encode64(input) {
    var output = "";
+
+   if (input == "") {
+       return output;
+   }
+
    var chr1, chr2, chr3;
    var enc1, enc2, enc3, enc4;
    var i = 0;
@@ -35,6 +40,11 @@ function encode64(input) {
 
 function decode64(input) {
    var output = "";
+
+   if (input == "") {
+       return output;
+   }
+
    var chr1, chr2, chr3;
    var enc1, enc2, enc3, enc4;
    var i = 0;
