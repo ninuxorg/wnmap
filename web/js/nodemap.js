@@ -241,23 +241,24 @@ function renamePrompt (b64name) {
 	return prompt ('Enter a new name for this node:', name);
 }
 
-function renameMarker (oldName, newName)
+function renameMarker (oldB64Name, newName)
 {
+	var oldName = decode64 (oldB64Name);
+
 	if ( markers[newName] != null ) {
 		alert("A marker named '" + newName + "' already exists!");
 		return 0;
 	}
 
-	var marker = getMarker (oldName);
+	var marker = markers [oldName];
 	marker.name = newName;
 
 	markers [newName] = marker;
 	markers [oldName] = null;
+	delete markers[oldName];
 
 	populateMap ();
 }
-
-
 
 // some helper functions
 
