@@ -37,6 +37,7 @@ require ("config.php");
 
 		<title><? echo SITE_TITLE; ?></title>
 
+		<style type="text/css">v\:* {behavior:url(#default#VML);}</style>
 		<link rel="stylesheet" href="themes/<?=THEME_NAME?>/theme.css" type="text/css" media="screen" title="Right sidebar - Blue/Gray" />
 		<link rel="alternate stylesheet" href="themes/rightsidebar.css" type="text/css" media="screen" title="Right sidebar - No Theme"/>
 	</head>
