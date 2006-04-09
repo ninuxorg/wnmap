@@ -76,40 +76,40 @@ define ("MAP_CENTER_LONG", -122.324);
 define ("ACCEPTABLE_DISTANCE", 70); // in miles
 
 $JS_CONFIG = array(
-	// SWNCFG_GEOCODE_STATE_ABBR
+	// WNMAP_GEOCODE_STATE_ABBR
 	//   Abbreviation of the state name we wish to restrict geocoding to.
-	"SWNCFG_GEOCODE_STATE_ABBR" => "WA",
+	"WNMAP_GEOCODE_STATE_ABBR" => "WA",
 
-	// SWNCFG_GEOCODE_STATE_NAME
+	// WNMAP_GEOCODE_STATE_NAME
 	//   Name of the state we wish to restrict geocoding to.
-	"SWNCFG_GEOCODE_STATE_NAME" => "Washington",
+	"WNMAP_GEOCODE_STATE_NAME" => "Washington",
 
-	"SWNCFG_MAP_START_LON" => MAP_CENTER_LONG,
-	"SWNCFG_MAP_START_LAT" => MAP_CENTER_LAT,
-	"SWNCFG_ACCEPTABLE_DISTANCE" => ACCEPTABLE_DISTANCE,
+	"WNMAP_MAP_START_LON" => MAP_CENTER_LONG,
+	"WNMAP_MAP_START_LAT" => MAP_CENTER_LAT,
+	"WNMAP_ACCEPTABLE_DISTANCE" => ACCEPTABLE_DISTANCE,
 
-        // SWNCFG_MAP_START_ZOOM
+        // WNMAP_MAP_START_ZOOM
         //   Default zoom level
         // Possible values: <Int: 0-17>
-        "SWNCFG_MAP_START_ZOOM" => 4,
+        "WNMAP_MAP_START_ZOOM" => 4,
 
-        // SWNCFG_MAP_START_TYPE
+        // WNMAP_MAP_START_TYPE
         //   Default map type
         // Possible values: <Enum>
         //   0 => Map
         //   1 => Satellite
         //   2 => Hybrid
-        "SWNCFG_MAP_START_TYPE" => 0,
+        "WNMAP_MAP_START_TYPE" => 0,
 
-        // SWNCFG_MAP_URL
+        // WNMAP_MAP_URL
         //   Base URL of the map application
         // Possible values: <URL>
-        "SWNCFG_MAP_URL" => MAP_URL,
+        "WNMAP_MAP_URL" => MAP_URL,
 
-        // SWNCFG_NODE_URL
+        // WNMAP_NODE_URL
         //   Base URL of the node database
         // Possible values: <URL>
-        "SWNCFG_NODE_URL" => "http://mywireless.net/",
+        "WNMAP_NODE_URL" => "http://mywireless.net/",
 );
 
 // remove this line

@@ -17,7 +17,7 @@ function NodeMarker (name, description, state, lng, lat)
 			this.statePretty = "Active Node";
 
 			var icon = new GIcon ();
-			icon.image = SWNCFG_MAP_URL + "/images/marker_active.png";
+			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
 			icon.iconSize = new GSize(20, 34);
 		 	icon.iconAnchor = new GPoint(9, 34);
 			icon.infoWindowAnchor = new GPoint(20, 1);
@@ -28,7 +28,7 @@ function NodeMarker (name, description, state, lng, lat)
 			this.statePretty = "Potential Node";
 
 			var icon = new GIcon ();
-			icon.image = SWNCFG_MAP_URL + "/images/marker_potential.png";
+			icon.image = WNMAP_MAP_URL + "/images/marker_potential.png";
 			icon.iconSize = new GSize(20, 34);
 			icon.iconAnchor = new GPoint(9, 34);
 			icon.infoWindowAnchor = new GPoint(20, 1);
@@ -91,7 +91,7 @@ function NodeMarker (name, description, state, lng, lat)
 			var addActionLink = document.createElement ("a");
 			addActionLink.innerHTML = "Add this to our database as a location for a potential node.<br/>";
 
-			url = SWNCFG_MAP_URL + "/AddPotentialNode.php?lon=" + this.point.x + "&lat=" + this.point.y + "&name=" + URLEncode (this.name) + "&addr='" + encode64 (this.streetAddress) + "'";
+			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.point.x + "&lat=" + this.point.y + "&name=" + URLEncode (this.name) + "&addr='" + encode64 (this.streetAddress) + "'";
 			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
 			
 			addActionItem.appendChild (addActionLink);
@@ -168,7 +168,7 @@ function NodeMarker (name, description, state, lng, lat)
 			var titleLink = document.createElement ("a");
 			titleLink.className = "title";
 			titleLink.innerHTML = this.name;
-			titleLink.href = SWNCFG_NODE_URL + this.name;
+			titleLink.href = WNMAP_NODE_URL + this.name;
 			title.appendChild (titleLink);
 			title.appendChild (document.createTextNode (' (' + this.description + ')'));
 			thing.appendChild (title);

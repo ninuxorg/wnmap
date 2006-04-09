@@ -35,7 +35,7 @@ function geocode (address) {
 							}
 
 							if (count == 0) {
-								document.getElementById ("findLocationResponse").innerHTML = "No results found. Note that search is currently restricted to a " + SWNCFG_ACCEPTABLE_DISTANCE + " mile radius of the center of the network, and that you must include a city in your search.";
+								document.getElementById ("findLocationResponse").innerHTML = "No results found. Note that search is currently restricted to a " + WNMAP_ACCEPTABLE_DISTANCE + " mile radius of the center of the network, and that you must include a city in your search.";
 								document.getElementById ("findLocationResponse").className = "error";
 							}
 						} else {
@@ -52,11 +52,11 @@ function geocode (address) {
 function tooFarFromCenter (lat, lon) {
 	var distance = distanceToCenterInMiles (lat, lon);
 
-	return ( distance > SWNCFG_ACCEPTABLE_DISTANCE );
+	return ( distance > WNMAP_ACCEPTABLE_DISTANCE );
 }
 
 function distanceToCenterInMiles (lat, lon) {
-	var p1 = new LatLong(SWNCFG_MAP_START_LAT, SWNCFG_MAP_START_LON);
+	var p1 = new LatLong(WNMAP_MAP_START_LAT, WNMAP_MAP_START_LON);
 	var p2 = new LatLong(lat, lon);
 	var distInKm = LatLong.distHaversine (p1, p2);
 	var distInMiles = distInKm / 1.609344;

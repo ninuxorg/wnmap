@@ -21,13 +21,13 @@ function createMap ()
 	map.setMapType (G_SATELLITE_TYPE);
 	map.addControl(new GLargeMapControl());
 	map.addControl (new GMapTypeControl());
-	map.centerAndZoom(new GPoint(SWNCFG_MAP_START_LON, SWNCFG_MAP_START_LAT), parseInt(SWNCFG_MAP_START_ZOOM));
+	map.centerAndZoom(new GPoint(WNMAP_MAP_START_LON, WNMAP_MAP_START_LAT), parseInt(WNMAP_MAP_START_ZOOM));
 	map.addControl(new GScaleControl());
 	map.registerKeyHandlers (window);
 
-	// Set default map type to SWNCFG_MAP_START_TYPE
+	// Set default map type to WNMAP_MAP_START_TYPE
 	var mapTypes = map.getMapTypes();
-	map.setMapType(mapTypes[SWNCFG_MAP_START_TYPE]);
+	map.setMapType(mapTypes[WNMAP_MAP_START_TYPE]);
 
 	GEvent.addListener (map, 'click', function (overlay, point) {
 		if (!overlay) {
