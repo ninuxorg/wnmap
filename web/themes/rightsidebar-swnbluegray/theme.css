@@ -15,7 +15,8 @@ h1, h2 {
 }
 
 h1 {
-	background: url("images/logo.png") no-repeat bottom right;
+/*	Place a link to your logo and its position attributes here. */
+/*	background: url("images/logo.png") no-repeat bottom right; */
 }
 
 h1 span {
