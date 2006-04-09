@@ -1,6 +1,6 @@
 <?php
 /*
-SeattleWireless Map
+WNMap
 Copyright (C) 2006 Eric Butler <eric@extremeboredom.net>
 
 This program is free software; you can redistribute it and/or
@@ -21,22 +21,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // Configure all of this accordingly!
 
 define ("MYSQL_HOST", "127.0.0.1");
-define ("MYSQL_USER", "swnmap");
+define ("MYSQL_USER", "wnmap");
 define ("MYSQL_PASS", "");
-define ("MYSQL_DB", "swnmap");
+define ("MYSQL_DB", "wnmap");
 
-define ("SITE_TITLE", "SeattleWireless Map");
+define ("SITE_TITLE", "My Wireless Network Map");
 
-define ("ORG_NAME", "SeattleWireless");
-define ("ORG_URL", "http://seattlewireless.net/");
-define ("ORG_DESC", "The SeattleWireless network");
+define ("ORG_NAME", "My Wireless");
+define ("ORG_URL", "http://mywireless.net/");
+define ("ORG_DESC", "The MyWireless network");
 
 // No trailing slash
-define ("MAP_URL", 'http://map.seattlewireless.net');
+define ("MAP_URL", 'http://map.mywireless.net');
 
-define ("GETTING_STARTED_URL", "http://seattlewireless.net/GetStarted");
+define ("GETTING_STARTED_URL", "http://mywireless.net/GetStarted");
 
-define ("MAIL_FROM", "noreply@seattlewireless.net");
+define ("MAIL_FROM", "noreply@mywireless.net");
 
 // This is appended to the message sent to people when they add a node
 define ("MAIL_FOOTER",<<<EOF
@@ -45,18 +45,17 @@ Getting Started
 
 For information about putting up a node, visit our Getting Started page at:
 
-http://seattlewireless.net/GetStarted
+http://mywireless.net/GetStarted
 
 If you would like to discuss anything with us, you can send a message to the
-appropriate mailing list (http://seattlewireless.net/MailingLists) or attend
-one of our meetings (http://seattlewireless.net/EventCalendar) and get to know
-the group in person.
-
+appropriate mailing list (http://mywireless.net/MailingLists) or attend one of
+our meetings (http://mywireless.net/EventCalendar) and get to know the group in
+person.
 
 We look forward to hearing from you!
 
 Regards,
-The SeattleWireless.net Community
+The MyWireless.net Community
 EOF
 );
 
@@ -70,7 +69,7 @@ define ("YAHOO_MAP_ID", "");
 define ("THEME_NAME", "rightsidebar-swnbluegray");
 
 // %s = node name
-define ("NODE_URL_FORMAT", "http://seattlewireless.net/%s");
+define ("NODE_URL_FORMAT", "http://mywireless.net/%s");
 
 define ("MAP_CENTER_LAT", 47.625);
 define ("MAP_CENTER_LONG", -122.324);
@@ -110,7 +109,7 @@ $JS_CONFIG = array(
         // SWNCFG_NODE_URL
         //   Base URL of the node database
         // Possible values: <URL>
-        "SWNCFG_NODE_URL" => "http://seattlewireless.net/",
+        "SWNCFG_NODE_URL" => "http://mywireless.net/",
 );
 
 // remove this line

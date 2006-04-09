@@ -1,14 +1,66 @@
-SeattleWireless Map - http://eric.extremeboredom.net/projects/swnmap
-by Eric Butler <eric@extremeboredom.net>
+WNMap: Wireless network map display
+  http://wnmap.sourceforge.net/
 
-INSTALLATION
-============
+ABSTRACT:
 
-1) Create a mysql database, use the create-tables.mysql script in the sql/
-   directory to set it up.
+ WNMap is a wireless network map display based on Google and Yahoo! Maps.  Once
+ installed network "nodes" can be added to the map's database and can be shown
+ for web visitors.  WNMap provides at-a-glance knowledge of the size of a
+ wireless network project.
 
-2) Copy everything in 'web' to wherever
+FEATURES:
 
-3) Edit the 'config.php.dist' file and then rename it to 'config.php'
+ * display your project's network infrastructure with a simple-to-use interface
+ * themeable display allows you to brand your WNMap site as you wish
+ * most map features are supported in all "modern" JS-enabled web browsers
+ * extremely easy to install (if it's not, see the SUPPORT section below)
 
-4) That should be it.
+REQUIREMENTS:
+
+ Web server (Apache recommended): http://httpd.apache.org/
+
+ PHP 4 or greater: http://www.php.net/
+
+ MySQL 3.23 or greater: http://www.mysql.com/
+
+ Google Maps API key: http://www.google.com/apis/maps/
+
+   Google Maps requires users of its web services API to provide a key given
+   to those who have registered for use of their service.  Register for your
+   API key at Google Maps API URL above.
+
+ Yahoo! Maps Application ID: http://api.search.yahoo.com/webservices/register_application
+
+   Yahoo! Maps requires users of its web services API to provide an application
+   ID which uniquely identifies your instance of WNMap.  Register for your
+   application ID at the Yahoo! Maps Application ID URL above.
+
+INSTALLATION:
+
+ 1. Create a WNMap MySQL database using 'sql/create-tables.sql'.
+
+ 2. Copy the entire contents of 'web/' to a directory served by HTTP.  Note
+    the URL that you will be accessing the application from.
+
+ 3. Register for a Google API key and Yahoo! app ID with your URL.
+
+ 4. Edit 'config.php.dist' in your web directory and rename it to 'config.php'.
+
+SUPPORT:
+
+ Please send questions, bugs, patches, etc, to the wnmap-devel mailing list
+ reachable through http://wnmap.sourceforge.net/, so that everyone can see
+ them.
+
+CREDITS:
+
+ WNMap is currently maintained and supported by:
+
+   Chase Phillips <shepard@ameth.org>
+
+ This software was originally developed for SeattleWireless by:
+
+   Eric Butler <eric@extremeboredom.net>
+
+ Much of the website and structure of the introductory documentation was taken
+ from The BuildBot project (http://buildbot.sourceforge.net/).
