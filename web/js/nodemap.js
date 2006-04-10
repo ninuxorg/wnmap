@@ -18,7 +18,6 @@ var firstLoad = true;
 function createMap ()
 {
 	map = new GMap(document.getElementById("mapColumn"));
-	map.setMapType (G_SATELLITE_TYPE);
 	map.addControl(new GLargeMapControl());
 	map.addControl (new GMapTypeControl());
 	map.centerAndZoom(new GPoint(WNMAP_MAP_START_LON, WNMAP_MAP_START_LAT), parseInt(WNMAP_MAP_START_ZOOM));
