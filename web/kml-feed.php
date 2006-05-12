@@ -48,8 +48,8 @@ if ($_GET["xml"] == null) {
 	<name><?=ORG_NAME?></name>
 	<description><?=ORG_DESC?></description>
 	<LookAt>
-		<longitude>MAP_CENTER_LONG</longitude>
-		<latitude>MAP_CENTER_LAT</latitude>
+		<longitude><?=MAP_CENTER_LONG?></longitude>
+		<latitude><?=MAP_CENTER_LAT?></latitude>
 		<range>100000</range>
 		<tilt>0</tilt>
 		<heading>0</heading>
