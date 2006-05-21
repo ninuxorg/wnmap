@@ -93,13 +93,13 @@ $JS_CONFIG = array(
         // Possible values: <Int: 0-17>
         "WNMAP_MAP_START_ZOOM" => 4,
 
-        // WNMAP_MAP_START_TYPE
-        //   Default map type
-        // Possible values: <Enum>
-        //   0 => Map
-        //   1 => Satellite
-        //   2 => Hybrid
-        "WNMAP_MAP_START_TYPE" => 0,
+	// WNMAP_MAP_START_TYPE
+	//   Default map type
+	// Possible values: <Enum>
+	//   Map => G_NORMAL_MAP
+	//   Satellite => G_SATELLITE_MAP
+	//   Hybrid => G_HYBRID_MAP
+	"WNMAP_MAP_START_TYPE" => G_NORMAL_MAP,
 
         // WNMAP_MAP_URL
         //   Base URL of the map application

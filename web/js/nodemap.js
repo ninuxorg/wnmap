@@ -17,20 +17,20 @@ var firstLoad = true;
 
 function createMap ()
 {
-	map = new GMap(document.getElementById("mapColumn"));
+	map = new GMap2(document.getElementById("mapColumn"));
 	map.addControl(new GLargeMapControl());
 	map.addControl (new GMapTypeControl());
-	map.centerAndZoom(new GPoint(WNMAP_MAP_START_LON, WNMAP_MAP_START_LAT), parseInt(WNMAP_MAP_START_ZOOM));
+	map.setCenter(new GLatLng(WNMAP_MAP_START_LAT, WNMAP_MAP_START_LON), parseInt(WNMAP_MAP_START_ZOOM));
 	map.addControl(new GScaleControl());
-	map.registerKeyHandlers (window);
+	new GKeyboardHandler(map, window);
 
 	// Set default map type to WNMAP_MAP_START_TYPE
-	var mapTypes = map.getMapTypes();
-	map.setMapType(mapTypes[WNMAP_MAP_START_TYPE]);
+	eval("var mapType = " + WNMAP_MAP_START_TYPE);
+	map.setMapType (mapType);
 
-	GEvent.addListener (map, 'click', function (overlay, point) {
-		if (!overlay) {
-			addMarker (point.y, point.x, '');
+	GEvent.addListener (map, 'click', function (marker, point) {
+		if (!marker) {
+			addMarker (point.lat(), point.lng(), '');
 		}
 	});
 
@@ -39,8 +39,6 @@ function createMap ()
 	request.open ('GET', 'data.php', true);
 	request.onreadystatechange = function () {
 		if (request.readyState == 4) {
-
-			var pointTable = [];
 
 			var xmlDoc = request.responseXML;
 
@@ -69,8 +67,8 @@ function createMap ()
 					link.type = lnks[i].getAttribute("type");
 					link.node1 = markers [lnks[i].getAttribute("node1")];
 					link.node2 = markers [lnks[i].getAttribute("node2")];
-					link.point1 = markers [lnks[i].getAttribute("node1")].point;
-					link.point2 = markers [lnks[i].getAttribute("node2")].point;
+					link.point1 = markers [lnks[i].getAttribute("node1")].getPoint();
+					link.point2 = markers [lnks[i].getAttribute("node2")].getPoint();
 					links.push (link);
 				} catch (e) {
 					alert ("ERROR WITH LINK: " + lnks[i].getAttribute("node1")  + " <--> " + lnks[i].getAttribute("node2") + ":\n\n" + e);
@@ -92,7 +90,7 @@ function createMap ()
 
 							var bad = false;
 							for (key in markers) {
-								if (markers[key].point.x == x & markers[key].point.y == y) {
+								if (markers[key].getPoint().lng() == x & markers[key].getPoint().lat() == y) {
 									bad = true;
 									break;
 								}
@@ -129,7 +127,7 @@ function populateMap ()
 	markerList.innerHTML = "";
 
 	// Add Markers
-	for (key in markers) {
+	for (var key in markers) {
 		var node = markers[key];
 	
 		if (node.state == 'active' && document.getElementById ("showActive").checked == false) {
@@ -145,9 +143,9 @@ function populateMap ()
 		map.addOverlay (node);
 
 		if (node.state == 'active' | node.state == 'potential') {
-			nodeList.innerHTML += '<li onmouseover="getMarker(\'' + encode64(node.name) + '\').showTooltip();" onmouseout="getMarker(\'' + encode64(node.name) + '\').destroyTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + encode64(node.name) + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + encode64(node.name) + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+			nodeList.innerHTML += '<li onmouseover="getMarker(\'' + encode64(node.name) + '\').showTooltip();" onmouseout="getMarker(\'' + encode64(node.name) + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + encode64(node.name) + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + encode64(node.name) + '\').zoomTo();" class="zoomLink">zoom</a></li>';
 		} else {
-			markerList.innerHTML += '<li onmouseover="getMarker(\'' + encode64(node.name) + '\').showTooltip();" onmouseout="getMarker(\'' + encode64(node.name) + '\').destroyTooltip();" class="nodeitem-' + node.state + '"><div style="float: right; padding-right:5px;">(<a href="javascript:getMarker(\'' + encode64(node.name) + '\').removeMarker();">x</a>)</div><a href="javascript:getMarker(\'' + encode64(node.name) + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + encode64(node.name) + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+			markerList.innerHTML += '<li onmouseover="getMarker(\'' + encode64(node.name) + '\').showTooltip();" onmouseout="getMarker(\'' + encode64(node.name) + '\').hideTooltip();" class="nodeitem-' + node.state + '"><div style="float: right; padding-right:5px;">(<a href="javascript:getMarker(\'' + encode64(node.name) + '\').removeMarker();">x</a>)</div><a href="javascript:getMarker(\'' + encode64(node.name) + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + encode64(node.name) + '\').zoomTo();" class="zoomLink">zoom</a></li>';
 		}
 
 	}
@@ -177,7 +175,7 @@ function populateMap ()
 	for (key in markers) {
 		var marker = markers[key];
 		if (marker.state == 'marker') {
-			arr.push(encode64 (marker.name) + ',' + marker.point.x + ',' + marker.point.y + ',' + encode64 (marker.streetAddress));
+			arr.push(encode64 (marker.name) + ',' + marker.getPoint().lng() + ',' + marker.getPoint().lat() + ',' + encode64 (marker.streetAddress));
 		}
 	}
 	value = arr.join("|");
@@ -206,21 +204,21 @@ function getMarker (b64index) {
 	return markers[index];
 }
 
-function addMarker (y, x, b64addr) 
+function addMarker (lat, lng, b64addr) 
 {
 	var streetAddress = decode64 (b64addr);
 
 	showMarkers ();
 
-	for (key in markers) {
-                if (markers[key].point.x == x & markers[key].point.y == y) {
+	for (var key in markers) {
+                if (markers[key].getPoint().lng() == lng & markers[key].getPoint().lat() == lat) {
                         alert ("A marker at this point already exists.");
                         return;
                 }
         }
 
 	markerCount ++;
-	var marker = new NodeMarker ("Untitled Marker " + markerCount, '', 'marker', x, y);
+	var marker = new NodeMarker ("Untitled Marker " + markerCount, '', 'marker', lng, lat);
 
 	// store the street address if it was passed in
 	if ( streetAddress != '' ) {
@@ -273,4 +271,13 @@ function getQueryVariable (variable) {
     }
   } 
   return null;
+}
+
+function instanceOf(object, constructorFunction) {
+  while (object != null) {
+    if (object == constructorFunction.prototype)
+     {return true}
+	 object = object.__proto__;
+  }
+  return false;
 }

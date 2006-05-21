@@ -9,8 +9,9 @@ function NodeMarker (name, description, state, lng, lat)
 	this.state = state;
 	this.visible = true;
 	this.streetAddress = "n/a";
+	this.tooltip = this.name;
 	
-	var point = new GPoint (lng, lat);
+	var point = new GLatLng (lat, lng);
 
 	switch (state.toLowerCase()) {
 		case 'active':
@@ -22,7 +23,7 @@ function NodeMarker (name, description, state, lng, lat)
 		 	icon.iconAnchor = new GPoint(9, 34);
 			icon.infoWindowAnchor = new GPoint(20, 1);
 			
-			GMarker.call (this, point, icon);
+			NodeMarker.baseConstructor.call (this, point, icon);
 			break;
 		case 'potential':
 			this.statePretty = "Potential Node";
@@ -32,20 +33,19 @@ function NodeMarker (name, description, state, lng, lat)
 			icon.iconSize = new GSize(20, 34);
 			icon.iconAnchor = new GPoint(9, 34);
 			icon.infoWindowAnchor = new GPoint(20, 1);
-			GMarker.call (this, point, icon);
+
+			NodeMarker.baseConstructor.call (this, point, icon);
 			break;
 		case 'marker':
 			this.statePretty = "Marker";
 
-			GMarker.call (this, point);
-			this.step = 1;
+			NodeMarker.baseConstructor.call (this, point);
 			break;
 		default:
 			alert ("Invalid state");
 			return;
 			break;
 	}
-	
 
 	this.getHtml = function () {
 		var html = "";
@@ -71,7 +71,7 @@ function NodeMarker (name, description, state, lng, lat)
 
 			var pos = document.createElement ("div");
 			pos.className = "position";
-			pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.point.y*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.point.x*1000000)/1000000;
+			pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
 			thing.appendChild (pos);
 
 			var address = document.createElement ("div");
@@ -81,7 +81,7 @@ function NodeMarker (name, description, state, lng, lat)
 
 			var distance = document.createElement ("div");
 			distance.className = "position";
-			distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.point.y, this.point.x);
+			distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
 			//thing.appendChild (distance);
 
 			var actionList = document.createElement ("ul");
@@ -91,7 +91,7 @@ function NodeMarker (name, description, state, lng, lat)
 			var addActionLink = document.createElement ("a");
 			addActionLink.innerHTML = "Add this to our database as a location for a potential node.<br/>";
 
-			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.point.x + "&lat=" + this.point.y + "&name=" + URLEncode (this.name) + "&addr='" + encode64 (this.streetAddress) + "'";
+			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&addr='" + encode64 (this.streetAddress) + "'";
 			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
 			
 			addActionItem.appendChild (addActionLink);
@@ -180,7 +180,7 @@ function NodeMarker (name, description, state, lng, lat)
 
 			var pos = document.createElement ("div");
 			pos.className = "position";
-			pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.point.y*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.point.x*1000000)/1000000;
+			pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
 			thing.appendChild (pos);
 
 			var address = document.createElement ("div");
@@ -190,7 +190,7 @@ function NodeMarker (name, description, state, lng, lat)
 
 			var distance = document.createElement ("div");
 			distance.className = "position";
-			distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.point.y, this.point.x);
+			distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
 			//thing.appendChild (distance);
 
 			var f = document.createElement ("div");
@@ -208,47 +208,55 @@ function NodeMarker (name, description, state, lng, lat)
 	}
 
 	this.zoomTo = function () {
-		this.destroyTooltip ();
-		map.centerAndZoom (this.point, 0);
+		this.hideTooltip ();
+		map.setCenter (this.getPoint(), 17);
+		this.openInfoWindowHtml (this.getHtml());
 	}
 
+	// In GMap2, the maps API changed sufficiently to break the original
+	// tooltip code contained here.  As a part of the port to GMap2, I'd
+	// like to thank toEat.com and Robert Aspinall for doing the heavy
+	// lifting in that code.  It showed the way for how to re-implement
+	// tooltips in GMap2.
 	this.showTooltip = function () {
-		if (!this.tooltip) {
-			var tooltip = document.createElement ('div');
-			tooltip.innerHTML = this.name;
+		if (this.tooltip) {
+			if (!this.tooltipObject) {
+				this.tooltipObject = document.createElement ('div');
+				this.tooltipObject.innerHTML = this.name;
 
-			var opacity = .70;
-			className ="tooltip";
-			tooltip.className ="tooltip";
-			tooltip.style.position = 'relative';
-			tooltip.style.background = 'white';
-			tooltip.style.border = '1px solid black';
-			tooltip.style.padding = '2px';
-			tooltip.style.zIndex = 50000;
-	            	tooltip.style.filter = "alpha(opacity=" + opacity + ")";
-	                tooltip.style.opacity = opacity;
+				var opacity = .70;
+				this.tooltipObject.className ="tooltip";
+				this.tooltipObject.style.position = 'relative';
+				this.tooltipObject.style.background = 'white';
+				this.tooltipObject.style.border = '1px solid black';
+				this.tooltipObject.style.padding = '2px';
+				this.tooltipObject.style.zIndex = 50000;
+	            		this.tooltipObject.style.filter = "alpha(opacity=" + opacity + ")";
+	                	this.tooltipObject.style.opacity = opacity;
 
-			var b = map.spec.getBitmapCoordinate (this.point.y, this.point.x, map.getZoomLevel());
-		        var c = map.getDivCoordinate (b.x, b.y);
-			tooltip.style.left = c.x + (this.icon.iconAnchor.x + 5) + "px";
-			tooltip.style.top = c.y - (this.icon.iconAnchor.y) + "px";
-			tooltip.style.display = "block";
-	
-			map.div.appendChild (tooltip);
+				map.getPane(G_MAP_MARKER_PANE).appendChild(this.tooltipObject);
+			}
 
-			this.tooltip = tooltip;
+			var c = map.fromLatLngToDivPixel(new GLatLng(this.getPoint().lat(), this.getPoint().lng()));
+
+			try {
+        			this.tooltipObject.style.top  = c.y - ( this.getIcon().iconAnchor.y + 5 ) + "px";
+        			this.tooltipObject.style.left = c.x + ( this.getIcon().iconSize.width - this.getIcon().iconAnchor.x + 5 ) + "px";
+        			this.tooltipObject.style.display = "block";
+			} catch(e) {
+				alert(e);
+			}
 		}
 	}
 
-	this.destroyTooltip = function () {
-		if (this.tooltip) {
-			map.div.removeChild (this.tooltip);
-			this.tooltip = null;
+	this.hideTooltip = function () {
+		if (this.tooltipObject) {
+			this.tooltipObject.style.display = "none";
 		}
 	}
 
 	this.removeMarker = function () {
-		this.destroyTooltip ();
+		this.hideTooltip ();
 
 		delete markers[this.name];
 
@@ -257,8 +265,18 @@ function NodeMarker (name, description, state, lng, lat)
 
 	GEvent.addListener (this, 'click', this.select);
 	GEvent.addListener (this, 'mouseover', this.showTooltip);
-	GEvent.addListener (this, 'mouseout', this.destroyTooltip);
+	GEvent.addListener (this, 'mouseout', this.hideTooltip);
 
 }
 
-NodeMarker.prototype = new GMarker;
+extend = function(subClass, baseClass) {
+   function inheritance() {}
+   inheritance.prototype = baseClass.prototype;
+
+   subClass.prototype = new inheritance();
+   subClass.prototype.constructor = subClass;
+   subClass.baseConstructor = baseClass;
+   subClass.superClass = baseClass.prototype;
+}
+
+extend(NodeMarker, GMarker);

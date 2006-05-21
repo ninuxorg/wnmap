@@ -26,7 +26,7 @@ require ("config.php");
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
-		<script src="http://maps.google.com/maps?file=api&v=1&key=<?=GOOGLE_MAP_KEY?>" type="text/javascript"></script>
+		<script src="http://maps.google.com/maps?file=api&v=2&key=<?=GOOGLE_MAP_KEY?>" type="text/javascript"></script>
 		<script src="js.php?file=nodemap" type="text/javascript"></script>
 		<script src="js.php?file=gui" type="text/javascript"></script>
 		<script src="js.php?file=geocode" type="text/javascript"></script>
@@ -42,7 +42,32 @@ require ("config.php");
 		<link rel="alternate stylesheet" href="themes/rightsidebar.css" type="text/css" media="screen" title="Right sidebar - No Theme"/>
 	</head>
 
-	<body onLoad="createMap(); resizeMe();" onResize="resizeMe();">
+	<script type="text/javascript">
+	//<![CDATA[
+
+	function load() {
+		if (GBrowserIsCompatible()) {
+			createMap();
+			resizeMe();
+		}
+	}
+
+	function resize() {
+		if (GBrowserIsCompatible()) {
+			resizeMe();
+		}
+	}
+
+	function unload() {
+		if (GBrowserIsCompatible()) {
+			GUnload();
+		}
+	}
+
+	//]]>
+	</script>
+
+	<body onLoad="load();" onResize="resize();" onUnload="unload()">
 		<div id="main">
 			<div id="header">
 				<h1><span><?=ORG_NAME?></span></h1>
