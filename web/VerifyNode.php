@@ -18,10 +18,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require ("config.php");
 
-$hash = mysql_real_escape_string ($_GET["hash"]);
-
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
+
+$hash = mysql_real_escape_string ($_GET["hash"]);
 
 $query = "UPDATE nodes SET status='1' WHERE adminHash='$hash' AND status = '0'";
 
