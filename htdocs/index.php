@@ -106,8 +106,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					</div>
 				</div>
 				-->
-				<div style="float: right; padding: 11px;"><a href="#" id="pageLink">Link to this page</a></div>
-				<h2><span>Network Map</span></h2>
+				<div style="float: right; padding: 11px;"><a href="#" id="pageLink"><?php =LINK_TO_THIS_PAGE ?></a></div>
+				<h2><span><?php =NETWORK_MAP ?></span></h2>
 			</div>
 			<div id="columns">
 				<div id="mapColumn">
@@ -129,7 +129,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					</div>	
 					<div id="findLocation" class="sideItem">
 						<div class="sideItemTitle">
-							<h3>Find Location</h3>
+							<h3><?=FIND_LOCATION?></h3>
 							<a href="javascript:toggleVisible ('findLocationContent'); swapImage ('findLocationCollapseImage', '<?=MAP_URL?>images/collapse.png', '<?MAP_URL?>images/expand.png');" ><img id="findLocationCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
 						</div>
 						<div class="sideItemContent" id="findLocationContent">

@@ -21,4 +21,9 @@ Ninux.org Community
 EOF
 );
 
+define ("LINK_TO_THIS_PAGE","Collegamento a questa pagina");
+define ("NETWORK_MAP","Mappa della rete");
+define ("FIND_LOCATION","Trova Indirizzo");
+
+
 ?>

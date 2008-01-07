@@ -20,4 +20,9 @@ The Ninux.org Community
 EOF
 );
 
+define ("LINK_TO_THIS_PAGE","Link to this page");
+define ("NETWORK_MAP","Network Map");
+define ("FIND_LOCATION","Find Location");
+
+
 ?>
