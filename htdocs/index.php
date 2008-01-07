@@ -24,6 +24,18 @@ if (file_exists ("config.php")) {
 	echo "Whoop! It seems that you haven't configured WNMap yet! Edit <code>config.php.dist</code>, rename it to <code>config.php</code>, and then reload this page.";
 	return;
 }
+//Apply selected language
+if (file_exists ("languages/".LANGUAGE.".php")) {
+        require ("languages/".LANGUAGE.".php");
+	} else {
+	        echo "Whoop! It seems that the configured language is not supported in this version of WNMAP Edit <code>config.php</code>, try with another language, and then reload this page.";
+		        return;
+			}
+			echo '<?xml version="1.0" encoding="UTF-8"?>';
+
+
+
+
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 ?>

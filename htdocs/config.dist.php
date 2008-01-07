@@ -32,33 +32,16 @@ define ("ORG_NAME", "Ninux.org");
 define ("ORG_URL", "http://wiki.ninux.org/");
 define ("ORG_DESC", "Rome Wireless Community");
 
+//Choose "en" or "it"
+define ("LANGUAGE", "it");
+
+
 // No trailing slash
 define ("MAP_URL", 'http://map.ninux.org');
 
 define ("GETTING_STARTED_URL", "http://wiki.ninux.org/NuovoNodo");
 
 define ("MAIL_FROM", "noreply@ninux.org");
-
-// This is appended to the message sent to people when they add a node
-define ("MAIL_FOOTER",<<<EOF
-Getting Started
-===============
-
-For information about putting up a node, visit our Getting Started page at:
-
-http://wiki.ninux.org/NuovoNodo
-
-If you would like to discuss anything with us, you can send a message to the
-appropriate mailing list (http://wiki.ninux.org/MailingLists) or attend one of
-our meetings (http://wiki.ninux.org/Riunioni) and get to know the group in
-person.
-
-We look forward to hearing from you!
-
-Regards,
-The Ninux.org Community
-EOF
-);
 
 // Get this from http://www.google.com/apis/maps/signup.html
 define ("GOOGLE_MAP_KEY", "");
