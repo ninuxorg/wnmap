@@ -21,22 +21,27 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 require ("config.php");
 
 header ("Content-Type: text/xml");
+$connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
+mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 ?>
 
 <map>
 	<nodes>
 		<?php
-			$connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
-			mysql_select_db (MYSQL_DB) or die ('Could not select database.');
-			$query = "SELECT * FROM nodes WHERE status IN (1,2) ORDER BY status DESC, nodename";
+			$query = "SELECT * FROM " . MYSQL_NODES_TABLE . " WHERE status IN (1,2) ORDER BY status DESC, nodename";
 			$result = mysql_query ($query, $connection) or die (mysql_error());
 
 			while ($row = mysql_fetch_assoc($result)) {
-				$name = $row['nodeName'];
-				$lat = $row['lat'];
-				$lng = $row['lng'];
-				$status = $row['status'];
-				$addr = $row['streetAddress'];
+				$name = htmlspecialchars($row['nodeName']);
+				$owner = htmlspecialchars($row['userRealName']);
+				$website = htmlspecialchars($row['userWebsite']);
+				$jabber = htmlspecialchars($row['userJabber']);
+				$email = htmlspecialchars($row['userEmail']);
+				$publish_email = htmlspecialchars($row['userEmailPublish']);
+				$lat = htmlspecialchars($row['lat']);
+				$lng = htmlspecialchars($row['lng']);
+				$status = htmlspecialchars($row['status']);
+				$addr = htmlspecialchars($row['streetAddress']);
 				$desc = htmlspecialchars ($row['nodeDescription']);
 
 				if ($status == 1)
@@ -44,24 +49,43 @@ header ("Content-Type: text/xml");
 				else if ($status == 2)
 					$state = "active";
 
-				echo "<node name=\"$name\" lat=\"$lat\" lng=\"$lng\" state=\"$state\" description=\"$desc\" streetAddress=\"$addr\" />\n";
+				if ($publish_email == 1) {
+					echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" website=\"$website\" jabber=\"$jabber\" lat=\"$lat\" lng=\"$lng\" state=\"$state\" description=\"$desc\" streetAddress=\"$addr\" email=\"$email\" />\n";
+				} else {
+					echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" website=\"$website\" jabber=\"$jabber\" lat=\"$lat\" lng=\"$lng\" state=\"$state\" description=\"$desc\" streetAddress=\"$addr\" email=\"\" />\n";
+				}
 			}
 
-			mysql_close ($connection);
 		?>
 
 	</nodes>
 	<links>
-		<!--<link node1="NodeOne" node2="NodeMultiLocal" />-->
-		<!--<link node1="NodeDexter" node2="NodeMultiLocal" />-->
-		<!--<link node1="NodeDexter" node2="NodeOne" type="wifi" />
-		<link node1="NodeSheffield" node2="NodeDexter" type="wifi" />
-		<link node1="NodeSheffield" node2="NodeOne" type="wifi" />
-		<link node1="NodeDexter" node2="NodeAreis" type="wifi" />
-		<link node1="NodeTheStrand" node2="NodeBelmontEast" type="wifi" />
-		<link node1="NodeOne" node2="2608-swn" type="tun" />
-		<link node1="NodeOne" node2="NodeBelmontEast" type="tun" />
-		<link node1="Gir" node2="NodeBelmontEast" type="tun" />
-		<link node1="NodeOne" node2="Gir" type="tun" /> -->
+		<?php
+			$query = "SELECT * FROM " . MYSQL_LINKS_TABLE . " ORDER BY type DESC";
+			$result = mysql_query ($query, $connection) or die (mysql_error());
+
+			while ($row = mysql_fetch_assoc($result)) {
+				$query = "SELECT nodeName FROM " . MYSQL_NODES_TABLE . " WHERE id = '" . $row['node1'] . "'";
+				$node_result = mysql_query ($query, $connection) or die (mysql_error());
+				$node1row = mysql_fetch_row($node_result);
+				$node1name = htmlspecialchars($node1row[0]);
+
+				$query = "SELECT nodeName FROM " . MYSQL_NODES_TABLE . " WHERE id = '" . $row['node2'] . "'";
+				$node_result = mysql_query ($query, $connection) or die (mysql_error());
+				$node2row = mysql_fetch_row($node_result);
+				$node2name = htmlspecialchars($node2row[0]);
+
+				$type = htmlspecialchars($row['type']);
+
+				# FIXME: We should probaby make a node type table
+				echo "<link node1=\"" . $node1name . "\" node2=\"" . $node2name . "\" type=\"" . $type . "\" />\n";
+			}
+		?>
+
 	</links>
+<?php
+mysql_close ($connection);
+?>
 </map>
+
+

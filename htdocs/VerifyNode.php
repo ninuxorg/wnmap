@@ -23,7 +23,7 @@ mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
 $hash = mysql_real_escape_string ($_GET["hash"]);
 
-$query = "UPDATE nodes SET status='1' WHERE adminHash='$hash' AND status = '0'";
+$query = "UPDATE " . MYSQL_NODES_TABLE . " SET status='1' WHERE adminHash='$hash' AND status = '0'";
 
 $result = mysql_query ($query, $connection) or die (mysql_error ());
 

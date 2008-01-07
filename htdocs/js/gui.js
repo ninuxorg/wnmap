@@ -1,3 +1,75 @@
+function initGui ()
+{
+        if (readCookie ("showactive") == "false") {
+		showActive = false;
+		document.getElementById("showActive").checked = false;
+	}
+        if (readCookie ("showpotential") == "false") {
+		showPotential = false;
+                document.getElementById("showPotential").checked = false;
+        }
+        if (readCookie ("showwireless") == "false") {
+		showLinks = false;
+                document.getElementById("showLinks").checked = false;
+        }
+        if (readCookie ("showtunnels") == "false") {
+		showTunnels = false;
+                document.getElementById("showTun").checked = false;
+        }
+
+	GEvent.addListener (map, "moveend", function () {
+		updatePageLink();
+	});
+
+	GEvent.addListener (map, "zoomend", function () {
+		updatePageLink();
+	});
+
+	GEvent.addListener (map, "infowindowopen", function () {
+		updatePageLink();
+
+		var selectedMarker = getSelectedMarker();
+		if (selectedMarker.state == "marker") {
+			showMarkers();
+		} else {
+			showNodes();
+		}
+	});
+
+	GEvent.addListener (map, "infowindowclose", function () {
+		updatePageLink();
+	});
+}
+
+function updatePageLink ()
+{
+	var center = map.getCenter();
+	var zoom = map.getZoom();
+
+	var selectedMarker = getSelectedMarker();
+	if (selectedMarker != null && selectedMarker.state != "marker") {
+		document.getElementById ("pageLink").href = "?centerlat=" + center.lat() + "&centerlng=" + center.lng() + "&zoom=" + zoom + "&select=" + URLEncode(selectedMarker.name);
+	} else {
+		document.getElementById ("pageLink").href = "?centerlat=" + center.lat() + "&centerlng=" + center.lng() + "&zoom=" + zoom;
+	}
+}
+
+function getSelectedMarker ()
+{
+	if (map.getInfoWindow() != null && map.getInfoWindow().isHidden() == false) {
+		var point = map.getInfoWindow().getPoint();
+		for (var key in markers) {
+			var node = markers[key];
+			if (node.getPoint() == point) {
+				return node;
+			}
+		}
+		return null;
+	} else {
+		return null;
+	}
+}
+
 function showNodes ()
 {
 	document.getElementById ("nodesTabContent").style.display = "block";
@@ -68,10 +140,11 @@ function getWindowHeight() {
 
 // resize stuff
 
-var minHeight = 450;
+//var minHeight = 410;
 
 function resizeMe()
 {
+
 	var containerDiv = document.getElementById ('mapColumn');
 	var sideDiv = document.getElementById ('sideColumn');
 	var nodesTabContentDiv = document.getElementById ('nodesTabContent');
@@ -80,6 +153,17 @@ function resizeMe()
 
 	var paddingTop = sideDiv.offsetTop;
 	var paddingBottom = footerDiv.offsetHeight;
+
+	var minHeight = paddingBottom + 50;
+	if (document.getElementById('welcomeContent').style.visible != 'none') {
+		minHeight += document.getElementById('welcomeSideItem').offsetHeight;
+	}
+	if (document.getElementById('findLocationContent').style.visible != 'none') {
+		minHeight += document.getElementById('findLocation').offsetHeight;
+	}
+	if (document.getElementById('mapSettingsContent').style.visible != 'none') {
+		minHeight += document.getElementById('mapSettings').offsetHeight;
+	}
 
 	var newHeight = getWindowHeight () - paddingTop - paddingBottom;
 	
@@ -96,4 +180,44 @@ function resizeMe()
 	if (typeof(map.onResize) == 'function')
 		map.onResize ();
 
+}
+
+                                                                                                                                               
+function toggleVisible (obj)
+{
+        var el = document.getElementById(obj);
+        if ( el.style.display != 'none' ) {
+                el.style.display = 'none';
+        } else {
+                el.style.display = '';
+        }
+        resizeMe ();
+}
+
+
+function swapImage (objId, image1, image2)
+{
+	var img = document.getElementById(objId);
+	if (img.src == image1) {
+		img.src = image2;
+	} else {
+		img.src = image1;
+	}
+}
+
+function settingChanged ()
+{
+	showActive = document.getElementById("showActive").checked;
+        createCookie ("showactive", showActive, 300);
+
+	showPotential = document.getElementById("showPotential").checked;
+        createCookie ("showpotential", showPotential, 300);
+
+	showLinks = document.getElementById("showLinks").checked;
+        createCookie ("showwireless", showLinks, 300);
+
+	showTunnels = document.getElementById("showTun").checked;
+        createCookie ("showtunnels", showTunnels, 300);
+
+	populateMap();
 }

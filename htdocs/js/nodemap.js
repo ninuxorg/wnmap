@@ -3,7 +3,7 @@
 // 
 // Authors:
 //   Eric Butler <eric@extremeboredom.net>
-// 
+//  
 
 
 var map;
@@ -15,13 +15,36 @@ var markerCount = 0;
 
 var firstLoad = true;
 
-function createMap ()
+var showActive = true;
+var showPotential = true;
+var showLinks = true;
+var showTunnels = true;
+
+function createMap (containerId)
 {
-	map = new GMap2(document.getElementById("mapColumn"));
-	map.addControl(new GLargeMapControl());
-	map.addControl (new GMapTypeControl());
+	if (containerId == null) {
+		containerId = "mapColumn";
+	}
+
+	embedScript ("js.php?file=NodeMarker");
+	embedScript ("js.php?file=UrlEncode");
+	embedScript ("js.php?file=base64");
+	embedScript ("js.php?file=cookies");
+	embedScript ("js.php?file=DistanceCalculator");
+
+	embedStyle ("themes/map.css");
+
+	map = new GMap2(document.getElementById(containerId));
+
+	if (getQueryVariable ('controls') != "off") {
+		map.addControl(new GLargeMapControl());
+		map.addControl (new GMapTypeControl());
+		map.addControl(new GScaleControl());
+	} else {
+		map.addControl (new TextControl ("Show&nbsp;Ful&nbsp;Map", WNMAP_MAP_URL));
+	}
+
 	map.setCenter(new GLatLng(WNMAP_MAP_START_LAT, WNMAP_MAP_START_LON), parseInt(WNMAP_MAP_START_ZOOM));
-	map.addControl(new GScaleControl());
 	new GKeyboardHandler(map, window);
 
 	// Set default map type to WNMAP_MAP_START_TYPE
@@ -34,6 +57,10 @@ function createMap ()
 		}
 	});
 
+	window.addEventListener('DOMMouseScroll', wheelZoom, false);
+	
+	map.enableContinuousZoom();
+	//wap.enableDoubleClickZoom();
 
 	var request = GXmlHttp.create ();
 	request.open ('GET', 'data.php', true);
@@ -47,13 +74,18 @@ function createMap ()
 			for (var i = 0; i < markersFromXml.length; i++) {
 
 				var name = markersFromXml[i].getAttribute("name");
+				var base64Name = markersFromXml[i].getAttribute("base64Name");
+				var owner = markersFromXml[i].getAttribute("owner");
 				var desc = markersFromXml[i].getAttribute("description");
+				var website = markersFromXml[i].getAttribute("website");
+				var email = markersFromXml[i].getAttribute("email");
+				var jabber = markersFromXml[i].getAttribute("jabber");
 				var state = markersFromXml[i].getAttribute("state");
 				var addr = markersFromXml[i].getAttribute("streetAddress");
 				var lng = parseFloat(markersFromXml[i].getAttribute("lng"));
 				var lat = parseFloat(markersFromXml[i].getAttribute("lat"));
 
-				var node = new NodeMarker (name, desc, state, lng, lat);
+				var node = new NodeMarker (name, base64Name, owner, email, website, jabber, desc, state, lng, lat);
 				node.setStreetAddress (addr);
 
 				markers[node.name] = node;
@@ -77,6 +109,7 @@ function createMap ()
 
 
 			// Add local markers
+			//XXX: Move cookie foo to gui.js
 			var markersText = readCookie ("markers");
 			if (markersText != null) {
 				var savedMarkers = markersText.split ('|');
@@ -98,7 +131,7 @@ function createMap ()
 
 							if (bad) { break; }
 
-							var marker = new NodeMarker (name, '', 'marker', x, y);
+							var marker = new NodeMarker (name, encode64(name), '', '', '', '', '', 'marker', x, y);
 							markers[marker.name] = marker;
 							markerCount ++;
 
@@ -115,6 +148,7 @@ function createMap ()
 		}
 	}
 	request.send (null);
+	return map;
 }
 
 function populateMap ()
@@ -122,18 +156,23 @@ function populateMap ()
 	map.clearOverlays ();
 
 	var nodeList = document.getElementById ("nodeList");
+	if (nodeList != null) {
+		nodeList.innerHTML = "";
+	}
+
 	var markerList = document.getElementById ("markerList");
-	nodeList.innerHTML = "";
-	markerList.innerHTML = "";
+	if (markerList != null) {
+		markerList.innerHTML = "";
+	}
 
 	// Add Markers
 	for (var key in markers) {
 		var node = markers[key];
 	
-		if (node.state == 'active' && document.getElementById ("showActive").checked == false) {
+		if (node.state == 'active' && showActive == false) {
 			node.visible = false;
 			continue;
-		} else if (node.state == 'potential' && document.getElementById ("showPotential").checked == false) {
+		} else if (node.state == 'potential' && showPotential == false) {
 			node.visible = false;
 			continue;
 		}
@@ -143,11 +182,14 @@ function populateMap ()
 		map.addOverlay (node);
 
 		if (node.state == 'active' | node.state == 'potential') {
-			nodeList.innerHTML += '<li onmouseover="getMarker(\'' + encode64(node.name) + '\').showTooltip();" onmouseout="getMarker(\'' + encode64(node.name) + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + encode64(node.name) + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + encode64(node.name) + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+			if (nodeList != null) {
+				nodeList.innerHTML += '<li onmouseover="getMarker(\'' + node.base64Name + '\').showTooltip();" onmouseout="getMarker(\'' + node.base64Name + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + node.base64Name + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.base64Name + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+			}
 		} else {
-			markerList.innerHTML += '<li onmouseover="getMarker(\'' + encode64(node.name) + '\').showTooltip();" onmouseout="getMarker(\'' + encode64(node.name) + '\').hideTooltip();" class="nodeitem-' + node.state + '"><div style="float: right; padding-right:5px;">(<a href="javascript:getMarker(\'' + encode64(node.name) + '\').removeMarker();">x</a>)</div><a href="javascript:getMarker(\'' + encode64(node.name) + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + encode64(node.name) + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+			if (markerList != null) {
+				markerList.innerHTML += '<li onmouseover="getMarker(\'' + node.base64Name + '\').showTooltip();" onmouseout="getMarker(\'' + node.base64Name + '\').hideTooltip();" class="nodeitem-' + node.state + '"><div style="float: right; padding-right:5px;">(<a href="javascript:getMarker(\'' + node.base64Name + '\').removeMarker();">x</a>)</div><a href="javascript:getMarker(\'' + node.base64Name + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.base64Name + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+			}
 		}
-
 	}
 
 	// Add Links
@@ -158,17 +200,39 @@ function populateMap ()
 			points.push (links[i].point2);
 
 			if (links[i].type == 'wifi') {
-				if (document.getElementById ("showLinks").checked == true) {
+				if (showLinks== true) {
 					map.addOverlay (new GPolyline (points));
 				}
 			} else {
-				if (document.getElementById ("showTun").checked == true) {
+				if (showTunnels == true) {
 					map.addOverlay (new GPolyline (points,"#ff8080"));
 				}
 			}
 		}
 	}
 
+
+	saveMarkers();
+
+	if (firstLoad == true) {
+		if (getQueryVariable("centerlat") != null && getQueryVariable("centerlng") != null && getQueryVariable("zoom") != null) {
+			if (getQueryVariable ("select") != null) {
+				markers[getQueryVariable("select")].select ();
+			}
+			map.setCenter (new GLatLng(getQueryVariable("centerlat"), getQueryVariable("centerlng")));
+			map.setZoom (parseInt(getQueryVariable("zoom")));
+		} else if (getQueryVariable ("select") != null) {
+			if (markers[getQueryVariable("select")] != null) {
+				markers[getQueryVariable("select")].zoomTo ();
+			}
+		}
+	}
+
+	firstLoad = false;
+}
+
+function saveMarkers()
+{	
 	// Save Markers
 	var value = '';
 	var arr = new Array();
@@ -180,23 +244,14 @@ function populateMap ()
 	}
 	value = arr.join("|");
 
+	//XXX: Move cookie foo to gui.js
 	if (value != '') {
 		createCookie ("markers", value, 300);
 	} else {
 		eraseCookie ("markers");
 	}
-
-	if (firstLoad == true) {
-		if (getQueryVariable ("select") != null) {
-			if (markers[getQueryVariable("select")] != null) {
-				markers[getQueryVariable("select")].zoomTo ();
-				markers[getQueryVariable("select")].select ();
-			}
-		}
-	}
-
-	firstLoad = false;
 }
+
 
 function getMarker (b64index) {
 	var index = decode64 (b64index);
@@ -218,7 +273,8 @@ function addMarker (lat, lng, b64addr)
         }
 
 	markerCount ++;
-	var marker = new NodeMarker ("Untitled Marker " + markerCount, '', 'marker', lng, lat);
+	var newMarkerName = "Untitled Marker " + markerCount;
+	var marker = new NodeMarker (newMarkerName, encode64(newMarkerName), '', '', '', '', '', 'marker', lng, lat);
 
 	// store the street address if it was passed in
 	if ( streetAddress != '' ) {
@@ -227,9 +283,10 @@ function addMarker (lat, lng, b64addr)
 
 	markers[marker.name] = marker;
 	populateMap ();
-	marker.openInfoWindowHtml (marker.getHtml());
+	marker.select();
 	resizeMe ();
 	scrollMarkersToBottom ();
+	return marker;
 }
 
 function renamePrompt (b64name) {
@@ -249,6 +306,7 @@ function renameMarker (oldB64Name, newName)
 
 	var marker = markers [oldName];
 	marker.name = newName;
+	marker.base64Name = encode64 (newName);
 
 	markers [newName] = marker;
 	markers [oldName] = null;
@@ -281,3 +339,78 @@ function instanceOf(object, constructorFunction) {
   }
   return false;
 }
+
+function embedScript (src)
+{
+   var head = document.getElementsByTagName("head")[0];
+   script = document.createElement('script');
+   script.type = 'text/javascript';
+   script.src = src;
+   head.appendChild(script);
+}
+
+function embedStyle (href)
+{
+   var head = document.getElementsByTagName("head")[0];
+   script = document.createElement('link');
+   script.rel = 'stylesheet';
+   script.type = 'text/css';
+   script.href = href;
+   head.appendChild(script);
+}
+
+function wheelZoom(event) {
+	// Prevent from scrolling the page when zooming the map
+	if(window.event) { event.returnValue = false; } // IE
+	if(event.cancelable) { event.preventDefault(); } // DOM-Standard
+	if((event.detail || -event.wheelDelta) < 0) {
+		map.zoomIn();
+	} else {
+		map.zoomOut();
+	}
+}
+
+
+
+
+
+    function TextControl(text, url) {
+	this.text = text;
+	this.url = url;
+    }
+    TextControl.prototype = new GControl();
+
+    // Creates a one DIV for each of the buttons and places them in a container
+    // DIV which is returned as our control element. We add the control to
+    // to the map container and return the element for the map class to
+    // position properly.
+    TextControl.prototype.initialize = function(map) {
+      var container = document.createElement("div");
+      var textDiv = document.createElement("div");
+      textDiv.innerHTML = '<a style="color: black;" href="' + this.url + '">' +this.text + '</a>';
+      this.setButtonStyle_(textDiv);
+ 	container.appendChild (textDiv);
+      map.getContainer().appendChild(container);
+      return container;
+    }
+
+    // By default, the control will appear in the top left corner of the
+    // map with 7 pixels of padding.
+    TextControl.prototype.getDefaultPosition = function() {
+      return new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(7, 7));
+    }
+
+    // Sets the proper CSS for the given button element.
+    TextControl.prototype.setButtonStyle_ = function(button) {
+      button.style.textDecoration = "underline";
+      button.style.color = "#0000cc";
+      button.style.backgroundColor = "white";
+      button.style.font = "x-small Arial";
+      button.style.border = "1px solid black";
+      button.style.padding = "3px";
+      button.style.marginBottom = "3px";
+      button.style.textAlign = "center";
+      button.style.cursor = "pointer";
+      button.style.setProperty ("-moz-opacity", "0.5", "");
+    }
+

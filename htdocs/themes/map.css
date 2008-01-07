@@ -1,0 +1,54 @@
+.marker_balloon * {
+	font-size: 10pt !important;
+}
+
+.marker_balloon .title {
+	font-weight: bold;
+	font-size: 10pt;
+	padding-bottom: 10px;
+}
+.marker_balloon .position {
+	padding-bottom: 10px;
+}
+
+.marker_balloon .title a {
+	font-weight: normal;
+	font-size: 8pt;
+	padding-left: 1em;
+}
+.marker_balloon .subText {
+	padding-bottom: 10px;
+}
+.marker_balloon .stepTitle {
+	font-weight: bold;
+}
+.marker_balloon .exampleText {
+	font-size: x-small;
+}
+.marker_balloon form {
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+.marker_balloon .buttonBox {
+	text-align: right;
+	padding: 10px 0px 10px 10px;
+}
+.marker_balloon .buttonBox a {
+	margin-left: 1em;
+}
+
+.marker_balloon img {
+	vertical-align: middle;
+}
+
+.marker_balloon li {
+	padding-left: 22px;
+	padding-bottom: 5px;
+	list-style: none;
+}
+
+.marker_balloon ul {
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}

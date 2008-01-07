@@ -70,6 +70,14 @@ require ("geocode_lib.php");
 				width: 100%;
 			}
 		</style>
+		<script type="text/javascript">
+			function setJabberId ()
+			{
+				if (document.getElementById ('jid').value == '') {
+					document.getElementById ('jid').value = document.getElementById('email').value;
+				}
+			}
+		</script>
 	</head>
 	<body>
 <?php
@@ -84,9 +92,14 @@ if ( tooFarFromCenter($y, $x) ) {
 } else { ?>
 		<h1>Add Node</h1>
 		<p>Thinking about putting up a node at this location? Add it to our database! This way, other people who think that they might be able to see you can let you know and discuss setting up a link.</p>
+		<p><strong>NOTE: Only add yourself to the map if you are actually seriously interested in linking up with other people on the network. The goal of this site is *NOT* to map every random access point in the city.</strong><p>
 		<form action="AddPotentialNodeSubmit.php" method="POST">
 			<table border="0" cellspacing="0" cellpadding="5">
-<tr><td colspan="2"  style="border-bottom: 1px solid #eee"><h2>Node Information</h2></td></tr>
+				<tr>
+					<td colspan="2" style="border-bottom: 1px solid #eee">
+						<h2>Node Information</h2>
+					</td>
+				</tr>
 				<tr>
 					<td>
 						Latitude:
@@ -106,19 +119,18 @@ if ( tooFarFromCenter($y, $x) ) {
 				<tr>
 					<td>
 						<label for="nodename">Node Name:</label>
+						<br/>
+						<span class="reallysmall">Pick a name for this node, such as "Node45thAnd12th" or "NodeAwesomeCoffee"...something unique to your location.</span>
 					</td>
 					<td>
 						<input type="text" id="nodename" name="nodename" value="<?=$name?>"/>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2">
-						<span class="reallysmall">Pick a name for this node.</span>
-					</td>
 				<tr class="alt">
 					<td>
 						<label for="description">Description:</label>
 						<br/>
+						<span class="reallysmall">Enter a brief description of the location (name of business, etc.).</span>
 					</td>
 					<td>
 						<input type="text" name="description" id="description"/>
@@ -127,46 +139,67 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr>
 					<td>
-						<label for="nodename">Node Street Address:</label>
+						<label for="nodeaddr">Node Street Address:</label>
+						<br/>
+						<span class="reallysmall">This is optional, and you can be vauge if you'd prefer (specify the building name but not the apartment number, for example).</span>
 					</td>
 					<td>
 						<input type="text" id="nodeaddr" name="nodeaddr" value="<?=$addr?>"/>
 					</td>
 				</tr>
-				<tr class="alt">
-				<td colspan="2">
-						<span class="reallysmall">Enter a brief description of the location (name of business, etc.).</span>
-					</td>
-								</tr>
-								</table>
-<br/>
-								<table>
+			</table>
+			<br/>
+			<table>
 				<tr>
-				<td colspan="2" style="border-bottom: 1px solid #eee">
-				<h2>Your Information</h2>
-				</td>
+					<td colspan="2" style="border-bottom: 1px solid #eee;">
+						<h2>Your Information</h2>
+						<span class="reallysmall">If somebody nearby thinks they can see you, they need some way to reach you!</span>
+					</td>
 				</tr>
-					<tr>
-						<td>
-							<label for="yourname">Your Full Name:</label>
-						</td>
-						<td>
-							<input type="text" id="yourname" name="yourname"/>
-						</td>
-					</tr>
-					<tr class="alt">
-						<td>
-							<label for="email">E-mail Address:</label>
-							<br/>
-							<span class="reallysmall">Must be valid, will not be published.</span>
-						</td>
-						<td>
-							<input type="text" id="email" name="email"/>
-						</td>
-					</tr>
-				</table>
+				<tr>
+					<td>
+						<label for="yourname">Your Full Name:</label>
+					</td>
+					<td>
+						<input type="text" id="yourname" name="yourname"/>
+					</td>
+				</tr>
+				<tr class="alt">
+					<td>
+						<label for="email">E-mail Address:</label>
+						<br/>
+						<span class="reallysmall">Used to verify node - must be valid.</span>
+					</td>
+					<td>
+						<input type="text" id="email" name="email" onChange="setJabberId();" />
+						<br/>
+						<input type="checkbox" id="publishEmail" name="publishEmail" checked="checked"/>
+						<label for="publishEmail">Publish Email</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="jid">Jabber ID:</label>
+						<br/>
+						<span class="reallysmall">Learn more about <a href="http://seattlewireless.net/JabberServer" target="_blank">Jabber</a>.</span>
+					</td>
+					<td>
+						<input type="text" id="jid" name="jid"/>
+					</td>
+				</tr>
+				<tr class="alt class="alt"">
+					<td>
+						<label for="website">Website URL:</label>
+						<br/>
+						<span class="reallysmall">(If you have one)</span>
+					</td>
+					<td>
+						<input type="text" id="website" name="website"/>
+					</td>
+				</tr>
+			</table>
 			<div class="buttonbox">
-			<input type="submit" value="Submit"/>
+				<input type="submit" value="Submit" />
 			</div>
 		</form>
 <? } ?>

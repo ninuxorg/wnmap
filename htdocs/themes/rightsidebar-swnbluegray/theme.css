@@ -16,7 +16,7 @@ h1, h2 {
 
 h1 {
 /*	Place a link to your logo and its position attributes here. */
-/*	background: url("images/logo.png") no-repeat bottom right; */
+	background: url("images/logo.png") no-repeat bottom right; 
 }
 
 h1 span {
@@ -45,27 +45,30 @@ h2 {
 }
 .sideItemTitle {
 	background: #2d2d2d url("images/side_item_title_bg.png") repeat-x;
+	border-bottom: 1px solid #242424;
 }
 
 .sideItemTitle h3 {
-	font-size: 10pt;
+	font-size: 9pt;
 	font-weight: bold;
 	color: #b6b6b6;
-	padding: 3px;
+	padding: 4px;
 }
 
 .sideItemContent {
 	color: #999;
+	border-bottom: 1px solid #242424;
 }
 .sideItemContent a {
 	color: #999;
 }
 input.text {
 	background-color: #4a4a4a;
-	border: 1px solid #363636;
+	border: 1px solid #363636 !important;
 	width: 235px;
 	color: #999;
 	padding: 3px;
+	font-size: inherit;
 }
 
 form {
@@ -79,12 +82,13 @@ form {
 	margin-bottom: 0px;
 }
 
-input.submit {
+input.button {
+	font-size: inherit;
 }
 
 input.checkbox {
-	background-color: #4a4a4a;
-	border: 1px solid #363636;
+	background-color: #4a4a4a !important;
+	border: 1px solid #363636 !important;
 }
 
 ul.nobullets li {
@@ -238,3 +242,6 @@ ul {
 	margin-left: 0px;
 }
 
+#pageLink {
+	color: #90BED5;
+}

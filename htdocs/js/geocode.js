@@ -1,53 +1,53 @@
 function geocode (address) {
-				document.getElementById ("findLocationResponse").innerHTML = "Searching...";
-				document.getElementById ("findLocationResponse").className = "";
-				document.getElementById ("submitLocationSearchButton").disabled = true;
+	document.getElementById ("findLocationResponse").innerHTML = "Searching...";
+	document.getElementById ("findLocationResponse").className = "";
+	document.getElementById ("submitLocationSearchButton").disabled = true;
 
-				resizeMe ();
+	resizeMe ();
 
-				var request = GXmlHttp.create ();
-				request.open ('GET', 'geocode.php?address=' + address, true);
-				request.onreadystatechange = function () {
-					if (request.readyState == 4) {
-						var xmlDoc = request.responseXML;
+	var request = GXmlHttp.create ();
+	request.open ('GET', 'geocode.php?address=' + address, true);
+	request.onreadystatechange = function () {
+		if (request.readyState == 4) {
+			var xmlDoc = request.responseXML;
 
-						if (xmlDoc.firstChild.nodeName == "ResultSet") {
-							document.getElementById ("findLocationResponse").innerHTML = "<p>The following result(s) were found:</p>";
-							var resultSet = xmlDoc.getElementsByTagName ("ResultSet") [0];
-							var results = resultSet.getElementsByTagName ("Result");
-							var count = 0;
-							for (var i = 0; i < results.length; i++) {
-								if (results[i].getAttribute ("precision") == "address") {
-									var lat = results[i].getElementsByTagName ("Latitude")[0].textContent;
-									var lng = results[i].getElementsByTagName ("Longitude")[0].textContent;
+			if (xmlDoc.firstChild.nodeName == "ResultSet") {
+				document.getElementById ("findLocationResponse").innerHTML = "<p>The following result(s) were found:</p>";
+				var resultSet = xmlDoc.getElementsByTagName ("ResultSet") [0];
+				var results = resultSet.getElementsByTagName ("Result");
+				var count = 0;
+				for (var i = 0; i < results.length; i++) {
+					if (results[i].getAttribute ("precision") == "address") {
+						var lat = results[i].getElementsByTagName ("Latitude")[0].textContent;
+						var lng = results[i].getElementsByTagName ("Longitude")[0].textContent;
 
-									if ( !tooFarFromCenter(lat, lng) ) {
-										var address = results[i].getElementsByTagName ("Address")[0].textContent;
-										var city = results[i].getElementsByTagName ("City")[0].textContent;
-										var state = results[i].getElementsByTagName ("State")[0].textContent;
-										var zip = results[i].getElementsByTagName ("Zip")[0].textContent;
-										var streetAddress = address + ", " + city + ", " + state;
-										document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + lat + ',' + lng + ',\'' + encode64 (streetAddress) + '\'); resetSearch();">' + address + " " + city + " " + zip  + "</a></p>";
-										resizeMe ();
-										count ++;
-									}
-								}
-							}
-
-							if (count == 0) {
-								document.getElementById ("findLocationResponse").innerHTML = "No results found. Note that search is currently restricted to a " + WNMAP_ACCEPTABLE_DISTANCE + " mile radius of the center of the network, and that you must include a city in your search.";
-								document.getElementById ("findLocationResponse").className = "error";
-							}
-						} else {
-							document.getElementById ("findLocationResponse").innerHTML = "Invalid search.";
-							document.getElementById ("findLocationResponse").className = "error";
+						if ( !tooFarFromCenter(lat, lng) ) {
+							var address = results[i].getElementsByTagName ("Address")[0].textContent;
+							var city = results[i].getElementsByTagName ("City")[0].textContent;
+							var state = results[i].getElementsByTagName ("State")[0].textContent;
+							var zip = results[i].getElementsByTagName ("Zip")[0].textContent;
+							var streetAddress = address + ", " + city + ", " + state;
+							document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + lat + ',' + lng + ',\'' + encode64 (streetAddress) + '\').zoomTo(); resetSearch();">' + address + " " + city + " " + zip  + "</a></p>";
+							resizeMe ();
+							count ++;
 						}
-						document.getElementById ("submitLocationSearchButton").disabled = false;
-						resizeMe ();
 					}
 				}
-				request.send (null);
+
+				if (count == 0) {
+					document.getElementById ("findLocationResponse").innerHTML = "No results found. Note that search is currently restricted to a " + WNMAP_ACCEPTABLE_DISTANCE + " mile radius of the center of the network, and that you must include a city in your search.";
+					document.getElementById ("findLocationResponse").className = "error";
+				}
+			} else {
+				document.getElementById ("findLocationResponse").innerHTML = "Invalid search.";
+				document.getElementById ("findLocationResponse").className = "error";
 			}
+			document.getElementById ("submitLocationSearchButton").disabled = false;
+			resizeMe ();
+		}
+	}
+	request.send (null);
+}
 
 function tooFarFromCenter (lat, lon) {
 	var distance = distanceToCenterInMiles (lat, lon);

@@ -22,16 +22,23 @@ require ("config.php");
 require ("geocode_lib.php");
 
 $email = trim ($_POST["email"]);
+$jabber = trim ($_POST["jid"]);
+$website = trim ($_POST["website"]);
 $yourname = trim ($_POST["yourname"]);
 $description = trim ($_POST["description"]);
 $nodename = trim ($_POST["nodename"]);
 $nodeaddr = trim ($_POST["nodeaddr"]);
+$publish_email = trim($_POST["publishEmail"]);
 $lng = $_POST["lon"];
 $lat = $_POST["lat"];
 
 if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email) == false) {
 	
 	echo "Invalid email address.";
+
+} else if ($jabber != "" && eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $jabber) == false) {
+	
+	echo "Invalid jabber id.";
 
 } else if ( tooFarFromCenter($lat, $lng) ) {
 
@@ -51,24 +58,33 @@ $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could 
 mysql_select_db (MYSQL_DB) or die ('Could not select database');
 
 $email = mysql_real_escape_string ($email);
+$website = mysql_real_escape_string ($website);
 $yourname = mysql_real_escape_string ($yourname);
+$jabber = mysql_real_escape_string($jabber);
 $description = mysql_real_escape_string ($description);
 $lng = mysql_real_escape_string ($lng);
 $lat = mysql_real_escape_string ($lat);
 $nodename = mysql_real_escape_string ($nodename);
 $nodeaddr = mysql_real_escape_string ($nodeaddr);
+$publish_email = mysql_real_escape_string ($publish_email);
+
+if ($publish_email == "on") {
+	$publish_email = 1;
+} else {
+	$publish_email = 0;
+}
 
 $hash = md5 (rand ());
 
-$query = "SELECT status FROM nodes WHERE lat='$lat' AND lng='$lng'";
+$query = "SELECT status FROM " . MYSQL_NODES_TABLE . " WHERE lat='$lat' AND lng='$lng'";
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 if (mysql_num_rows($result) > 0) {
-	echo "This point already exists in our database.";
+	echo "A node at this point already exists in our database.";
 	return;
 }
 
-$query = "SELECT status FROM nodes WHERE nodeName='$nodename'";
+$query = "SELECT status FROM " . MYSQL_NODES_TABLE . " WHERE nodeName='$nodename'";
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 if (mysql_num_rows($result) > 0) {
@@ -78,7 +94,7 @@ if (mysql_num_rows($result) > 0) {
 
 
 
-$query = "INSERT INTO nodes (
+$query = "INSERT INTO " . MYSQL_NODES_TABLE . " (
 			status,
 			adminHash, 
 			lat, 
@@ -87,7 +103,10 @@ $query = "INSERT INTO nodes (
 			userRealName, 
 			userEmail, 
 			nodeName, 
-			nodeDescription
+			nodeDescription,
+			userJabber,
+			userWebsite,
+			userEmailPublish
 		)
 		VALUES (
 			0,
@@ -98,7 +117,10 @@ $query = "INSERT INTO nodes (
 			'$yourname',
 			'$email',
 			'$nodename',
-			'$description'
+			'$description',
+			'$jabber',
+			'$website',
+			'$publish_email'
 		)";
 
 mysql_query ($query, $connection) or die (mysql_error());
@@ -138,4 +160,8 @@ mail ($to, $subject, $message, $headers) or die ("Failed to send mail!!");
 <h1>Thank You!</h1>
 <p>Hello <b><? echo ($_POST["yourname"]); ?></b>, an email has been sent to <a href="<? echo ($_POST["email"]); ?>"><? echo ($_POST["email"]); ?></a> with instructions on what to do next.</p>
 
-<? } ?>
+<? 
+	return;
+}
+echo '<br/><a href="javascript:history.go(-1);">&laquo; Go back</a>';
+ ?>

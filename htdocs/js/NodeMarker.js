@@ -1,14 +1,27 @@
-//NodeMarker.js
+/*
+ * NodeMarker.js
+ *
+ * Authors:
+ *    Eric Butler <eric@extremeboredom.net>
+ *
+ * Part of the WNMap Project - http://wnmap.sf.net/
+ *
+ */
 
 var url;
 
-function NodeMarker (name, description, state, lng, lat)
+function NodeMarker (name, base64name, owner, email, website, jabber, description, state, lng, lat)
 {
 	this.name = name;
+	this.owner = owner;
+	this.email = email;
+	this.website = website;
+	this.jabber = jabber;
+	this.base64Name = base64name;
 	this.description = description;
 	this.state = state;
 	this.visible = true;
-	this.streetAddress = "n/a";
+	this.streetAddress = "";
 	this.tooltip = this.name;
 	
 	var point = new GLatLng (lat, lng);
@@ -39,7 +52,10 @@ function NodeMarker (name, description, state, lng, lat)
 		case 'marker':
 			this.statePretty = "Marker";
 
-			NodeMarker.baseConstructor.call (this, point);
+
+			NodeMarker.baseConstructor.call (this, point, {draggable:true});
+			this.enableDragging();
+
 			break;
 		default:
 			alert ("Invalid state");
@@ -47,7 +63,7 @@ function NodeMarker (name, description, state, lng, lat)
 			break;
 	}
 
-	this.getHtml = function () {
+	this.getOverviewHtml = function () {
 		var html = "";
 
 		if (state == "marker") {
@@ -69,16 +85,6 @@ function NodeMarker (name, description, state, lng, lat)
 			type.innerHTML = "<b>Type:</b> " + this.statePretty;
 			thing.appendChild (type);
 
-			var pos = document.createElement ("div");
-			pos.className = "position";
-			pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
-			thing.appendChild (pos);
-
-			var address = document.createElement ("div");
-			address.className = "position";
-			address.innerHTML = "<b>Street Address:</b> " + this.streetAddress;
-			thing.appendChild (address);
-
 			var distance = document.createElement ("div");
 			distance.className = "position";
 			distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
@@ -88,19 +94,24 @@ function NodeMarker (name, description, state, lng, lat)
 			thing.appendChild (actionList);
 	
 			var addActionItem = document.createElement ("li");
+			addActionItem.style.setProperty("background", "#ffffff url(images/add.png) no-repeat 0px 5px", null);
+
 			var addActionLink = document.createElement ("a");
 			addActionLink.innerHTML = "Add this to our database as a location for a potential node.<br/>";
 
 			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&addr='" + encode64 (this.streetAddress) + "'";
 			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
 			
+
 			addActionItem.appendChild (addActionLink);
 			actionList.appendChild (addActionItem);
 	
 			var deleteActionItem = document.createElement ("li");
+			deleteActionItem.style.setProperty("background", "url(images/remove.png) no-repeat", "");
 			var deleteActionLink = document.createElement ("a");
 			deleteActionLink.innerHTML = "Remove this marker";
 			deleteActionLink.href = "javascript:getMarker('" + encode64 (this.name) + "').removeMarker ();";
+
 			deleteActionItem.appendChild (deleteActionLink);
 			actionList.appendChild (deleteActionItem);
 
@@ -156,47 +167,107 @@ function NodeMarker (name, description, state, lng, lat)
 
 			*/
 
+			/*
 			var f = document.createElement ("div");
 			f.appendChild (thing);
 			return f.innerHTML;
+			*/
+			return thing;
 
 		} else {
 			var thing = document.createElement ("div");
 			thing.className = "marker_balloon";
 
 			var title = document.createElement ("div");
+
+			var titleLabel = document.createElement ("span");
+			titleLabel.innerHTML = "<b>Name:</b> ";
+			title.appendChild (titleLabel);
+
 			var titleLink = document.createElement ("a");
 			titleLink.className = "title";
 			titleLink.innerHTML = this.name;
 			titleLink.href = WNMAP_NODE_URL + this.name;
 			title.appendChild (titleLink);
-			title.appendChild (document.createTextNode (' (' + this.description + ')'));
+
+			var linkTo = document.createElement ("span");
+			linkTo.innerHTML = ' - <a href="?select=' + this.name + '">Map Link</a>';
+			title.appendChild (linkTo);
+
 			thing.appendChild (title);
-			
+
+			var description = document.createElement ("div");
+
+			var descriptionLabel = document.createElement("span");
+			descriptionLabel.innerHTML = "<b>Description:</b> ";
+			description.appendChild (descriptionLabel);
+
+			var descriptionText = document.createElement("span");
+			descriptionText.innerHTML = this.description;
+			description.appendChild (descriptionText);
+	
+			thing.appendChild (description);
+
+			var owner = document.createElement ("div");
+
+			if (this.website != "") {
+				owner.innerHTML = '<b>Owner:</b> <a href="' + this.website + '">' + this.owner + '</a>';
+			} else {
+				owner.innerHTML = "<b>Owner:</b> " + this.owner;
+			}
+
+			if (this.email != "") {
+				owner.innerHTML += " - <a href=\"mailto:" + this.email + "\">Send Mail</a>";
+				if (this.jabber != "") {
+					owner.innerHTML += " <a href=\"xmpp:" + this.jabber + "?message\">Send IM</a>";
+				}
+			} else {
+				if (this.jabber != "") {
+					owner.innerHTML += " - <a href=\"xmpp:" + this.jabber + "?message\">Send IM</a>";
+				}
+			}
+
+			thing.appendChild (owner);
+
+
 			var type = document.createElement ("div");
 			type.className ="position";
 			type.innerHTML = "<b>Type:</b> " + this.statePretty;
 			thing.appendChild (type);
 
-			var pos = document.createElement ("div");
-			pos.className = "position";
-			pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
-			thing.appendChild (pos);
-
-			var address = document.createElement ("div");
-			address.className = "position";
-			address.innerHTML = "<b>Street Address:</b> " + this.streetAddress;
-			thing.appendChild (address);
-
-			var distance = document.createElement ("div");
-			distance.className = "position";
-			distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
-			//thing.appendChild (distance);
-
+			return thing;
+			/*
 			var f = document.createElement ("div");
 			f.appendChild (thing);
 			return f.innerHTML;
+			*/
 		}
+	}
+
+	this.getLocationHtml = function () {
+		var thing = document.createElement ("div");
+		thing.className = "marker_balloon";
+
+		var f = document.createElement ("div");
+
+		var pos = document.createElement ("div");
+		pos.className = "position";
+		pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
+		thing.appendChild (pos);
+
+		var address = document.createElement ("div");
+		address.className = "position";
+		address.innerHTML = "<b>Street Address:</b> " + this.streetAddress;
+		thing.appendChild (address);
+
+		//var distance = document.createElement ("div");
+		//distance.className = "position";
+		//distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
+		//thing.appendChild (distance);
+
+	//	f.appendChild (thing);
+	//	return f.innerHTML;	
+		return thing;
 	}
 
 	this.setStreetAddress = function (addr) {
@@ -204,13 +275,27 @@ function NodeMarker (name, description, state, lng, lat)
 	}
 
 	this.select = function () {
-		this.openInfoWindowHtml (this.getHtml());
+
+		var infoTabs = [
+			new GInfoWindowTab("Overview", this.getOverviewHtml()),
+			new GInfoWindowTab("Location", this.getLocationHtml()),
+			new GInfoWindowTab("Distance", new DistanceCalculator(this).getContent())
+		];
+
+		this.openInfoWindowTabs (infoTabs);
 	}
 
 	this.zoomTo = function () {
 		this.hideTooltip ();
 		map.setCenter (this.getPoint(), 17);
-		this.openInfoWindowHtml (this.getHtml());
+
+		var infoTabs = [
+			new GInfoWindowTab("Overview", this.getOverviewHtml()),
+			new GInfoWindowTab("Location", this.getLocationHtml()),
+			new GInfoWindowTab("Distance", new DistanceCalculator(this).getContent())
+		];
+
+		this.openInfoWindowTabsHtml (infoTabs);
 	}
 
 	// In GMap2, the maps API changed sufficiently to break the original
@@ -222,7 +307,6 @@ function NodeMarker (name, description, state, lng, lat)
 		if (this.tooltip) {
 			if (!this.tooltipObject) {
 				this.tooltipObject = document.createElement ('div');
-				this.tooltipObject.innerHTML = this.name;
 
 				var opacity = .70;
 				this.tooltipObject.className ="tooltip";
@@ -236,6 +320,9 @@ function NodeMarker (name, description, state, lng, lat)
 
 				map.getPane(G_MAP_MARKER_PANE).appendChild(this.tooltipObject);
 			}
+
+			// The name might have changed
+			this.tooltipObject.innerHTML = this.name;
 
 			var c = map.fromLatLngToDivPixel(new GLatLng(this.getPoint().lat(), this.getPoint().lng()));
 
@@ -263,9 +350,21 @@ function NodeMarker (name, description, state, lng, lat)
 		populateMap ();
 	}
 
+	this.onDragStart = function () {
+		this.hideTooltip ();
+		map.closeInfoWindow();
+	}
+
+	this.onDragEnd = function () {
+		saveMarkers();
+	}
+
 	GEvent.addListener (this, 'click', this.select);
 	GEvent.addListener (this, 'mouseover', this.showTooltip);
 	GEvent.addListener (this, 'mouseout', this.hideTooltip);
+
+	GEvent.addListener (this, 'dragstart', this.onDragStart);
+	GEvent.addListener (this, 'dragend', this.onDragEnd);
 
 }
 

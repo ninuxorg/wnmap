@@ -8,7 +8,7 @@ body {
 }
 
 h1 {
-	height: 92px;
+	height: 61px;
 	margin: 0px;
 }
 
@@ -26,7 +26,7 @@ h2 {
 #sideColumn {
 	position: absolute;
 	width: 260px;
-	top: 131px;
+	top: 100px; /* h1 height + h2 height +2 */
 	right: 0px;
 }
 
@@ -36,6 +36,17 @@ h2 {
  
 .sideItemTitle h3 {
 	margin: 0px;
+	float: left;
+}
+
+.sideItemTitle a {
+	float: right;
+	margin-right: 6px;
+	margin-top: 6px;
+}
+
+.sideItemTitle a img {
+	border: 0px;
 }
 
 .sideItemContent {
