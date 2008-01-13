@@ -106,8 +106,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					</div>
 				</div>
 				-->
-				<div style="float: right; padding: 11px;"><a href="#" id="pageLink"><?php =LINK_TO_THIS_PAGE ?></a></div>
-				<h2><span><?php =NETWORK_MAP ?></span></h2>
+				<div style="float: right; padding: 11px;"><a href="#" id="pageLink"><?=LINK_TO_THIS_PAGE?></a></div>
+				<h2><span><?=NETWORK_MAP?></span></h2>
 			</div>
 			<div id="columns">
 				<div id="mapColumn">
