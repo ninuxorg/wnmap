@@ -86,6 +86,7 @@ $lon = $_GET["lon"];
 $y = $lat;
 $x = $lon;
 $name = $_GET["name"];
+$ip = $_GET["ip"];
 $addr = base64_decode($_GET["addr"]);
 if ( tooFarFromCenter($y, $x) ) {
         printf("Point must not be more than %d miles from the center of the network.\n", ACCEPTABLE_DISTANCE);
@@ -136,6 +137,16 @@ if ( tooFarFromCenter($y, $x) ) {
 						<input type="text" name="description" id="description"/>
 					</td>
 
+				</tr>
+				<tr>
+					<td>
+						<label for="nodeip">Node IP:</label>
+						<br/>
+						<span class="reallysmall">Enter the IP address of the node(if the node is an active node of the network)</span>
+					</td>
+					<td>
+						<input type="text" id="nodeip" name="nodeip" value="<?=$ip?>"/>
+					</td>
 				</tr>
 				<tr>
 					<td>

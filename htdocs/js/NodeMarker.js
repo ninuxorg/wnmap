@@ -10,7 +10,7 @@
 
 var url;
 
-function NodeMarker (name, base64name, owner, email, website, jabber, description, state, lng, lat)
+function NodeMarker (name, base64name, owner, email, website, jabber, description, ip, state, lng, lat)
 {
 	this.name = name;
 	this.owner = owner;
@@ -19,6 +19,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 	this.jabber = jabber;
 	this.base64Name = base64name;
 	this.description = description;
+	this.ip = ip;
 	this.state = state;
 	this.visible = true;
 	this.streetAddress = "";
@@ -99,7 +100,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			var addActionLink = document.createElement ("a");
 			addActionLink.innerHTML = "Add this to our database as a location for a potential node.<br/>";
 
-			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&addr='" + encode64 (this.streetAddress) + "'";
+			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&ip=" + this.ip + "&addr='" + encode64 (this.streetAddress) + "'";
 			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
 			
 
@@ -260,6 +261,11 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 		address.innerHTML = "<b>Street Address:</b> " + this.streetAddress;
 		thing.appendChild (address);
 
+		
+		var ip = document.createElement ("div");
+		address.className = "position";
+		address.innerHTML = "<b>IP:</b> " + this.ip;
+		thing.appendChild (ip);
 		//var distance = document.createElement ("div");
 		//distance.className = "position";
 		//distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());

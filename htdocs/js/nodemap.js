@@ -77,6 +77,7 @@ function createMap (containerId)
 				var base64Name = markersFromXml[i].getAttribute("base64Name");
 				var owner = markersFromXml[i].getAttribute("owner");
 				var desc = markersFromXml[i].getAttribute("description");
+				var ip = markersFromXml[i].getAttribute("ip");
 				var website = markersFromXml[i].getAttribute("website");
 				var email = markersFromXml[i].getAttribute("email");
 				var jabber = markersFromXml[i].getAttribute("jabber");
@@ -85,7 +86,7 @@ function createMap (containerId)
 				var lng = parseFloat(markersFromXml[i].getAttribute("lng"));
 				var lat = parseFloat(markersFromXml[i].getAttribute("lat"));
 
-				var node = new NodeMarker (name, base64Name, owner, email, website, jabber, desc, state, lng, lat);
+				var node = new NodeMarker (name, base64Name, owner, email, website, jabber, desc, ip, state, lng, lat);
 				node.setStreetAddress (addr);
 
 				markers[node.name] = node;
@@ -131,7 +132,7 @@ function createMap (containerId)
 
 							if (bad) { break; }
 
-							var marker = new NodeMarker (name, encode64(name), '', '', '', '', '', 'marker', x, y);
+							var marker = new NodeMarker (name, encode64(name), '', '', '', '', '', '', 'marker', x, y);
 							markers[marker.name] = marker;
 							markerCount ++;
 
@@ -274,7 +275,7 @@ function addMarker (lat, lng, b64addr)
 
 	markerCount ++;
 	var newMarkerName = "Untitled Marker " + markerCount;
-	var marker = new NodeMarker (newMarkerName, encode64(newMarkerName), '', '', '', '', '', 'marker', lng, lat);
+	var marker = new NodeMarker (newMarkerName, encode64(newMarkerName), '', '', '', '', '', '', 'marker', lng, lat);
 
 	// store the street address if it was passed in
 	if ( streetAddress != '' ) {

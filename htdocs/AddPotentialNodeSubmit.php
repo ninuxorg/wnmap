@@ -28,6 +28,7 @@ $yourname = trim ($_POST["yourname"]);
 $description = trim ($_POST["description"]);
 $nodename = trim ($_POST["nodename"]);
 $nodeaddr = trim ($_POST["nodeaddr"]);
+$nodeip = trim ($_POST["nodeip"]);
 $publish_email = trim($_POST["publishEmail"]);
 $lng = $_POST["lon"];
 $lat = $_POST["lat"];
@@ -39,6 +40,10 @@ if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$"
 } else if ($jabber != "" && eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $jabber) == false) {
 	
 	echo "Invalid jabber id.";
+
+} else if ($nodeip != "" && eregi("^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(/[0-9]{1,2}){0,1}$", $nodeip) == false) {
+	
+	echo "Invalid IP.";
 
 } else if ( tooFarFromCenter($lat, $lng) ) {
 
@@ -66,6 +71,7 @@ $lng = mysql_real_escape_string ($lng);
 $lat = mysql_real_escape_string ($lat);
 $nodename = mysql_real_escape_string ($nodename);
 $nodeaddr = mysql_real_escape_string ($nodeaddr);
+$nodeip = mysql_real_escape_string ($nodeip);
 $publish_email = mysql_real_escape_string ($publish_email);
 
 if ($publish_email == "on") {
@@ -92,7 +98,13 @@ if (mysql_num_rows($result) > 0) {
 	return;
 }
 
+$query = "SELECT status FROM " . MYSQL_NODES_TABLE . " WHERE nodeip='$nodeip'";
+$result = mysql_query ($query, $connection) or die (mysql_error());
 
+if (mysql_num_rows($result) > 0) {
+	echo "A node with that IP already exists in our database.";
+	return;
+}
 
 $query = "INSERT INTO " . MYSQL_NODES_TABLE . " (
 			status,
@@ -104,6 +116,7 @@ $query = "INSERT INTO " . MYSQL_NODES_TABLE . " (
 			userEmail, 
 			nodeName, 
 			nodeDescription,
+			nodeIP,
 			userJabber,
 			userWebsite,
 			userEmailPublish
@@ -118,6 +131,7 @@ $query = "INSERT INTO " . MYSQL_NODES_TABLE . " (
 			'$email',
 			'$nodename',
 			'$description',
+			'$nodeip',
 			'$jabber',
 			'$website',
 			'$publish_email'
