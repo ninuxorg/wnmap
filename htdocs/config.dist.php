@@ -34,7 +34,7 @@ define ("ORG_DESC", "Rome Wireless Community");
 
 //Choose "en" or "it"
 define ("LANGUAGE", "it");
-
+require ("languages/".LANGUAGE.".php");
 
 // No trailing slash
 define ("MAP_URL", 'http://map.ninux.org');
