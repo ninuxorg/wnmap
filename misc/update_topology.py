@@ -46,26 +46,47 @@ mysql_query=''
 for line in topology_file.readlines():
 	if parsing:
 		if line.isspace():
+			print "Executing query on DB..."
+			print "MySQL QUERY: INSERT INTO `links` (`node1`,`node2`,`type`,`quality`) VALUES %s" % (mysql_query)
+			if mysql_query=='':
+				print "NO DATA IN MY_SQL_TABLE"
+			else:
+				cursore.execute('INSERT INTO `links` (`node1`,`node2`,`type`,`quality`) VALUES %s' % mysql_query )
 			parsing=False
 			break
 		endpoint1=line.split()[0] #IP address of endpoint1
 		endpoint2=line.split()[1] #IP address of endpoint2
-		if endpoint1.find('172.16.') != -1 and endpoint2.find('172.16.') != -1:
-			id_endpoint1=cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP`="%s"' % (endpoint1))
-			id_endpoint2=cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP`="%s"' % (endpoint2))
+		cursore.execute('SELECT `id` FROM `links` WHERE `node1`="%s" AND `node2`="%s"' % (endpoint1,endpoint2))
+		if cursore.fetchall() == () :
+			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP`="%s"' % (endpoint1))
+			data = cursore.fetchall()
+			if data==():
+				print endpoint1
+				continue
+			else:
+				print "OK"
+			print data[0]
+			id_endpoint1=data[0][0]
+			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP`="%s"' % (endpoint2))
+			data2 = cursore.fetchall()
+			if data2==():
+				print endpoint2
+				continue
+			else:
+				print "OK2"
+			print data2[0]
+			id_endpoint2=data2[0][0]
 			etx=line.split()[4]
 			link_quality=''
 			if etx <= good_link:
-				etx = good 
+				link_quality = good 
 			elif good_link > etx > bad_link:
-				etx = medium
+				link_quality = medium
 			elif etx >= bad_link:
-				etx = bad
+				link_quality = bad
 			if mysql_query != '': 
 				mysql_query=mysql_query + ','
-			mysql_query=mysql_query + "(%s,%s,'wifi',%s)" % (id_endpoint1,id_endpoint2,etx)
+			mysql_query=mysql_query + '(%s,%s,"wifi",%s)' % (id_endpoint1,id_endpoint2,link_quality)
+			print mysql_query
 	if line.find('Destination IP') != -1:
-		if id_endpoint1 != '' or id_endpoint2 != '' :
-			print ("ESECUZIONE QUERY")
-			cursore.execute('INSERT INTO `links` (`node1`,`node2`,`type`,`quality`) VALUES %s' % mysql_query )
 		parsing=True	
