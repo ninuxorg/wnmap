@@ -98,6 +98,8 @@ if (mysql_num_rows($result) > 0) {
 	return;
 }
 
+/*
+// NODE WITH MULTIPLE ID NEED A BETTER PARSING
 $query = "SELECT status FROM " . MYSQL_NODES_TABLE . " WHERE nodeip='$nodeip'";
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
@@ -105,6 +107,8 @@ if (mysql_num_rows($result) > 0) {
 	echo "A node with that IP already exists in our database.";
 	return;
 }
+
+*/
 
 $query = "INSERT INTO " . MYSQL_NODES_TABLE . " (
 			status,
