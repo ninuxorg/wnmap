@@ -20,6 +20,11 @@ var showPotential = true;
 var showLinks = true;
 var showTunnels = true;
 
+var goodLinkColor = "#00ff00";
+var medLinkColor = "#ffff00";
+var badLinkColor = "#ee0000";
+
+
 function createMap (containerId)
 {
 	if (containerId == null) {
@@ -98,6 +103,7 @@ function createMap (containerId)
 				try {
 					var link = new Object ();
 					link.type = lnks[i].getAttribute("type");
+					link.quality = lnks[i].getAttribute("quality");
 					link.node1 = markers [lnks[i].getAttribute("node1")];
 					link.node2 = markers [lnks[i].getAttribute("node2")];
 					link.point1 = markers [lnks[i].getAttribute("node1")].getPoint();
@@ -202,7 +208,17 @@ function populateMap ()
 
 			if (links[i].type == 'wifi') {
 				if (showLinks== true) {
-					map.addOverlay (new GPolyline (points));
+					if (links[i].quality == "1"){ 
+						map.addOverlay (new GPolyline (points,goodLinkColor));
+					} else if (links[i].quality == "2"){  
+						map.addOverlay (new GPolyline (points,medLinkColor));
+					} else if (links[i].quality == "3"){ 
+						map.addOverlay (new GPolyline (points,badLinkColor));	
+					} else {
+						//map.addOverlay (new GPolyline (points));		
+						alert ("Link quality error. No wifi link quality information provided in the db!");
+                        return;	
+					}
 				}
 			} else {
 				if (showTunnels == true) {

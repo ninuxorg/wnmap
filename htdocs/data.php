@@ -77,9 +77,10 @@ mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 				$node2name = htmlspecialchars($node2row[0]);
 
 				$type = htmlspecialchars($row['type']);
+				$quality = htmlspecialchars($row['quality']);
 
 				# FIXME: We should probaby make a node type table
-				echo "<link node1=\"" . $node1name . "\" node2=\"" . $node2name . "\" type=\"" . $type . "\" />\n";
+				echo "<link node1=\"" . $node1name . "\" node2=\"" . $node2name . "\" type=\"" . $type . "\" quality=\"" . $quality . "\" />\n";
 			}
 		?>
 
