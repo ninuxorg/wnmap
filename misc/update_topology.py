@@ -2,7 +2,7 @@
 import os
 import re
 import MySQLdb
-
+from string import atof
 # Authors: OrazioPirataDelloSpazio, Don@TuX, Si_Mo
 # This software is released under GPL3
 # Ninux.org 2008
@@ -10,9 +10,9 @@ import MySQLdb
 #This script read the the txt file from olsrd_txtinfo plug-in and insert in the wnmap database active wireless links
 
 #Mysql variables
-host = "www.bzzauz.org"
+host = "localhost"
 user="wnmap"
-passwd="wnmap"
+passwd="wnmap_pwd"
 db="wnmapunstable"
 table="links"
 
@@ -78,11 +78,12 @@ for line in topology_file.readlines():
 			id_endpoint2=data2[0][0]
 			etx=line.split()[4]
 			link_quality=''
-			if etx <= good_link:
+			netx=atof(etx)
+			if netx <= good_link:
 				link_quality = good 
-			elif good_link > etx > bad_link:
+			elif good_link > netx > bad_link:
 				link_quality = medium
-			elif etx >= bad_link:
+			elif netx >= bad_link:
 				link_quality = bad
 			if mysql_query != '': 
 				mysql_query=mysql_query + ','
