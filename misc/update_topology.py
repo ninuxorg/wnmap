@@ -82,7 +82,7 @@ for line in topology_file.readlines():
 
 			if id_endpoint1 + id_endpoint2 not in links_etx:
 				links_etx[id_endpoint2 + id_endpoint1] = etx
-				continue #wait the other monodirectional link...
+				#continue #wait the other monodirectional link...
 			
 			# if found the other link, we can calculate the average etx and prepare the mysql query
 			avg_etx = (links_etx[id_endpoint1 + id_endpoint2] + etx )/ 2
@@ -102,7 +102,8 @@ for line in topology_file.readlines():
 				if mysql_query != '': 
 					mysql_query = mysql_query + ','
 				mysql_query = mysql_query + '(%s,%s,"wifi",%s)' % (id_endpoint1,id_endpoint2,link_quality)
-				
+			else: 
+				print "same ids"		
 				
 	if line.find('Destination IP') != -1:
 		parsing=True	
