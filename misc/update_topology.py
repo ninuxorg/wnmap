@@ -63,14 +63,16 @@ for line in topology_file.readlines():
 		#look if there is already a link between these two nodes
 		cursore.execute('SELECT `id` FROM `links` WHERE `node1`="%s" AND `node2`="%s"' % (endpoint1,endpoint2))
 		if cursore.rowcount == 0 : # if no links between nodes...(i.e. no VPN links)
-			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint1+'%'))
+			#cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint1+'%'))
+			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` REGEXP "%s"' % (endpoint1 + "[[:>:]]") )
 			data = cursore.fetchall()
 			if cursore.rowcount == 0: 
 				print "No nodes with IP: %s in the nodes table" % (endpoint1)
 				continue
 			id_endpoint1=data[0][0]
 			print "%s's Node ip is %d" % (endpoint1,id_endpoint1)	
-			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint2+'%'))
+			#cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint2+'%'))
+			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` REGEXP "%s"' % (endpoint2 + "[[:>:]]") )
 			data = cursore.fetchall()
 			if cursore.rowcount == 0: 
 				print "No nodes with IP: %s in the nodes table" % (endpoint2)
@@ -91,13 +93,10 @@ for line in topology_file.readlines():
 			print "Created link from node %s to node %s with medium etx %f" % (endpoint1, endpoint2, avg_etx)
 			if avg_etx <= good_link:
 				link_quality = quality_values['good'] 
-				print "good"
 			elif good_link < avg_etx < bad_link:
 				link_quality = quality_values['medium'] 
-				print "medium"
 			elif avg_etx >= bad_link:
 				link_quality = quality_values['bad'] 
-				print "bad"
 			if id_endpoint1 != id_endpoint2:	
 				if mysql_query != '': 
 					mysql_query = mysql_query + ','
