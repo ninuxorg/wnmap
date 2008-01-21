@@ -25,7 +25,7 @@ bad_link=2
 ########################### IMPLEMENTATION #############################
 
 #download topology
-#os.system(" wget http://127.0.0.1:2006 -q -O topology.txt")
+os.system(" wget http://127.0.0.1:2006 -q -O topology.txt")
 
 #open file
 topology_file=open("topology.txt",'r')
@@ -82,7 +82,7 @@ for line in topology_file.readlines():
 
 			if id_endpoint1 + id_endpoint2 not in links_etx:
 				links_etx[id_endpoint2 + id_endpoint1] = etx
-				#continue #wait the other monodirectional link...
+				continue #wait the other monodirectional link...
 			
 			# if found the other link, we can calculate the average etx and prepare the mysql query
 			avg_etx = (links_etx[id_endpoint1 + id_endpoint2] + etx )/ 2
