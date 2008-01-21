@@ -25,7 +25,7 @@ bad_link=2
 ########################### IMPLEMENTATION #############################
 
 #download topology
-os.system(" wget http://127.0.0.1:2006 -q -O topology.txt")
+#os.system(" wget http://127.0.0.1:2006 -q -O topology.txt")
 
 #open file
 topology_file=open("topology.txt",'r')
@@ -59,9 +59,9 @@ for line in topology_file.readlines():
 			break
 		endpoint1=line.split()[0] #IP address of endpoint1
 		endpoint2=line.split()[1] #IP address of endpoint2
+		print "searching ip: %s and the other ip %s" % (endpoint1,endpoint2) 	
 		#look if there is already a link between these two nodes
 		cursore.execute('SELECT `id` FROM `links` WHERE `node1`="%s" AND `node2`="%s"' % (endpoint1,endpoint2))
-		
 		if cursore.rowcount == 0 : # if no links between nodes...(i.e. no VPN links)
 			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint1+'%'))
 			data = cursore.fetchall()
@@ -69,13 +69,14 @@ for line in topology_file.readlines():
 				print "No nodes with IP: %s in the nodes table" % (endpoint1)
 				continue
 			id_endpoint1=data[0][0]
-			
+			print "%s's Node ip is %d" % (endpoint1,id_endpoint1)	
 			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint2+'%'))
 			data = cursore.fetchall()
 			if cursore.rowcount == 0: 
 				print "No nodes with IP: %s in the nodes table" % (endpoint2)
 				continue
 			id_endpoint2=data[0][0]
+			print "%s's Node ip is %d" % (endpoint2,id_endpoint2)	
 
 			etx=float(line.split()[4])
 
