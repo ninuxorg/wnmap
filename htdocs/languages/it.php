@@ -25,7 +25,7 @@ define ("LINK_TO_THIS_PAGE","Collegamento a questa pagina");
 define ("NETWORK_MAP","Mappa della rete");
 define ("FIND_LOCATION","Trova Indirizzo");
 
-define ("THINK_ABOUT","Pensi di costruire un nodo di ".=ORG_NAME." ? Segna la tua posizione sulla mappa!");
+define ("THINK_ABOUT","Pensi di costruire un nodo ? Segna la tua posizione sulla mappa!");
 
 
 ?>
