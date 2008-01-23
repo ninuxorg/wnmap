@@ -25,7 +25,7 @@ require ("config.php");
 		<title><?=SITE_TITLE?> - Help</title>
 	</head>
 	<body>
-		<p><b>Thinking about setting up a <?=ORG_NAME?> node? Put youself on the map!</b></p>
+		<p><b><?=THINK_ABOUT?></b></p>
 		<ol style="padding-left: 2em;">
 			<li>Use the "Find Location" search below to add a marker at your desired location. You can also click anywhere on the map if you do not know the address.<br/><br/></li>
 			<li>Rename the marker something meaningful such as "Eric's House".<br/><br/></li>
