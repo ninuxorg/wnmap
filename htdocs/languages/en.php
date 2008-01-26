@@ -24,6 +24,15 @@ define ("LINK_TO_THIS_PAGE","Link to this page");
 define ("NETWORK_MAP","Network Map");
 define ("FIND_LOCATION","Find Location");
 
+//help.php
 define ("THINK_ABOUT","Thinking about setting up a node? Put youself on the map!");
+define ("THINK_ABOUT_DESC_1","Use the \"" . FIND_LOCATION . "\" search below to add a marker at your desired location. You can also click anywhere on the map if you do not know the address.");
+define ("THINK_ABOUT_DESC_2","Rename the marker something meaningful such as \"Eric's House\".");
+define ("THINK_ABOUT_DESC_3","Select the option to add the marker to the database and follow the directions.");
+define ("THINK_ABOUT_DESC_4","You can click on other nodes to view photos and other information. If you think you find a node that you have line-of-sight to, get in touch with whoever owns it and set up a link!");
+define ("GETTING_STARTED_TEXT","More information about putting up a node &raquo;");
+define ("MAP_LEGEND_TITLE","Map Legend");
+define ("MAP_LEGEND_POTENTIAL","Potential location for a node");
+define ("MAP_LEGEND_ACTIVE","Active node");
 
 ?>

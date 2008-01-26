@@ -27,15 +27,15 @@ require ("config.php");
 	<body>
 		<p><b><?=THINK_ABOUT?></b></p>
 		<ol style="padding-left: 2em;">
-			<li>Use the "Find Location" search below to add a marker at your desired location. You can also click anywhere on the map if you do not know the address.<br/><br/></li>
-			<li>Rename the marker something meaningful such as "Eric's House".<br/><br/></li>
-			<li>Select the option to add the marker to the database and follow the directions.<br/><br/></li>
-			<li>You can click on other nodes to view photos and other information. If you think you find a node that you have line-of-sight to, get in touch with whoever owns it and set up a link!</li>
+			<li><?=THINK_ABOUT_DESC_1?><br/><br/></li>
+			<li><?=THINK_ABOUT_DESC_2?><br/><br/></li>
+			<li><?=THINK_ABOUT_DESC_3?><br/><br/></li>
+			<li><?=THINK_ABOUT_DESC_4?></li>
 		</ol>
-		<p><a href="<?=GETTING_STARTED_URL?>" target="_blank">More information about putting up a node &raquo;</a><p>
+		<p><a href="<?=GETTING_STARTED_URL?>" target="_blank"><?=GETTING_STARTED_TEXT?></a><p>
 
-		<p><b>Map Legend</b></p>
-		<p><img src="<?=MAP_URL?>/images/marker_potential_small.png"/> Potential location for a node</p>
-		<p><img src="<?=MAP_URL?>/images/marker_active_small.png"/> Active node</p>
+		<p><b><?=MAP_LEGEND_TITLE?></b></p>
+		<p><img src="<?=MAP_URL?>/images/marker_potential_small.png"/><?=MAP_LEGEND_POTENTIAL?></p>
+		<p><img src="<?=MAP_URL?>/images/marker_active_small.png"/><?=MAP_LEGEND_ACTIVE?></p>
 	</body>
 </html>
