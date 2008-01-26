@@ -1,0 +1,247 @@
+@import "../rightsidebar.css";
+
+body {
+	font-family: Bitstream Vera Sans, Verdana;
+	font-size: 8pt;
+	background-color: #ff9900;
+}
+
+h1, h2 {
+	border-bottom: 1px solid #000000;
+}
+
+#header {
+	background: url("images/logo_bg.png");
+}
+
+h1 {
+/*	Place a link to your logo and its position attributes here. */
+	background: url("images/logo.png") no-repeat bottom left; 
+}
+
+h1 span {
+	display: none;
+}
+
+h2 span {
+	display: none;
+}
+
+#pageTitle {
+	background: url("images/title_bg.png");
+}
+
+h2 {
+	background: url("images/title.png") no-repeat center left;
+}
+
+#mapColumn {
+	border-right: 1px solid #000000;
+	background-color: #ffffff;
+}
+
+#sideColumn {
+	 background-color: #ff9900;
+}
+.sideItemTitle {
+	background: #fffff url("images/side_item_title_bg.png") repeat-x;
+	border-bottom: 1px solid #000000;
+}
+
+.sideItemTitle h3 {
+	font-size: 9pt;
+	font-weight: bold;
+	color: #ff9900;
+	padding: 4px;
+}
+
+.sideItemContent {
+	color: #999;
+	border-bottom: 1px solid #000000;
+}
+.sideItemContent a {
+	color: #ffffff;
+}
+input.text {
+	background-color: #ffffff;
+	border: 1px solid #000000 !important;
+	width: 235px;
+	color: #999;
+	padding: 3px;
+	font-size: inherit;
+}
+
+form {
+	margin: 0px;
+}
+
+.buttonBox {
+	text-align: right;
+	margin-right: 0px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+input.button {
+	font-size: inherit;
+}
+
+input.checkbox {
+	background-color: #ffffff !important;
+	border: 1px solid #000000 !important;
+}
+
+ul.nobullets li {
+	padding-bottom: 3px;
+}
+
+
+#tabs {
+	border-top: 1px solid #000000;
+	background: url("images/tab_switcher_bg.png") repeat-x;
+	height: 31px;
+}
+
+#tabs ul.tabSwitcher {
+	border-bottom: 1px solid black;
+}
+
+#tabs ul.tabSwitcher li {
+        background-color: #000000;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+}
+
+#tabs ul.tabSwitcher li.selected, ul.tabSwitcher li:hover {
+        background-color: #ff9900;
+}
+#tabs ul.tabSwitcher li.selected {
+        border-bottom: 1px solid #ff9900;
+}
+#tabs ul.tabSwitcher li.selected a {
+        color: #ffffff;
+}
+#tabs ul.tabSwitcher li a {
+        color: #ff9900;
+	font-weight: bold;
+        text-decoration: none;
+}
+
+#footer {
+	border-top: 1px solid #000000;
+	background-color: #ff9900;
+	padding: 10px;
+	color: #000000;
+}
+#footer a {
+	color: inherit;
+}
+
+
+#nodeList, #markerList {
+	list-style: none;
+	padding-left: 10px;
+}
+
+#nodeList li, #markerList li {
+	padding-bottom: 10px;
+}
+
+/* does this even work? */
+#nodeList li:last-child, #markerList li:last-child {
+	padding-bottom: 0px !important;
+}
+
+#nodeList li a, #markerList li a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.nodeitem-active {
+	background: url('/images/marker_active_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-potential {
+	background: url('/images/marker_potential_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-marker {
+	background: url('/images/marker_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+
+#accountInfo {
+	color: white;
+}
+
+#accountInfo a {
+	color: white;
+	text-decoration: none;
+}
+
+#accountInfo a:hover {
+	text-decoration: underline;
+}
+
+.InfoWindowContent hr {
+	height: 1px;
+	border: 0px;
+	background-color: black;
+	margin: 0px !important;
+}
+
+.zoomLink {
+	font-size: 7pt;
+	color: #ff9900 !important;
+}
+
+.addressLink {
+	color: #ffffff;
+}
+
+.marker_balloon .title {
+	font-weight: bold;
+	font-size: 10pt;
+	padding-bottom: 10px;
+}
+.marker_balloon .position {
+	padding-bottom: 10px;
+}
+
+.marker_balloon .title a {
+	font-weight: normal;
+	font-size: 8pt;
+	padding-left: 1em;
+}
+.marker_balloon .subText {
+	padding-bottom: 10px;
+}
+.marker_balloon .stepTitle {
+	font-weight: bold;
+}
+.marker_balloon .exampleText {
+	font-size: x-small;
+}
+.marker_balloon form {
+	border: 1px solid #ff9900;
+	padding: 10px;
+}
+.marker_balloon .buttonBox {
+	text-align: right;
+	padding: 10px 0px 10px 10px;
+}
+.marker_balloon .buttonBox a {
+	margin-left: 1em;
+}
+
+ul { 
+	margin-left: 0px;
+}
+
+#pageLink {
+	color: #ff9900;
+}
