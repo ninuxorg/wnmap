@@ -116,14 +116,14 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 				<div id="sideColumn">
 					<div class="sideItem" id="welcomeSideItem">
 						<div class="sideItemTitle">
-							<h3 style="float: left;">Welcome!</h3>
+						<h3 style="float: left;"><?=WELCOME_TITLE?></h3>
 							<a href="javascript:toggleVisible ('welcomeContent'); swapImage ('welcomeCollapseImage', '<?=MAP_URL?>images/collapse.png', '<?=MAP_URL?>images/expand.png');"><img src="images/collapse.png" alt="Toggle" id="welcomeCollapseImage" /></a>
 						</div>
 						<div class="sideItemContent" id="welcomeContent">
-							<p style="margin-top: 0px;">Welcome to the <?=ORG_NAME?> Network Map!</p>
+						<p style="margin-top: 0px;"><?=WELCOME_TO_THE?></p>
 							<ul style="padding-left: 2em; list-style: square;">
-								<li style="padding-bottom: 0.5em;"><a href="<?=ORG_URL?>">What is <?=ORG_NAME?>?</a></li>
-								<li><a href="javascript:void(0);" onclick="window.open ('help.php', 'help', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=600,height=400');">How do I use this map?</a></li>
+								<li style="padding-bottom: 0.5em;"><a href="<?=ORG_URL?>"><?=WHAT_IS?></a></li>
+								<li><a href="javascript:void(0);" onclick="window.open ('help.php', 'help', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=600,height=400');"><?=HOW_TO_USE_MAP?></a></li>
 							</ul>
 						</div>
 					</div>	
@@ -134,12 +134,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 						</div>
 						<div class="sideItemContent" id="findLocationContent">
 							<form onsubmit="geocode(document.getElementById('address').value); return false;" action="">
-								<p style="margin: 0px;"><label for="address">Address, Street, and City, State or Zip:</label>
+								<p style="margin: 0px;"><label for="address"><?=ADDRESS_LABEL?></label>
 								<br/>
 								<input type="text" id="address" class="text" />
 								</p>
 								<p class="buttonBox">
-									<input type="submit" value="Search" class="button" id="submitLocationSearchButton"/>
+									<input type="submit" value="<?=ADDRESS_SUBMIT_LABEL?>" class="button" id="submitLocationSearchButton"/>
 								</p>
 							</form>
 							<div id="findLocationResponse"></div>
@@ -147,43 +147,43 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					</div>
 					<div id="mapSettings" class="sideItem">
 						<div class="sideItemTitle">
-							<h3>Map Settings</h3>
+							<h3><?=MAP_SETTINGS_TITLE?></h3>
 							<a href="javascript:toggleVisible ('mapSettingsContent'); swapImage ('mapSettingsCollapseImage', '<?=MAP_URL?>images/collapse.png', '<?=MAP_URL?>images/expand.png');" ><img id="mapSettingsCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
 						</div>
 						<div class="sideItemContent" id="mapSettingsContent">
 							<ul class="nobullets">
 								<li>
 									<input class="checkbox" type="checkbox" id="showActive" checked="checked" onclick="settingChanged();"/>
-									<label for="showActive">Show Active Nodes</label>
+									<label for="showActive"><?=SHOW_ACTIVE_NODES?></label>
 								</li>
 								<li>
 									<input class="checkbox" type="checkbox" id="showPotential" checked="checked" onclick="settingChanged();"/>
-									<label for="showPotential">Show Potential Node Locations</label>
+									<label for="showPotential"><?=SHOW_POTENTIAL_NODES?></label>
 								</li>
 								<li>
 									<input class="checkbox" type="checkbox" id="showLinks" checked="checked" onclick="settingChanged();"/>
-									<label for="showLinks">Show Wireless Links</label>
+									<label for="showLinks"><?=SHOW_WIRELESS_LINKS?></label>
 								</li>
 								<li>
 									<input class="checkbox" type="checkbox" id="showTun" onclick="settingChanged();"/>
-									<label for="showTun">Show Internet Tunnels</label>
+									<label for="showTun"><?=SHOW_INTERNET_TUNNELS?></label>
 								</li>
 							</ul>
 						</div>
 					</div>
 					<div id="tabs" class="sideItem">
 						<ul class="tabSwitcher">
-							<li id="nodesTab" class="selected"><a href="javascript:showNodes();">Nodes</a></li>
-							<li id="myMarkersTab"><a href="javascript:showMarkers();">My Markers</a></li>
+							<li id="nodesTab" class="selected"><a href="javascript:showNodes();"><?=NODES_?></a></li>
+							<li id="myMarkersTab"><a href="javascript:showMarkers();"><?=MY_MARKERS?></a></li>
 						</ul>
 						<div id="nodesTabContent" class="tabContent">
 							<ul id="nodeList">
-								<li>Loading...</li>
+								<li><?=LOADING_?></li>
 							</ul>
 						</div>
 						<div id="myMarkersTabContent" class="tabContent" style="display: none;">
 							<ul id="markerList">
-								<li>Loading...</li>
+								<li><?=LOADING_?></li>
 							</ul>
 						</div>
 					</div>

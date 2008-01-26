@@ -21,9 +21,24 @@ Ninux.org Community
 EOF
 );
 
+//index.php
 define ("LINK_TO_THIS_PAGE","Collegamento a questa pagina");
 define ("NETWORK_MAP","Mappa della rete");
 define ("FIND_LOCATION","Trova Indirizzo");
+define ("WELCOME_TITLE","Benvenut*!");
+define ("WELCOME_TO_THE","Benvenut* alla mappa della rete " . ORG_NAME . "!");
+define ("WHAT_IS","Cos'&egrave; " . ORG_NAME . "?");
+define ("HOW_TO_USE_MAP","Come si usa questa mappa?");
+define ("ADDRESS_LABEL","Indirizzo, via e citt&agrave;, stato o codice postale:");
+define ("ADDRESS_SUBMIT_LABEL","Trova");
+define ("MAP_SETTINGS_TITLE","Impostazioni della mappa");
+define ("SHOW_ACTIVE_NODES","Visualizza nodi attivi");
+define ("SHOW_POTENTIAL_NODES","Visualizza ubicazione dei nodi potenziali");
+define ("SHOW_WIRELESS_LINKS","Visualizza collegamenti wireless");
+define ("SHOW_INTERNET_TUNNELS","Visualizza collegamenti via tunnel su Internet");
+define ("NODES_","Nodi");
+define ("MY_MARKERS","I miei segnaposto");
+define ("LOADING_","Caricando...");
 
 //help.php
 define ("THINK_ABOUT","Pensi di costruire un nodo ? Segna la tua posizione sulla mappa!");
