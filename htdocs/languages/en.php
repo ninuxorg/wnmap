@@ -50,4 +50,30 @@ define ("MAP_LEGEND_TITLE","Map Legend");
 define ("MAP_LEGEND_POTENTIAL","Potential location for a node");
 define ("MAP_LEGEND_ACTIVE","Active node");
 
+//AddPotentialNode.php
+define ("OUT_OF_RANGE","Point must not be more than %d miles from the center of the network.\n");
+define ("ADD_NODE","Add Node");
+define ("THINKING_ABOUT_NODE","Thinking about putting up a node at this location? Add it to our database! This way, other people who think that they might be able to see you can let you know and discuss setting up a link.");
+define ("THINKING_ABOUT_NODE_NOTE","NOTE: Only add yourself to the map if you are actually seriously interested in linking up with other people on the network. The goal of this site is *NOT* to map every random access point in the city.");
+define ("NODE_INFORMATION","Node Information");
+define ("LATITUDE_","Latitude:");
+define ("LONGITUDE_","Longitude:");
+define ("NODE_NAME_","Node Name:");
+define ("PICK_A_NAME","Pick a name for this node, such as \"Node45thAnd12th\" or \"NodeAwesomeCoffee\"...something unique to your location.");
+define ("DESCRIPTION_","Description:");
+define ("DESCRIPTION_DESC","Enter a brief description of the location (name of business, etc.).");
+define ("NODE_IP_","Node IP:");
+define ("ENTER_IP","Enter the IP address of the node(if the node is an active node of the network)");
+define ("NODE_STREET_ADDRESS_","Node Street Address:");
+define ("NODE_STREET_ADDRESS_DESC","This is optional, and you can be vauge if you'd prefer (specify the building name but not the apartment number, for example).");
+define ("YOUR_INFORMATION_","Your Information");
+define ("SOMEBODY_NEARBY","If somebody nearby thinks they can see you, they need some way to reach you!");
+define ("YOUR_FULL_NAME_","Your Full Name:");
+define ("EMAIL_ADDRESS_","E-mail Address:");
+define ("EMAIL_ADDRESS_DESC","Used to verify node - must be valid.");
+define ("PUBLISH_EMAIL_","Publish Email");
+define ("JABBER_ID_","Jabber ID:");
+define ("JABBER_ID_DESC","Learn more about <a href=\"http://seattlewireless.net/JabberServer\" target=\"_blank\">Jabber</a>.");
+define ("WEBSITE_URL","Website URL:");
+define ("WEBSITE_URL_DESC","(If you have one)");
 ?>

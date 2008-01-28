@@ -51,4 +51,31 @@ define ("MAP_LEGEND_TITLE","Legenda");
 define ("MAP_LEGEND_POTENTIAL","Ubicazione di un nodo potenziale");
 define ("MAP_LEGEND_ACTIVE","Nodo attivo");
 
+//AddPotentialNode.php
+define ("OUT_OF_RANGE","Il punto non pu&ograve; trovarsi pi&ugrave; lontano di %d miglia dal centro della rete.\n");
+define ("ADD_NODE","Aggiungi un nodo");
+define ("THINKING_ABOUT_NODE","Stai pensando di costruire un nodo qui? Aggiungilo al nostro database! In questo modo altre persone che pensano di potersi collegare con te ti possono contattare."); 
+define ("THINKING_ABOUT_NODE_NOTE","NOTA: Aggiungiti alla mappa solo se sei seriamente intenzionato a collegarti con altre persone sulla rete mesh. Lo scopo di questo sito *NON* &egrave; quello di mappare tutti i singoli access point della citt&agrave;"); 
+define ("NODE_INFORMATION","Informazioni sul nodo");
+define ("LATITUDE_","Latitudine:");
+define ("LONGITUDE_","Longitudine:");
+define ("NODE_NAME_","Nome del nodo:");
+define ("PICK_A_NAME","Scegli un nome per questo nodo, tipo \"PiazzaTuscolo\" o \"NodoBirreria\"... Qualcosa che contraddistingua la tua ubicazione."); 
+define ("DESCRIPTION_","Descrizione:");
+define ("DESCRIPTION_DESC","Inserisci una breve descrizione del luogo (nome dell'associazione, etc.)."); 
+define ("NODE_IP_","IP del nodo:");
+define ("ENTER_IP","Inserisci l'indirizzo IP del nodo (solo se il nodo &egrave; un nodo attivo della rete). Vedi <a href=\"http://wiki.ninux.org/NuovoNodo\">qui</a>.");
+define ("NODE_STREET_ADDRESS_","Indirizzo postale del nodo:");
+define ("NODE_STREET_ADDRESS_DESC","Questo &egrave; opzionale e puoi essere vago se preferisci (per esempio specificare il numero civico del palazzo senza l'interno)."); 
+define ("YOUR_INFORMATION_","I tuoi dati");
+define ("SOMEBODY_NEARBY","Se qualcuno vicino a te pensa di potersi collegare con il tuo nodo, ti deve contattare in qualche modo!");
+define ("YOUR_FULL_NAME_","Il tuo nome (e cognome):");
+define ("EMAIL_ADDRESS_","Indirizzo e-mail:");
+define ("EMAIL_ADDRESS_DESC","Utilizzato per verificare il nodo - deve essere valido.");
+define ("PUBLISH_EMAIL_","Pubblica indirizzo e-mail");
+define ("JABBER_ID_","Jabber ID:");
+define ("JABBER_ID_DESC","Se hai un account <a href=\"http://seattlewireless.net/JabberServer\" target=\"_blank\">Jabber</a>.");
+define ("WEBSITE_URL","Home Page:");
+define ("WEBSITE_URL_DESC","(Se ne hai una)");
+
 ?>
