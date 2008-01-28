@@ -89,21 +89,21 @@ $name = $_GET["name"];
 $ip = $_GET["ip"];
 $addr = base64_decode($_GET["addr"]);
 if ( tooFarFromCenter($y, $x) ) {
-        printf("Point must not be more than %d miles from the center of the network.\n", ACCEPTABLE_DISTANCE);
+        printf(OUT_OF_RANGE, ACCEPTABLE_DISTANCE);
 } else { ?>
-		<h1>Add Node</h1>
-		<p>Thinking about putting up a node at this location? Add it to our database! This way, other people who think that they might be able to see you can let you know and discuss setting up a link.</p>
-		<p><strong>NOTE: Only add yourself to the map if you are actually seriously interested in linking up with other people on the network. The goal of this site is *NOT* to map every random access point in the city.</strong><p>
+		<h1><?=ADD_NODE?></h1>
+		<p><?=THINKING_ABOUT_NODE?></p>
+		<p><strong><?=THINKING_ABOUT_NODE_NOTE?></strong><p>
 		<form action="AddPotentialNodeSubmit.php" method="POST">
 			<table border="0" cellspacing="0" cellpadding="5">
 				<tr>
 					<td colspan="2" style="border-bottom: 1px solid #eee">
-						<h2>Node Information</h2>
+						<h2><?=NODE_INFORMATION?></h2>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Latitude:
+						<?=LATITUDE_?>
 					</td>
 					<td>
 						<input type="text" readonly="true" value="<?=$lat?>" name="lat" id="y"/>
@@ -111,7 +111,7 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr class="alt">
 					<td>
-						Longitude:
+						<?=LONGITUDE_?>
 					</td>
 					<td>
 						<input type="text" readonly="true" value="<?=$lon?>" name="lon" id="y"/>
@@ -119,9 +119,9 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr>
 					<td>
-						<label for="nodename">Node Name:</label>
+						<label for="nodename"><?=NODE_NAME_?></label>
 						<br/>
-						<span class="reallysmall">Pick a name for this node, such as "Node45thAnd12th" or "NodeAwesomeCoffee"...something unique to your location.</span>
+						<span class="reallysmall"><?=PICK_A_NAME?></span>
 					</td>
 					<td>
 						<input type="text" id="nodename" name="nodename" value="<?=$name?>"/>
@@ -129,9 +129,9 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr class="alt">
 					<td>
-						<label for="description">Description:</label>
+						<label for="description"><?=DESCRIPTION_?></label>
 						<br/>
-						<span class="reallysmall">Enter a brief description of the location (name of business, etc.).</span>
+						<span class="reallysmall"><?=DESCRIPTION_DESC?></span>
 					</td>
 					<td>
 						<input type="text" name="description" id="description"/>
@@ -140,9 +140,9 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr>
 					<td>
-						<label for="nodeip">Node IP:</label>
+						<label for="nodeip"><?=NODE_IP_?></label>
 						<br/>
-						<span class="reallysmall">Enter the IP address of the node(if the node is an active node of the network)</span>
+						<span class="reallysmall"><?=ENTER_IP?></span>
 					</td>
 					<td>
 						<input type="text" id="nodeip" name="nodeip" value="<?=$ip?>"/>
@@ -150,9 +150,9 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr>
 					<td>
-						<label for="nodeaddr">Node Street Address:</label>
+						<label for="nodeaddr"><?=NODE_STREET_ADDRESS_?></label>
 						<br/>
-						<span class="reallysmall">This is optional, and you can be vauge if you'd prefer (specify the building name but not the apartment number, for example).</span>
+						<span class="reallysmall"><?=NODE_STREET_ADDRESS_DESC?></span>
 					</td>
 					<td>
 						<input type="text" id="nodeaddr" name="nodeaddr" value="<?=$addr?>"/>
@@ -163,13 +163,13 @@ if ( tooFarFromCenter($y, $x) ) {
 			<table>
 				<tr>
 					<td colspan="2" style="border-bottom: 1px solid #eee;">
-						<h2>Your Information</h2>
-						<span class="reallysmall">If somebody nearby thinks they can see you, they need some way to reach you!</span>
+						<h2><?=YOUR_INFORMATION_?></h2>
+						<span class="reallysmall"><?=SOMEBODY_NEARBY?></span>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="yourname">Your Full Name:</label>
+						<label for="yourname"><?=YOUR_FULL_NAME_?></label>
 					</td>
 					<td>
 						<input type="text" id="yourname" name="yourname"/>
@@ -177,22 +177,22 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr class="alt">
 					<td>
-						<label for="email">E-mail Address:</label>
+						<label for="email"><?=EMAIL_ADDRESS_?></label>
 						<br/>
-						<span class="reallysmall">Used to verify node - must be valid.</span>
+						<span class="reallysmall"><?=EMAIL_ADDRESS_DESC?></span>
 					</td>
 					<td>
 						<input type="text" id="email" name="email" onChange="setJabberId();" />
 						<br/>
 						<input type="checkbox" id="publishEmail" name="publishEmail" checked="checked"/>
-						<label for="publishEmail">Publish Email</label>
+						<label for="publishEmail"><?=PUBLISH_EMAIL_?></label>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="jid">Jabber ID:</label>
+						<label for="jid"><?=JABBER_ID_?></label>
 						<br/>
-						<span class="reallysmall">Learn more about <a href="http://seattlewireless.net/JabberServer" target="_blank">Jabber</a>.</span>
+						<span class="reallysmall"><?=JABBER_ID_DESC?></span>
 					</td>
 					<td>
 						<input type="text" id="jid" name="jid"/>
@@ -200,9 +200,9 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr class="alt class="alt"">
 					<td>
-						<label for="website">Website URL:</label>
+						<label for="website"><?=WEBSITE_URL?></label>
 						<br/>
-						<span class="reallysmall">(If you have one)</span>
+						<span class="reallysmall"><?=WEBSITE_URL_DESC?></span>
 					</td>
 					<td>
 						<input type="text" id="website" name="website"/>

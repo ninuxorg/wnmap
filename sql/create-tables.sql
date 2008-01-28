@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: 07 Gen, 2008 at 09:43 PM
--- Versione MySQL: 5.0.44
--- Versione PHP: 5.2.5-pl1-gentoo
+-- Generated on: 07 Jan, 2008 at 09:43 PM
+-- MySQL version: 5.0.44
+-- PHP version: 5.2.5-pl1-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `links`
+-- Structure of table `links`
 --
 
 CREATE TABLE IF NOT EXISTS `links` (
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `links` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `nodes`
+-- Structure of table `nodes`
 --
 
 CREATE TABLE IF NOT EXISTS `nodes` (
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `nodes` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `nodes_old`
+-- Structure of table `nodes_old`
 --
 
 CREATE TABLE IF NOT EXISTS `nodes_old` (
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `nodes_old` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `users`
+-- Structure of table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
