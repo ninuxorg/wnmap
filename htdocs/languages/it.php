@@ -78,4 +78,36 @@ define ("JABBER_ID_DESC","Se hai un account <a href=\"http://seattlewireless.net
 define ("WEBSITE_URL","Home Page:");
 define ("WEBSITE_URL_DESC","(Se ne hai una)");
 
+// AddPotentialNodeSubmit.php
+define ("INVALID_EMAIL","Indirizzo e-mail non valido.");
+define ("INVALID_JABBER","ID jabber non valido.");
+define ("INVALID_IP_","IP non valido.");
+define ("INVALID_NAME_","Nome non valido.");
+define ("ADD_LOCATION_","Aggiungi segnaposto");
+define ("SPECIFY_DESCRIPTION","Per favore includi una descrizione di questa ubicazione.");
+define ("NODE_ALREADY_EXISTS","Un nodo in questo punto esiste gi&agrave; nel nostro database.");
+define ("NODE_NAME_ALREADY_EXISTS","Un nodo con questo nome esiste gi&agrave; nel nostro database.");
+define ("ADDNODE_EMAIL_BODY","Grazie per il tuo interesse in %s!
+
+Per prevenire gli abusi, ti chiediamo per favore di cliccare sul seguente link
+in modo da confermare il tuo indirizzo e-mail ed aggiungere il tuo segnaposto alla 
+mappa della rete.
+
+%s/VerifyNode.php?hash=%s
+
+Se *NON* hai richiesto che un nodo venisse aggiunto alla mappa, o se per qualunque 
+ragione vuoi togliere questo segnaposto dalla mappa successivamente, puoi utilizzare
+il seguente link:
+
+%s/DeleteNode.php?hash=%s
+
+
+%s");
+define ("THANK_YOU_","Grazie!");
+define ("HELLO_","Ciao");
+define ("AN_EMAIL_WAS_SENT","una mail &egrave; stata inviata a");
+define ("WITH_INSTRUCTIONS","con le istruzioni per aggiungere il segnaposto alla mappa."); 
+define ("GO_BACK_","Indietro");
+
+
 ?>

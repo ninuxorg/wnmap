@@ -35,31 +35,31 @@ $lat = $_POST["lat"];
 
 if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email) == false) {
 	
-	echo "Invalid email address.";
+	echo INVALID_EMAIL;
 
 } else if ($jabber != "" && eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $jabber) == false) {
 	
-	echo "Invalid jabber id.";
+	echo INVALID_JABBER;
 
 } 
 
 else if ($nodeip != "" && eregi("^(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(/[0-9]{1,2}){0,1})([[:space:]]|$))*$", $nodeip) == false) {
 	
-	echo "Invalid IP.";
+	echo INVALID_IP_;
 
 } 
 
 else if ( tooFarFromCenter($lat, $lng) ) {
 
-	printf("Point must not be more than %d miles from the center of the network.\n", ACCEPTABLE_DISTANCE);
+	printf(OUT_OF_RANGE, ACCEPTABLE_DISTANCE);
 
 } else if ($yourname == "") {
 
-	echo "Invalid name.";
+	echo INVALID_NAME_;
 
 } else if ($description == "") {
 
-	echo "Please specify a description of this location.";
+	echo SPECIFY_DESCRIPTION; 
 
 } else {
 
@@ -90,7 +90,7 @@ $query = "SELECT status FROM " . MYSQL_NODES_TABLE . " WHERE lat='$lat' AND lng=
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 if (mysql_num_rows($result) > 0) {
-	echo "A node at this point already exists in our database.";
+	echo NODE_ALREADY_EXISTS;
 	return;
 }
 
@@ -98,7 +98,7 @@ $query = "SELECT status FROM " . MYSQL_NODES_TABLE . " WHERE nodeName='$nodename
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 if (mysql_num_rows($result) > 0) {
-	echo "A node with that name already exists in our database.";
+	echo NODE_NAME_ALREADY_EXISTS;
 	return;
 }
 
@@ -138,7 +138,7 @@ mysql_query ($query, $connection) or die (mysql_error());
 
 mysql_close ($connection);
 
-$subject = "Add Location - ".SITE_TITLE;
+$subject = ADD_LOCATION_." - ".SITE_TITLE;
 
 //$headers ="To: $yourname <$email>" . "\r\n" .
 //	'From: '. SITE_TITLE .' <' . MAIL_FROM . '>';
@@ -147,32 +147,18 @@ $to = "$yourname <$email>";
 
 $headers = 'From: '. SITE_TITLE .' <' . MAIL_FROM . '>';
 
-$message = "Thank you for your interest in " . ORG_NAME . "!
-
-To prevent abuse, we ask that you please visit the following URL to confirm 
-your email address and have your node added to the network map.
-
-" . MAP_URL . "/VerifyNode.php?hash=$hash
-
-If you did NOT request that a node be added to the map, or for any reason you
-would like to remove this location from the map at a later time, you can use
-the following URL:
-
-" . MAP_URL . "/DeleteNode.php?hash=$hash
-
-
-" . MAIL_FOOTER;
+$message = sprintf(ADDNODE_EMAIL_BODY, ORG_NAME,MAP_URL,$hash,MAP_URL,$hash,MAIL_FOOTER);
 
 mail ($to, $subject, $message, $headers) or die ("Failed to send mail!!");
 
 
 ?>
 
-<h1>Thank You!</h1>
-<p>Hello <b><? echo ($_POST["yourname"]); ?></b>, an email has been sent to <a href="<? echo ($_POST["email"]); ?>"><? echo ($_POST["email"]); ?></a> with instructions on what to do next.</p>
+<h1><?=THANK_YOU_?></h1>
+<p><?=HELLO_?> <b><? echo ($_POST["yourname"]); ?></b>, <?=AN_EMAIL_WAS_SENT?> <a href="<? echo ($_POST["email"]); ?>"><? echo ($_POST["email"]); ?></a> <?=WITH_INSTRUCTIONS?> </p>
 
 <? 
 	return;
 }
-echo '<br/><a href="javascript:history.go(-1);">&laquo; Go back</a>';
+echo '<br/><a href="javascript:history.go(-1);">&laquo; '. GO_BACK_ .'</a>';
  ?>

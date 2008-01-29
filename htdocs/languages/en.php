@@ -76,4 +76,36 @@ define ("JABBER_ID_","Jabber ID:");
 define ("JABBER_ID_DESC","Learn more about <a href=\"http://seattlewireless.net/JabberServer\" target=\"_blank\">Jabber</a>.");
 define ("WEBSITE_URL","Website URL:");
 define ("WEBSITE_URL_DESC","(If you have one)");
+
+// AddPotentialNodeSubmit.php
+define ("INVALID_EMAIL","Invalid email address.");
+define ("INVALID_JABBER","Invalid jabber id.");
+define ("INVALID_IP_","Invalid IP.");
+define ("INVALID_NAME_","Invalid name.");
+define ("ADD_LOCATION_","Add Location");
+define ("SPECIFY_DESCRIPTION","Please specify a description of this location.");
+define ("NODE_ALREADY_EXISTS","A node at this point already exists in our database.");
+define ("NODE_NAME_ALREADY_EXISTS","A node with that name already exists in our database.");
+define ("ADDNODE_EMAIL_BODY","Thank you for your interest in %s!
+
+To prevent abuse, we ask that you please visit the following URL to confirm 
+your email address and have your node added to the network map.
+
+%s/VerifyNode.php?hash=%s
+
+If you did NOT request that a node be added to the map, or for any reason you
+would like to remove this location from the map at a later time, you can use
+the following URL:
+
+%s/DeleteNode.php?hash=%s
+
+
+%s");
+define ("THANK_YOU_","Thank You!");
+define ("HELLO_","Hello");
+define ("AN_EMAIL_WAS_SENT","an email has been sent to");
+define ("WITH_INSTRUCTIONS","with instructions on what to do next."); 
+define ("GO_BACK_","Go back");
+
+
 ?>
