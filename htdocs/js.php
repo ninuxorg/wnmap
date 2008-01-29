@@ -35,7 +35,7 @@ if ( !ereg("^(NodeMarker|UrlEncode|DistanceCalculator|cookies|geocode|gui|nodema
 } 
 
 // internationalized js
-if ( ereg("^(NodeMarker)$", $file) ) {
+if ( ereg("^(NodeMarker|DistanceCalculator)$", $file) ) {
 	$fileint = $file . "." . LANGUAGE;  
 	// we assume that at least the english version exists 
 	if ( !file_exists("js/".$fileint.".js") )
