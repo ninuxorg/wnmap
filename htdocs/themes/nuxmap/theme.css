@@ -12,7 +12,6 @@ h1, h2 {
 }
 
 #header {
-/*	background: url("images/logo_bg.png"); */
 }
 
 h1 {
@@ -50,7 +49,6 @@ h2 {
 	 border-right: 4px solid #000000;
 }
 .sideItemTitle {
-	/* background: #fffff url("images/side_item_title_bg.png") repeat-x; */
 	background-color: #ffffff;
 	border: 2px solid #000000;
 }
@@ -113,8 +111,7 @@ ul.nobullets li {
 
 
 #tabs {
-/*	border-top: 1px solid #000000;
-	background: url("images/tab_switcher_bg.png") repeat-x; */
+/*	border-top: 1px solid #000000; */
 	height: 30px;
 }
 

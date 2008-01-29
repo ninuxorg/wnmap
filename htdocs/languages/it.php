@@ -9,7 +9,7 @@ Per informazioni su come costruire un nuovo nodo visita il nostro wiki a questa 
 http://wiki.ninux.org/NuovoNodo
 
 Se vuoi metterti in contatto con noi puoi iscriverti alla mailing list
-appropriata (http://wiki.ninux.org/MailingLists) o venire ad una delle
+appropriata (http://wiki.ninux.org/MailingLists ) o venire ad una delle
 nostre riunioni (http://wiki.ninux.org/Riunioni ) e conoscere il
 gruppo di persona.
 
@@ -60,7 +60,7 @@ define ("NODE_INFORMATION","Informazioni sul nodo");
 define ("LATITUDE_","Latitudine:");
 define ("LONGITUDE_","Longitudine:");
 define ("NODE_NAME_","Nome del nodo:");
-define ("PICK_A_NAME","Scegli un nome per questo nodo, tipo \"PiazzaTuscolo\" o \"NodoBirreria\"... Qualcosa che contraddistingua la tua ubicazione."); 
+define ("PICK_A_NAME","Scegli un nome per questo nodo, come \"PiazzaTuscolo\" o \"NodoBirreria\"... Qualcosa che contraddistingua la tua posizione."); 
 define ("DESCRIPTION_","Descrizione:");
 define ("DESCRIPTION_DESC","Inserisci una breve descrizione del luogo (nome dell'associazione, etc.)."); 
 define ("NODE_IP_","IP del nodo:");
