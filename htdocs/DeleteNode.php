@@ -1,7 +1,7 @@
 <? require ("config.php"); ?>
 
-<p>Are you <strong>sure</strong> you want to delete this node?</p>
+<p><?=ARE_YOU_SURE?></p>
 
-<p><a href="DeleteNodeYes.php?hash=<?=$_GET["hash"]?>">Yes, delete it.</a></p>
+<p><a href="DeleteNodeYes.php?hash=<?=$_GET["hash"]?>"><?=YES_DELETE?></a></p>
 
-<p><a href="<?=MAP_URL?>">Nope, I changed my mind.</a></p>
+<p><a href="<?=MAP_URL?>"><?=DONT_DELETE?></a></p>

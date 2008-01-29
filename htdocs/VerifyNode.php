@@ -30,9 +30,9 @@ $result = mysql_query ($query, $connection) or die (mysql_error ());
 if (mysql_affected_rows () != 1) {
 	echo "Invalid hash or hash already verified.";
 } else {
-	echo '<h1>Thank You!</h1>
-		<p>Your email address has been confirmed and this location is now active on the map!</p>
-		<p><a href="' . MAP_URL . '/">View the map!</a></p>';
+	echo '<h1>' . THANK_YOU_ . '</h1>
+		<p>' . EMAIL_CONFIRMED . '</p>
+		<p><a href="' . MAP_URL . '/">' . VIEW_MAP . '</a></p>';
 }
 mysql_close ($connection);
 ?>

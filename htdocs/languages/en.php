@@ -107,5 +107,17 @@ define ("AN_EMAIL_WAS_SENT","an email has been sent to");
 define ("WITH_INSTRUCTIONS","with instructions on what to do next."); 
 define ("GO_BACK_","Go back");
 
+// DeleteNode.php
+define ("ARE_YOU_SURE","Are you <strong>sure</strong> you want to delete this node?");
+define ("YES_DELETE","Yes, delete it.");
+define ("DONT_DELETE","Nope, I changed my mind.");
+
+// DeleteNodeYes.php
+define ("NODE_DELETED_","Node deleted.");
+define ("NODE_REMOVED","Your node has been removed from the map.");
+define ("VIEW_MAP","View the map!");
+
+// VerifyNode.php
+define ("EMAIL_CONFIRMED","Your email address has been confirmed and this location is now active on the map!");
 
 ?>

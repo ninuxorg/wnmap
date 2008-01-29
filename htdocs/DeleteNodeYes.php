@@ -32,9 +32,9 @@ $result = mysql_query ($query, $connection) or die (mysql_error ());
 if (mysql_affected_rows () != 1) {
 	echo "Hash not found.";
 } else {
-	echo '<h1>Node deleted.</h1>
-		<p>Your node has been removed from the map.</p>
-		<p><a href="' . MAP_URL . '/">View the map!</a></p>';
+	echo '<h1>'. NODE_DELETED_ .'</h1>
+		<p>'. NODE_REMOVED .'</p>
+		<p><a href="' . MAP_URL . '/">' . VIEW_MAP .'</a></p>';
 }
 mysql_close ($connection);
 ?>

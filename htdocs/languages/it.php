@@ -109,5 +109,17 @@ define ("AN_EMAIL_WAS_SENT","una mail &egrave; stata inviata a");
 define ("WITH_INSTRUCTIONS","con le istruzioni per aggiungere il segnaposto alla mappa."); 
 define ("GO_BACK_","Indietro");
 
+// DeleteNode.php
+define ("ARE_YOU_SURE","Sei <strong>sicuro</strong> di voler eliminare questo nodo?");
+define ("YES_DELETE","S&igrave;, eliminalo.");
+define ("DONT_DELETE","No, ho cambiato idea.");
+
+// DeleteNodeYes.php
+define ("NODE_DELETED_","Nodo eliminato.");
+define ("NODE_REMOVED","Il tuo nodo &egrave; stato eliminato dalla mappa.");
+define ("VIEW_MAP","Visualizza la mappa!");
+
+// VerifyNode.php
+define ("EMAIL_CONFIRMED","Il tuo indirizzo e-mail &egrave; stato verificato e questo segnaposto &egrave; ora attivo sulla mappa!");
 
 ?>
