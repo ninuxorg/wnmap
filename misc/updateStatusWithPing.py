@@ -1,18 +1,18 @@
-#! /usr/bin/python
+#! /usr/bin/env python
 import os
 import time
 import MySQLdb
 
 # Authors: OrazioPirataDelloSpazio
 # This software is released under GPL3
-# Ninux.org 2007
+# Copyright Ninux.org 2007
 
-# The software monitors the nodes in the network and set the status of the nodes on the map according with the ping responses.
+# The software monitors the nodes in the network and sets the status of the nodes on the map according to the ping responses.
 
-# UNDER CONSTRUCTION: 
-# Non settare il valore di polling troppo basso!!! sempre maggiore
-# di NUMERO_NODI * NUMERO_PING_PER_NODO * TEMPO_TIMEOUT_UN_PING 
-# altrimenti esplode
+# UNDER CONSTRUCTION:
+# Don't set the polling value too low!!! Should always be greater than
+# NUMBER_OF_NODES * NUMBER_OF_PINGS_FOR_EACH_NODE * PING_TIMEOUT
+# otherwise it blows up 
 
 pingcmd = "ping -c 1 " # you could set how many ping for node here
 host = "127.0.0.1"

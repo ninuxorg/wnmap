@@ -53,7 +53,7 @@ function DistanceCalculator (node)
 		var container = document.createElement ("div");
 
 		var text = document.createElement ("span");
-		text.innerHTML = WNMAP_CALCULATE_DISTANCE_FROM + " <b>" + this.node.name + " </b> " + WNMAP_TO_;
+		text.innerHTML = WNMAP_CALCULATE_DISTANCE_FROM + " <b>" + this.node.name + " </b> " + WNMAP_TO_ + " ";
 
 		container.appendChild (text);
 		container.appendChild (select);

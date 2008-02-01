@@ -1,14 +1,14 @@
-#! /usr/bin/python
+#! /usr/bin/env python
 import os
 import re
 import MySQLdb
 
 # Authors: OrazioPirataDelloSpazio, Don@TuX, Si_Mo, Nino
 # This software is released under GPL3
-# Ninux.org 2008
+# Copyright Ninux.org 2008
 
-#This script read the the txt file from olsrd_txtinfo plug-in and insert in the wnmap database active wireless links
-#Need python-mysql and wget packages
+#This script reads the the txt file from olsrd_txtinfo plug-in and inserts in the wnmap database active wireless links
+#Needs python-mysql and wget packages
 
 
 #Mysql variables
