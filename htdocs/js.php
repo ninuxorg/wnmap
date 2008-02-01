@@ -30,9 +30,13 @@ $file = $_GET['file'];
 $file = eregi_replace("[^[:alnum:]]", "", $file);
 
 // if the specified file doesn't match what we expect, set $file to an empty string
-if ( !ereg("^(NodeMarker|UrlEncode|DistanceCalculator|cookies|geocode|gui|nodemap|base64|textcontrol)$", $file) ) {
+if ( !ereg("^(NodeMarker|UrlEncode|DistanceCalculator|cookies|geocode|gui|nodemap|base64|textcontrol|currentLanguage)$", $file) ) {
     $file = "";
 }
+
+// internationalized js strings
+if ($file=="currentLanguage")
+	$file=LANGUAGE; //from config.php
 
 // if $file contains characters, ...
 if (strlen($file) > 0) {

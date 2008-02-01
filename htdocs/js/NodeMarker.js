@@ -29,7 +29,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 
 	switch (state.toLowerCase()) {
 		case 'active':
-			this.statePretty = "Active Node";
+			this.statePretty = WNMAP_ACTIVE_NODE;
 
 			var icon = new GIcon ();
 			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
@@ -40,7 +40,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			NodeMarker.baseConstructor.call (this, point, icon);
 			break;
 		case 'potential':
-			this.statePretty = "Potential Node";
+			this.statePretty = WNMAP_POTENTIAL_NODE;
 
 			var icon = new GIcon ();
 			icon.image = WNMAP_MAP_URL + "/images/marker_potential.png";
@@ -51,7 +51,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			NodeMarker.baseConstructor.call (this, point, icon);
 			break;
 		case 'marker':
-			this.statePretty = "Marker";
+			this.statePretty = WNMAP_MARKER;
 
 
 			NodeMarker.baseConstructor.call (this, point, {draggable:true});
@@ -59,7 +59,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 
 			break;
 		default:
-			alert ("Invalid state");
+			alert (WNMAP_INVALID_STATE);
 			return;
 			break;
 	}
@@ -78,17 +78,17 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			
 			var renameLink = document.createElement ("a");
 			renameLink.href = "javascript:var newname = renamePrompt ('" + encode64 (this.name) + "'); if (newname != null) { renameMarker ('" + encode64 (this.name) + "', newname); getMarker (newname).select(); }";
-			renameLink.innerHTML = "Rename";
+			renameLink.innerHTML = WNMAP_RENAME;
 			title.appendChild (renameLink);
 
 			var type = document.createElement ("div");
 			type.className ="position";
-			type.innerHTML = "<b>Type:</b> " + this.statePretty;
+			type.innerHTML = "<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
 			thing.appendChild (type);
 
 			var distance = document.createElement ("div");
 			distance.className = "position";
-			distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
+			distance.innerHTML = "<b>" + WNMAP_DISTANCE_2_CENTER + "</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
 			//thing.appendChild (distance);
 
 			var actionList = document.createElement ("ul");
@@ -98,7 +98,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			addActionItem.style.setProperty("background", "#ffffff url(images/add.png) no-repeat 0px 5px", null);
 
 			var addActionLink = document.createElement ("a");
-			addActionLink.innerHTML = "Add this to our database as a location for a potential node.<br/>";
+			addActionLink.innerHTML = WNMAP_ADD_THIS + "<br/>";
 
 			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&ip=" + this.ip + "&addr='" + encode64 (this.streetAddress) + "'";
 			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
@@ -110,7 +110,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			var deleteActionItem = document.createElement ("li");
 			deleteActionItem.style.setProperty("background", "url(images/remove.png) no-repeat", "");
 			var deleteActionLink = document.createElement ("a");
-			deleteActionLink.innerHTML = "Remove this marker";
+			deleteActionLink.innerHTML = WNMAP_REMOVE_MARKER;
 			deleteActionLink.href = "javascript:getMarker('" + encode64 (this.name) + "').removeMarker ();";
 
 			deleteActionItem.appendChild (deleteActionLink);
@@ -182,7 +182,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			var title = document.createElement ("div");
 
 			var titleLabel = document.createElement ("span");
-			titleLabel.innerHTML = "<b>Name:</b> ";
+			titleLabel.innerHTML = "<b>" + WNMAP_NAME_ + "</b> ";
 			title.appendChild (titleLabel);
 
 			var titleLink = document.createElement ("a");
@@ -192,7 +192,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			title.appendChild (titleLink);
 
 			var linkTo = document.createElement ("span");
-			linkTo.innerHTML = ' - <a href="?select=' + this.name + '">Map Link</a>';
+			linkTo.innerHTML = ' - <a href="?select=' + this.name + '">' + WNMAP_MAP_LINK_ + '</a>';
 			title.appendChild (linkTo);
 
 			thing.appendChild (title);
@@ -200,7 +200,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			var description = document.createElement ("div");
 
 			var descriptionLabel = document.createElement("span");
-			descriptionLabel.innerHTML = "<b>Description:</b> ";
+			descriptionLabel.innerHTML = "<b>" + WNMAP_DESCRIPTION_ +"</b> ";
 			description.appendChild (descriptionLabel);
 
 			var descriptionText = document.createElement("span");
@@ -212,19 +212,19 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			var owner = document.createElement ("div");
 
 			if (this.website != "") {
-				owner.innerHTML = '<b>Owner:</b> <a href="' + this.website + '">' + this.owner + '</a>';
+				owner.innerHTML = '<b>' + WNMAP_OWNER_ + '</b> <a href="' + this.website + '">' + this.owner + '</a>';
 			} else {
-				owner.innerHTML = "<b>Owner:</b> " + this.owner;
+				owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner;
 			}
 
 			if (this.email != "") {
-				owner.innerHTML += " - <a href=\"mailto:" + this.email + "\">Send Mail</a>";
+				owner.innerHTML += " - <a href=\"mailto:" + this.email + "\">" + WNMAP_SEND_MAIL + "</a>";
 				if (this.jabber != "") {
-					owner.innerHTML += " <a href=\"xmpp:" + this.jabber + "?message\">Send IM</a>";
+					owner.innerHTML += " <a href=\"xmpp:" + this.jabber + "?message\">" + WNMAP_SEND_IM + "</a>";
 				}
 			} else {
 				if (this.jabber != "") {
-					owner.innerHTML += " - <a href=\"xmpp:" + this.jabber + "?message\">Send IM</a>";
+					owner.innerHTML += " - <a href=\"xmpp:" + this.jabber + "?message\">" + WNMAP_SEND_IM + "</a>";
 				}
 			}
 
@@ -233,7 +233,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 
 			var type = document.createElement ("div");
 			type.className ="position";
-			type.innerHTML = "<b>Type:</b> " + this.statePretty;
+			type.innerHTML = "<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
 			thing.appendChild (type);
 
 			return thing;
@@ -253,18 +253,18 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 
 		var pos = document.createElement ("div");
 		pos.className = "position";
-		pos.innerHTML = "<b>Latitude:</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>Longitude:</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
+		pos.innerHTML = "<b>" + WNMAP_LATITUDE_ + "</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>" + WNMAP_LONGITUDE_ + "</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
 		thing.appendChild (pos);
 
 		var address = document.createElement ("div");
 		address.className = "position";
-		address.innerHTML = "<b>Street Address:</b> " + this.streetAddress;
+		address.innerHTML = "<b>" + WNMAP_STREET_ADDRESS_ + "</b> " + this.streetAddress;
 		thing.appendChild (address);
 
 		
 		var ip = document.createElement ("div");
 		address.className = "position";
-		address.innerHTML = "<b>IP:</b> " + this.ip;
+		address.innerHTML = "<b>" + WNMAP_IP_ + "</b> " + this.ip;
 		thing.appendChild (ip);
 		//var distance = document.createElement ("div");
 		//distance.className = "position";
@@ -283,9 +283,9 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 	this.select = function () {
 
 		var infoTabs = [
-			new GInfoWindowTab("Overview", this.getOverviewHtml()),
-			new GInfoWindowTab("Location", this.getLocationHtml()),
-			new GInfoWindowTab("Distance", new DistanceCalculator(this).getContent())
+			new GInfoWindowTab(WNMAP_OVERVIEW_, this.getOverviewHtml()),
+			new GInfoWindowTab(WNMAP_LOCATION_, this.getLocationHtml()),
+			new GInfoWindowTab(WNMAP_DISTANCE_, new DistanceCalculator(this).getContent())
 		];
 
 		this.openInfoWindowTabs (infoTabs);
@@ -296,9 +296,9 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 		map.setCenter (this.getPoint(), 17);
 
 		var infoTabs = [
-			new GInfoWindowTab("Overview", this.getOverviewHtml()),
-			new GInfoWindowTab("Location", this.getLocationHtml()),
-			new GInfoWindowTab("Distance", new DistanceCalculator(this).getContent())
+			new GInfoWindowTab(WNMAP_OVERVIEW_, this.getOverviewHtml()),
+			new GInfoWindowTab(WNMAP_LOCATION_, this.getLocationHtml()),
+			new GInfoWindowTab(WNMAP_DISTANCE_, new DistanceCalculator(this).getContent())
 		];
 
 		this.openInfoWindowTabsHtml (infoTabs);

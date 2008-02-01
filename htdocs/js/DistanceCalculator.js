@@ -12,17 +12,17 @@ function DistanceCalculator (node)
 		var select = document.createElement ("select");
 		select.style.width = "125px";
 		var option = document.createElement("option");
-		option.appendChild(document.createTextNode("- select -"));
+		option.appendChild(document.createTextNode(WNMAP_SELECT_));
 		select.appendChild(option);
 		
 		var activegroup = document.createElement("optgroup");
-		activegroup.label = "Active nodes"
+		activegroup.label = WNMAP_ACTIVE_NODES; 
 
 		var inactivegroup = document.createElement("optgroup");
-		inactivegroup.label = "Potential Nodes";
+		inactivegroup.label = WNMAP_POTENTIAL_NODES;
 
 		var markergroup = document.createElement("optgroup");
-		markergroup.label = "My Markers";
+		markergroup.label = WNMAP_MY_MARKERS;
 
 		for (key in markers) {
 			var marker = markers[key];
@@ -53,7 +53,7 @@ function DistanceCalculator (node)
 		var container = document.createElement ("div");
 
 		var text = document.createElement ("span");
-		text.innerHTML = "Calculate distance from <b>" + this.node.name + "</b> to ";
+		text.innerHTML = WNMAP_CALCULATE_DISTANCE_FROM + " <b>" + this.node.name + " </b> " + WNMAP_TO_;
 
 		container.appendChild (text);
 		container.appendChild (select);
@@ -77,17 +77,17 @@ function DistanceCalculator (node)
 					var miles = km * 0.6214;
 
 					if (km > 2) {
-						result.innerHTML = roundNumber(km,2) + " km";
+						result.innerHTML = roundNumber(km,2) + " " + WNMAP_KM_;
 					} else {
-						result.innerHTML = roundNumber(meters,2) + " meters";
+						result.innerHTML = roundNumber(meters,2) + " " + WNMAP_METERS_;
 					}
 
 					result.innerHTML += "<br/>";
 
 					if (miles > 1) {
-						result.innerHTML += roundNumber(miles,2) + " miles";
+						result.innerHTML += roundNumber(miles,2) + " " + WNMAP_MILES_;
 					} else {
-						result.innerHTML += roundNumber(yards,2) + " yards";
+						result.innerHTML += roundNumber(yards,2) + " " + WNMAP_YARDS_;
 					}
 
 					overlay = new GPolyline([node.getPoint(), otherMarker.getPoint()], "#FFF73B", 10);
