@@ -32,16 +32,6 @@ $file = eregi_replace("[^[:alnum:]]", "", $file);
 // if the specified file doesn't match what we expect, set $file to an empty string
 if ( !ereg("^(NodeMarker|UrlEncode|DistanceCalculator|cookies|geocode|gui|nodemap|base64|textcontrol)$", $file) ) {
     $file = "";
-} 
-
-// internationalized js
-if ( ereg("^(NodeMarker|DistanceCalculator)$", $file) ) {
-	$fileint = $file . "." . LANGUAGE;  
-	// we assume that at least the english version exists 
-	if ( !file_exists("js/".$fileint.".js") )
-		$file = $file . ".en";
-	else
-		$file = $fileint; 
 }
 
 // if $file contains characters, ...
