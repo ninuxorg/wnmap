@@ -82,6 +82,7 @@ define ("WEBSITE_URL_DESC","(If you have one)");
 define ("INVALID_EMAIL","Invalid email address.");
 define ("INVALID_JABBER","Invalid jabber id.");
 define ("INVALID_IP_","Invalid IP.");
+define ("INVALID_ELEVATION_","Invalid elevation.");
 define ("INVALID_NAME_","Invalid name.");
 define ("ADD_LOCATION_","Add Location");
 define ("SPECIFY_DESCRIPTION","Please specify a description of this location.");
