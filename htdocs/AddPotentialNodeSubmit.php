@@ -32,6 +32,7 @@ $nodeip =trim ($_POST["nodeip"]);
 $publish_email = trim($_POST["publishEmail"]);
 $lng = $_POST["lon"];
 $lat = $_POST["lat"];
+$ele = $_POST["ele"];
 
 if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email) == false) {
 	
@@ -53,6 +54,10 @@ else if ( tooFarFromCenter($lat, $lng) ) {
 
 	printf(OUT_OF_RANGE, ACCEPTABLE_DISTANCE);
 
+} else if (!eregi("^([0-9]|\.)*$",$ele)) {
+	
+	echo INVALID_ELEVATION_;
+
 } else if ($yourname == "") {
 
 	echo INVALID_NAME_;
@@ -73,6 +78,7 @@ $jabber = mysql_real_escape_string($jabber);
 $description = mysql_real_escape_string ($description);
 $lng = mysql_real_escape_string ($lng);
 $lat = mysql_real_escape_string ($lat);
+$ele = mysql_real_escape_string ($ele);
 $nodename = mysql_real_escape_string ($nodename);
 $nodeaddr = mysql_real_escape_string ($nodeaddr);
 $nodeip = mysql_real_escape_string ($nodeip);
@@ -107,7 +113,8 @@ $query = "INSERT INTO " . MYSQL_NODES_TABLE . " (
 			status,
 			adminHash, 
 			lat, 
-			lng, 
+			lng,
+			elevation, 
 			streetAddress,
 			userRealName, 
 			userEmail, 
@@ -123,6 +130,7 @@ $query = "INSERT INTO " . MYSQL_NODES_TABLE . " (
 			'$hash',
 			'$lat',
 			'$lng',
+			'$ele',
 			'$nodeaddr',
 			'$yourname',
 			'$email',

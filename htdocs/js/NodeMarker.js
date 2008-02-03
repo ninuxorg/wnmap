@@ -10,7 +10,7 @@
 
 var url;
 
-function NodeMarker (name, base64name, owner, email, website, jabber, description, ip, state, lng, lat)
+function NodeMarker (name, base64name, owner, email, website, jabber, description, ip, state, lng, lat, ele)
 {
 	this.name = name;
 	this.owner = owner;
@@ -20,6 +20,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 	this.base64Name = base64name;
 	this.description = description;
 	this.ip = ip;
+	this.elevation = ele;
 	this.state = state;
 	this.visible = true;
 	this.streetAddress = "";
@@ -253,7 +254,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 
 		var pos = document.createElement ("div");
 		pos.className = "position";
-		pos.innerHTML = "<b>" + WNMAP_LATITUDE_ + "</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>" + WNMAP_LONGITUDE_ + "</b> " + Math.round(this.getPoint().lng()*1000000)/1000000;
+		pos.innerHTML = "<b>" + WNMAP_LATITUDE_ + "</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>" + WNMAP_LONGITUDE_ + "</b> " + Math.round(this.getPoint().lng()*1000000)/1000000 + "<br/><b>" + WNMAP_ELEVATION_ + "</b> " + this.elevation + " " + WNMAP_AMSL;
 		thing.appendChild (pos);
 
 		var address = document.createElement ("div");

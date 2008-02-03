@@ -59,6 +59,7 @@ define ("THINKING_ABOUT_NODE_NOTE","NOTA: Aggiungiti alla mappa solo se sei seri
 define ("NODE_INFORMATION","Informazioni sul nodo");
 define ("LATITUDE_","Latitudine:");
 define ("LONGITUDE_","Longitudine:");
+define ("ELEVATION_","Altitudine (m s.l.m.):");
 define ("NODE_NAME_","Nome del nodo:");
 define ("PICK_A_NAME","Scegli un nome per questo nodo, come \"PiazzaTuscolo\" o \"NodoBirreria\"... Qualcosa che contraddistingua la tua posizione."); 
 define ("DESCRIPTION_","Descrizione:");

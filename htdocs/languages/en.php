@@ -58,6 +58,7 @@ define ("THINKING_ABOUT_NODE_NOTE","NOTE: Only add yourself to the map if you ar
 define ("NODE_INFORMATION","Node Information");
 define ("LATITUDE_","Latitude:");
 define ("LONGITUDE_","Longitude:");
+define ("ELEVATION_","Elevation (meters AMSL):");
 define ("NODE_NAME_","Node Name:");
 define ("PICK_A_NAME","Pick a name for this node, such as \"Node45thAnd12th\" or \"NodeAwesomeCoffee\"...something unique to your location.");
 define ("DESCRIPTION_","Description:");

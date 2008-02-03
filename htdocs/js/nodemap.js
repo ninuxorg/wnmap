@@ -90,8 +90,9 @@ function createMap (containerId)
 				var addr = markersFromXml[i].getAttribute("streetAddress");
 				var lng = parseFloat(markersFromXml[i].getAttribute("lng"));
 				var lat = parseFloat(markersFromXml[i].getAttribute("lat"));
+				var ele = parseFloat(markersFromXml[i].getAttribute("elevation"));
 
-				var node = new NodeMarker (name, base64Name, owner, email, website, jabber, desc, ip, state, lng, lat);
+				var node = new NodeMarker (name, base64Name, owner, email, website, jabber, desc, ip, state, lng, lat, ele);
 				node.setStreetAddress (addr);
 
 				markers[node.name] = node;

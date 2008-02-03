@@ -40,6 +40,7 @@ mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 				$publish_email = htmlspecialchars($row['userEmailPublish']);
 				$lat = htmlspecialchars($row['lat']);
 				$lng = htmlspecialchars($row['lng']);
+				$ele = htmlspecialchars($row['elevation']);
 				$status = htmlspecialchars($row['status']);
 				$addr = htmlspecialchars($row['streetAddress']);
 				$ip = htmlspecialchars($row['nodeIP']);
@@ -51,9 +52,9 @@ mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 					$state = "active";
 
 				if ($publish_email == 1) {
-					echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" website=\"$website\" jabber=\"$jabber\" lat=\"$lat\" lng=\"$lng\" state=\"$state\" description=\"$desc\" ip=\"$ip\" streetAddress=\"$addr\" email=\"$email\" />\n";
+					echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" website=\"$website\" jabber=\"$jabber\" lat=\"$lat\" lng=\"$lng\" elevation = \"$ele\" state=\"$state\" description=\"$desc\" ip=\"$ip\" streetAddress=\"$addr\" email=\"$email\" />\n";
 				} else {
-					echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" website=\"$website\" jabber=\"$jabber\" lat=\"$lat\" lng=\"$lng\" state=\"$state\" description=\"$desc\" ip=\"$ip\" streetAddress=\"$addr\" email=\"\" />\n";
+					echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" website=\"$website\" jabber=\"$jabber\" lat=\"$lat\" lng=\"$lng\" elevation = \"$ele\" state=\"$state\" description=\"$desc\" ip=\"$ip\" streetAddress=\"$addr\" email=\"\" />\n";
 				}
 			}
 

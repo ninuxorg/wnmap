@@ -83,6 +83,7 @@ require ("geocode_lib.php");
 <?php
 $lat = $_GET["lat"];
 $lon = $_GET["lon"];
+$ele = $_GET["ele"];
 $y = $lat;
 $x = $lon;
 $name = $_GET["name"];
@@ -119,6 +120,14 @@ if ( tooFarFromCenter($y, $x) ) {
 				</tr>
 				<tr>
 					<td>
+						<?=ELEVATION_?>
+					</td>
+					<td>
+						<input type="text" value="<?=$ele?>" name="ele" />
+					</td>
+				</tr>
+				<tr class="alt">
+					<td>
 						<label for="nodename"><?=NODE_NAME_?></label>
 						<br/>
 						<span class="reallysmall"><?=PICK_A_NAME?></span>
@@ -127,7 +136,7 @@ if ( tooFarFromCenter($y, $x) ) {
 						<input type="text" id="nodename" name="nodename" value="<?=$name?>"/>
 					</td>
 				</tr>
-				<tr class="alt">
+				<tr>
 					<td>
 						<label for="description"><?=DESCRIPTION_?></label>
 						<br/>
@@ -138,7 +147,7 @@ if ( tooFarFromCenter($y, $x) ) {
 					</td>
 
 				</tr>
-				<tr>
+				<tr class="alt">
 					<td>
 						<label for="nodeip"><?=NODE_IP_?></label>
 						<br/>
@@ -198,7 +207,7 @@ if ( tooFarFromCenter($y, $x) ) {
 						<input type="text" id="jid" name="jid"/>
 					</td>
 				</tr>
-				<tr class="alt class="alt"">
+				<tr class="alt">
 					<td>
 						<label for="website"><?=WEBSITE_URL?></label>
 						<br/>

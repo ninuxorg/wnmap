@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `nodes` (
   `adminHash` varchar(100) NOT NULL default '',
   `lng` text,
   `lat` text,
+  `elevation` text,
   `userRealName` varchar(100) NOT NULL default '',
   `userEmail` varchar(100) NOT NULL default '',
   `nodeName` varchar(100) NOT NULL default '',
