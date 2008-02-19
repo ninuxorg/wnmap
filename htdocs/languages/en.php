@@ -101,6 +101,10 @@ the following URL:
 
 %s/DeleteNode.php?hash=%s
 
+After verification, you may want to edit the node's info:
+
+%s/EditNode.php?hash=%s
+
 
 %s");
 define ("THANK_YOU_","Thank You!");
@@ -121,5 +125,11 @@ define ("VIEW_MAP","View the map!");
 
 // VerifyNode.php
 define ("EMAIL_CONFIRMED","Your email address has been confirmed and this location is now active on the map!");
+
+// EditNode.php
+define ("EDIT_NODE","Edit Node Information");
+
+// EditNodeSubmit.php
+define ("UPDATE_SUCCESSFUL","Information successfully updated.");
 
 ?>

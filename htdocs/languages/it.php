@@ -103,6 +103,10 @@ il seguente link:
 
 %s/DeleteNode.php?hash=%s
 
+Dopo la verifica del tuo indirizzo e-mail, puoi aggiornare le informazioni sul nodo 
+utilizzando questa pagina:
+
+%s/EditNode.php?hash=%s
 
 %s");
 define ("THANK_YOU_","Grazie!");
@@ -124,4 +128,9 @@ define ("VIEW_MAP","Visualizza la mappa!");
 // VerifyNode.php
 define ("EMAIL_CONFIRMED","Il tuo indirizzo e-mail &egrave; stato verificato e questo segnaposto &egrave; ora attivo sulla mappa!");
 
+// EditNode.php
+define ("EDIT_NODE","Modifica i dati del nodo");
+
+// EditNodeSubmit.php
+define ("UPDATE_SUCCESSFUL","Informazioni aggiornate con successo.");
 ?>
