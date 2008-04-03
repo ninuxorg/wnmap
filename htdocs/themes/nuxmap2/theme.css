@@ -1,0 +1,265 @@
+@import "../rightsidebar.css";
+
+body {
+	font-family: Bitstream Vera Sans, Verdana;
+	font-size: 8pt;
+	background-color: #ffffff
+}
+
+h1, h2 {
+	/* border-bottom: 1px solid #000000; */
+}
+
+#header {
+}
+
+h1 {
+/*	Place a link to your logo and its position attributes here. */
+	background: url("images/ninux_logo.png") no-repeat left;
+       	height: 100px;
+	margin-bottom: 5px;	
+}
+
+h1 span {
+	display: none;
+}
+
+h2 span {
+	display: none;
+}
+
+#pageTitle {
+	background-color: #444;
+}
+
+h2 {
+	background: url("images/title.png") no-repeat center left;
+}
+
+#mapColumn {
+	border-right: 2px solid #444;
+	/* background-color: #ffffff; */
+}
+
+#sideColumn {
+	 background-color: #f93;
+	 top: 142px;
+	 border-left: 4px solid #000000;
+	 border-right: 4px solid #000000;
+}
+.sideItemTitle {
+	background-color: #ffffff;
+	border: 2px solid #000000;
+}
+
+.sideItemTitle a {
+	color: #000000;
+}
+
+.sideItemTitle h3 {
+	font-size: 9pt;
+	font-weight: bold;
+	color: #000000;
+	padding: 4px;
+}
+
+.sideItemContent {
+	color: #000000;
+	/* border-bottom: 1px solid #000000; */
+}
+.sideItemContent a {
+	color: #000000;
+	font-weight: bold;
+}
+input.text {
+	background-color: #cccccc;
+	border: 2px solid #000000 !important;
+	width: 235px;
+	color: #000000;
+	padding: 3px;
+	font-size: inherit;
+}
+
+form {
+	margin: 0px;
+}
+
+.buttonBox {
+	text-align: right;
+	margin-right: 0px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+input.button {
+	font-size: inherit;
+	color: #ffffff;
+	font-weight: bold;
+	border: 2px solid #000000 !important;
+	background-color: #000000 !important;
+}
+
+input.checkbox {
+	background-color: #ffffff !important;
+	border: 2px solid #000000 !important;
+}
+
+ul.nobullets li {
+	padding-bottom: 3px;
+}
+
+
+#tabs {
+/*	border-top: 1px solid #000000; */
+	height: 30px;
+}
+
+#tabs ul.tabSwitcher {
+	border-bottom: 2px solid black; 
+}
+
+#tabs ul.tabSwitcher li {
+        background-color: #ffffff;
+        border-top: 2px solid black;
+        border-left: 2px solid black;
+        border-right: 2px solid black;
+}
+
+#tabs ul.tabSwitcher li.selected, ul.tabSwitcher li:hover {
+        background-color: #ffffff;
+}
+#tabs ul.tabSwitcher li.selected {
+        border-bottom: 1px solid #000000;
+}
+#tabs ul.tabSwitcher li.selected a {
+        color: #000000;
+}
+#tabs ul.tabSwitcher li a {
+        color: #aaaaaa;
+	font-weight: bold;
+        text-decoration: none;
+}
+
+.tabContent {
+	background-color: #ffffff;
+	border: 2px solid #000000;
+	color: #000000;
+}
+
+#footer {
+	border-top: 15px solid #444;
+	background-color: #444;
+	padding: 10px;
+	color: #ffffff;
+}
+#footer a {
+	color: inherit;
+}
+
+
+#nodeList, #markerList {
+	list-style: none;
+	padding-left: 10px;
+}
+
+#nodeList li, #markerList li {
+	padding-bottom: 10px;
+}
+
+/* does this even work? */
+#nodeList li:last-child, #markerList li:last-child {
+	padding-bottom: 0px !important;
+}
+
+#nodeList li a, #markerList li a {
+	color: #000000;
+	text-decoration: none;
+}
+
+.nodeitem-active {
+	background: url('/images/marker_active_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-potential {
+	background: url('/images/marker_potential_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-marker {
+	background: url('/images/marker_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+
+#accountInfo {
+	color: black;
+}
+
+#accountInfo a {
+	color: black;
+	text-decoration: none;
+}
+
+#accountInfo a:hover {
+	text-decoration: underline;
+}
+
+.InfoWindowContent hr {
+	height: 1px;
+	border: 0px;
+	background-color: black;
+	margin: 0px !important;
+}
+
+.zoomLink {
+	font-size: 7pt;
+	color: #000000 !important;
+}
+
+.addressLink {
+	color: #ffffff;
+}
+
+.marker_balloon .title {
+	font-weight: bold;
+	font-size: 10pt;
+	padding-bottom: 10px;
+}
+.marker_balloon .position {
+	padding-bottom: 10px;
+}
+
+.marker_balloon .title a {
+	font-weight: normal;
+	font-size: 8pt;
+	padding-left: 1em;
+}
+.marker_balloon .subText {
+	padding-bottom: 10px;
+}
+.marker_balloon .stepTitle {
+	font-weight: bold;
+}
+.marker_balloon .exampleText {
+	font-size: x-small;
+}
+.marker_balloon form {
+	border: 1px solid #000000;
+	padding: 10px;
+}
+.marker_balloon .buttonBox {
+	text-align: right;
+	padding: 10px 0px 10px 10px;
+}
+.marker_balloon .buttonBox a {
+	margin-left: 1em;
+}
+
+ul { 
+	margin-left: 0px;
+}
+
+#pageLink {
+	color: #ffffff;
+}
