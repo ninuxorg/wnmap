@@ -58,6 +58,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<style type="text/css">v\:* {behavior:url(#default#VML);}</style>
 		<link rel="stylesheet" href="themes/<?=THEME_NAME?>/theme.css" type="text/css" media="screen" title="Right sidebar - Blue/Gray" />
 		<link rel="alternate stylesheet" href="themes/rightsidebar.css" type="text/css" media="screen" title="Right sidebar - No Theme"/>
+    		<link rel="alternate" title="ninux.org map RSS 2.0 feed" type="application/rss+xml" href="rss.php" />
 
 		<script type="text/javascript">
 			function load() {
