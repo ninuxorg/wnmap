@@ -104,6 +104,6 @@ for line in topology_file.readlines():
 			else: 
 				print "same ids"		
 				
-	if line.find('Destination IP') != -1:
+	if line.find('Dest. IP') != -1:
 		parsing=True	
 
