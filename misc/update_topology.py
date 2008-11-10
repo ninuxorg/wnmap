@@ -80,7 +80,10 @@ for line in topology_file.readlines():
 			id_endpoint2=data[0][0]
 			print "%s's Node ip is %d" % (endpoint2,id_endpoint2)	
 
-			etx=float(line.split()[4])
+			try:
+				etx=float(line.split()[4])
+			except:
+				etx = 999999
 
 			if id_endpoint1 + id_endpoint2 not in links_etx:
 				links_etx[id_endpoint2 + id_endpoint1] = etx
