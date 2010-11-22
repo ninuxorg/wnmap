@@ -193,7 +193,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 			</div>
 			<div id="footer">
 				<div style="float: right; margin-top: -2px;"><a href="<?=MAP_URL?>/kml-feed.php"><img src="images/google_earth_feed.png" alt="Google Earth Feed" style="border: 0px;" /></a></div>
-				The <a href="<?=ORG_URL?>"><?=ORG_NAME?></a> Network Map is powered by <a href="http://wnmap.sourceforge.net/">WNMap</a>.
+				The <a href="<?=ORG_URL?>"><?=ORG_NAME?></a> Network Map is powered by <a href="http://hg.ninux.org/wnmap">WNMap</a>.
 			</div>
 		</div>
 	</body>
