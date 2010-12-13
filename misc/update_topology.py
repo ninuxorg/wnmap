@@ -12,12 +12,12 @@ import MySQLdb
 
 
 #Mysql variables
-host = "www.bzzauz.org"
+host = "127.0.0.1" 
 user="wnmap"
 passwd="wnmap"
 db="wnmapunstable"
 table="links"
-
+ninuxcity="roma"
 #Link quality threshold
 good_link=1.2
 bad_link=2
@@ -25,7 +25,7 @@ bad_link=2
 ########################### IMPLEMENTATION #############################
 
 #download topology
-os.system(" wget http://127.0.0.1:2006 -q -O topology.txt")
+os.system(" wget http://127.0.0.1:2006/all -q -O topology.txt")
 
 #open file
 topology_file=open("topology.txt",'r')
@@ -36,7 +36,8 @@ try:
 except MySQLdb.Error, e:
 	print "Error %d: %s" % (e.args[0], e.args[1])
 cursore = conn.cursor()
-cursore.execute('DELETE FROM `links` WHERE `links`.`type`="wifi"')
+deletequery = "DELETE FROM `links` WHERE `links`.`network`=\"%s\"" % ninuxcity
+cursore.execute(deletequery)
 assert good_link <=  bad_link, "Good link threshold must be lesser equal than bad link threshold !"
 mysql_query=''
 link_quality=''
@@ -50,11 +51,11 @@ for line in topology_file.readlines():
 	if parsing:
 		if line.isspace():
 			print "Executing query on DB..."
-			print "MySQL QUERY: INSERT INTO `links` (`node1`,`node2`,`type`,`quality`) VALUES %s" % (mysql_query)
+			print "MySQL QUERY: INSERT INTO `links` (`node1`,`node2`,`type`,`quality`,`network`) VALUES %s" % (mysql_query)
 			if mysql_query=='':
 				print "NO DATA IN MY_SQL_TABLE"
 			else:
-				cursore.execute('INSERT INTO `links` (`node1`,`node2`,`type`,`quality`) VALUES %s' % mysql_query )
+				cursore.execute('INSERT INTO `links` (`node1`,`node2`,`type`,`quality`,`network`) VALUES %s' % mysql_query )
 			parsing=False
 			break
 		endpoint1=line.split()[0] #IP address of endpoint1
@@ -103,7 +104,7 @@ for line in topology_file.readlines():
 			if id_endpoint1 != id_endpoint2:	
 				if mysql_query != '': 
 					mysql_query = mysql_query + ','
-				mysql_query = mysql_query + '(%s,%s,"wifi",%s)' % (id_endpoint1,id_endpoint2,link_quality)
+				mysql_query = mysql_query + '(%s,%s,"wifi",%s,\"%s\")' % (id_endpoint1,id_endpoint2,link_quality,ninuxcity)
 			else: 
 				print "same ids"		
 				

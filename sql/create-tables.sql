@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `node2` int(11) NOT NULL default '0',
   `type` varchar(4) NOT NULL default 'wifi',
   `quality` int(11) NOT NULL default '0',
+  `network` varchar(8) NOT NULL default 'roma',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
