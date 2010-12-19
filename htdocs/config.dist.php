@@ -46,10 +46,6 @@ define ("MAIL_FROM", "noreply@ninux.org");
 // Get this from http://www.google.com/apis/maps/signup.html
 define ("GOOGLE_MAP_KEY", "");
 
-// Get this from http://api.search.yahoo.com/webservices/register_application
-// (used for geocoding)
-define ("YAHOO_MAP_ID", "");
-
 define ("THEME_NAME", "rightsidebar-swnbluegray");
 
 // %s = node name

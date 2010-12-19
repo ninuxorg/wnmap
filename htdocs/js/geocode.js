@@ -7,31 +7,36 @@ function geocode (address) {
 
 	var request = GXmlHttp.create ();
 	request.open ('GET', 'geocode.php?address=' + address, true);
+	//Query directly google from javascript would allow to put off php fopen, but does not work to me
+	//request.open ('GET', 'http://maps.googleapis.com/maps/api/geocode/xml?address=' + address +'&sensor=true', true);
+	//request.open ('GET', 'http://maps.googleapis.com/maps/api/geocode/xml?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&sensor=false', true);
 	request.onreadystatechange = function () {
 		if (request.readyState == 4) {
 			var xmlDoc = request.responseXML;
 
-			if (xmlDoc.firstChild.nodeName == "ResultSet") {
+			if (xmlDoc.firstChild.nodeName == "GeocodeResponse") {
 				document.getElementById ("findLocationResponse").innerHTML = "<p>The following result(s) were found:</p>";
-				var resultSet = xmlDoc.getElementsByTagName ("ResultSet") [0];
-				var results = resultSet.getElementsByTagName ("Result");
+				var resultSet = xmlDoc.getElementsByTagName ("GeocodeResponse") [0];
+				var results = resultSet.getElementsByTagName ("result");
 				var count = 0;
 				for (var i = 0; i < results.length; i++) {
-					if (results[i].getAttribute ("precision") == "address") {
-						var lat = results[i].getElementsByTagName ("Latitude")[0].textContent;
-						var lng = results[i].getElementsByTagName ("Longitude")[0].textContent;
+					//if (results[i].getElementsByTagName ("type")[0].childNodes[0].nodeValue == "route") {
+						var lat = results[i].getElementsByTagName ("lat")[0].childNodes[0].nodeValue;
+						var lng = results[i].getElementsByTagName ("lng")[0].childNodes[0].nodeValue;
 
 						if ( !tooFarFromCenter(lat, lng) ) {
-							var address = results[i].getElementsByTagName ("Address")[0].textContent;
-							var city = results[i].getElementsByTagName ("City")[0].textContent;
-							var state = results[i].getElementsByTagName ("State")[0].textContent;
-							var zip = results[i].getElementsByTagName ("Zip")[0].textContent;
-							var streetAddress = address + ", " + city + ", " + state;
-							document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + lat + ',' + lng + ',\'' + encode64 (streetAddress) + '\').zoomTo(); resetSearch();">' + address + " " + city + " " + zip  + "</a></p>";
+							//var address = results[i].getElementsByTagName ("Address")[0].childNodes[0].nodeValue;
+							//var city = results[i].getElementsByTagName ("City")[0].textContent;
+							//var state = results[i].getElementsByTagName ("State")[0].textContent;
+							//var zip = results[i].getElementsByTagName ("Zip")[0].textContent;
+							//var streetAddress = address + ", " + city + ", " + state;
+							var streetAddress =  results[i].getElementsByTagName ("formatted_address")[0].childNodes[0].nodeValue
+							//document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + lat + ',' + lng + ',\'' + encode64 (streetAddress) + '\').zoomTo(); resetSearch();">' + address + " " + city + " " + zip  + "</a></p>";
+							document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + lat + ',' + lng + ',\'' + encode64 (streetAddress) + '\').zoomTo(); resetSearch();">'+streetAddress +"</a></p>";
 							resizeMe ();
 							count ++;
 						}
-					}
+					//} // endif type
 				}
 
 				if (count == 0) {

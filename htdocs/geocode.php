@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 header('Content-type: text/xml');
 
 $address = $_GET['address'];
-//$result = file_get_contents ("http://rpc.geocoder.us/service/rest?address=".urlencode($address));
-$result = file_get_contents ("http://api.local.yahoo.com/MapsService/V1/geocode?appid=".YAHOO_MAP_ID."&location=".urlencode($address));
+$result = file_get_contents ("http://maps.googleapis.com/maps/api/geocode/xml?address=".urlencode($address)."&sensor=true");
+
 echo $result;
 ?>
