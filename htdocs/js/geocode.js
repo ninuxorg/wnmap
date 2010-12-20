@@ -4,55 +4,22 @@ function geocode (address) {
 	document.getElementById ("submitLocationSearchButton").disabled = true;
 
 	resizeMe ();
+	var geocoder = null;
+	geocoder = new GClientGeocoder();
+	geocoder.getLatLng(address,function(point) {
 
-	var request = GXmlHttp.create ();
-	request.open ('GET', 'geocode.php?address=' + address, true);
-	//Query directly google from javascript would allow to put off php fopen, but does not work to me
-	//request.open ('GET', 'http://maps.googleapis.com/maps/api/geocode/xml?address=' + address +'&sensor=true', true);
-	//request.open ('GET', 'http://maps.googleapis.com/maps/api/geocode/xml?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&sensor=false', true);
-	request.onreadystatechange = function () {
-		if (request.readyState == 4) {
-			var xmlDoc = request.responseXML;
 
-			if (xmlDoc.firstChild.nodeName == "GeocodeResponse") {
-				document.getElementById ("findLocationResponse").innerHTML = "<p>The following result(s) were found:</p>";
-				var resultSet = xmlDoc.getElementsByTagName ("GeocodeResponse") [0];
-				var results = resultSet.getElementsByTagName ("result");
-				var count = 0;
-				for (var i = 0; i < results.length; i++) {
-					//if (results[i].getElementsByTagName ("type")[0].childNodes[0].nodeValue == "route") {
-						var lat = results[i].getElementsByTagName ("lat")[0].childNodes[0].nodeValue;
-						var lng = results[i].getElementsByTagName ("lng")[0].childNodes[0].nodeValue;
-
-						if ( !tooFarFromCenter(lat, lng) ) {
-							//var address = results[i].getElementsByTagName ("Address")[0].childNodes[0].nodeValue;
-							//var city = results[i].getElementsByTagName ("City")[0].textContent;
-							//var state = results[i].getElementsByTagName ("State")[0].textContent;
-							//var zip = results[i].getElementsByTagName ("Zip")[0].textContent;
-							//var streetAddress = address + ", " + city + ", " + state;
-							var streetAddress =  results[i].getElementsByTagName ("formatted_address")[0].childNodes[0].nodeValue
-							//document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + lat + ',' + lng + ',\'' + encode64 (streetAddress) + '\').zoomTo(); resetSearch();">' + address + " " + city + " " + zip  + "</a></p>";
-							document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + lat + ',' + lng + ',\'' + encode64 (streetAddress) + '\').zoomTo(); resetSearch();">'+streetAddress +"</a></p>";
-							resizeMe ();
-							count ++;
-						}
-					//} // endif type
-				}
-
-				if (count == 0) {
-					document.getElementById ("findLocationResponse").innerHTML = "No results found. Note that search is currently restricted to a " + WNMAP_ACCEPTABLE_DISTANCE + " mile radius of the center of the network, and that you must include a city in your search.";
-					document.getElementById ("findLocationResponse").className = "error";
-				}
-			} else {
-				document.getElementById ("findLocationResponse").innerHTML = "Invalid search.";
-				document.getElementById ("findLocationResponse").className = "error";
-			}
-			document.getElementById ("submitLocationSearchButton").disabled = false;
-			resizeMe ();
-		}
+	if(!point) { document.getElementById ("findLocationResponse").innerHTML += '<p><a href="javascript:resetSearch();"> Indirizzo non trovato. Click to reset. </a></p>' 
 	}
-	request.send (null);
-}
+	else {
+	document.getElementById ("findLocationResponse").innerHTML += '<p><a class="addressLink" href="javascript:addMarker(' + point.y + ',' + point.x + ',\'' + encode64 (address) + '\').zoomTo(); resetSearch();">'+address +"</a></p>";
+	resizeMe ();
+	}
+
+	}
+
+	);
+}	
 
 function tooFarFromCenter (lat, lon) {
 	var distance = distanceToCenterInMiles (lat, lon);
