@@ -192,7 +192,10 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 				</div>
 			</div>
 			<div id="footer">
-				<div style="float: right; margin-top: -2px;"><a href="<?=MAP_URL?>/kml-feed.php"><img src="images/google_earth_feed.png" alt="Google Earth Feed" style="border: 0px;" /></a></div>
+				<div style="float: right; margin-top: -2px;">
+				    <a href="<?=MOBILE_MAP_URL?>"><img src="images/addandroid.png" alt="Mobile Map for Android" style="border: 0px;" /></a>
+					<a href="<?=MAP_URL?>/kml-feed.php"><img src="images/google_earth_feed.png" alt="Google Earth Feed" style="border: 0px;" /></a>
+				</div>
 				The <a href="<?=ORG_URL?>"><?=ORG_NAME?></a> Network Map is powered by <a href="http://hg.ninux.org/wnmap">WNMap</a>.
 			</div>
 		</div>
