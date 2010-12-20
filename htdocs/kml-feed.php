@@ -68,6 +68,25 @@ if ($_GET["xml"] == null) {
 			</Icon>
 		</IconStyle>
 	</Style>
+    <Style id="Link1Style">
+        <LineStyle>
+            <color>7f00ff00</color>
+            <width>4</width>
+        </LineStyle>
+    </Style>
+    <Style id="Link2Style">
+        <LineStyle>
+            <color>7f00ffff</color>
+            <width>4</width>
+        </LineStyle>
+    </Style>
+    <Style id="Link3Style">
+        <LineStyle>
+            <color>7f0000ff</color>
+            <width>4</width>
+        </LineStyle>
+    </Style>
+
 	<Folder>
 		<name>Active Nodes</name>
 		<description>Nodes that are up and running</description>
@@ -79,6 +98,14 @@ if ($_GET["xml"] == null) {
 		<description>Potential node locations</description>
 		<? DoNodes (1); ?>
 	</Folder>
+	
+	<Folder>
+		<name>Active Links</name>
+		<description>The Links that are active</description>
+		<? DoLinks(); ?>
+	</Folder>	
+
+
 </Document>
 <? 
 	mysql_close ($connection);
@@ -96,6 +123,7 @@ function DoNodes ($statusId) {
 		$status = $row['status'];
 		$desc = htmlspecialchars ($row['nodeDescription']);
 	?>
+
 	<Placemark>
 		<description><![CDATA[<? echo $desc ?> (<a href="<? printf (NODE_URL_FORMAT, $name); ?>">View Wiki Page</a>)]]></description>
 		<name><? echo $name ?></name>
@@ -118,6 +146,29 @@ function DoNodes ($statusId) {
 		</Point>
 	</Placemark>
 	<?php
+	}
+}
+
+function DoLinks() {
+	global $connection;
+	$query = "SELECT n1.lat AS lat1, n1.lng AS lng1, n2.lat AS lat2, n2.lng AS lng2, links.quality AS qlt FROM (links JOIN nodes AS n1 ON links.node1 = n1.id) JOIN nodes AS n2 ON links.node2 = n2.id";
+	$result = mysql_query ($query, $connection) or die (mysql_error());
+	while ($row = mysql_fetch_assoc($result)) {
+		$lat1 = $row['lat1'];
+		$lng1 = $row['lng1'];
+		$lat2 = $row['lat2'];
+		$lng2 = $row['lng2'];
+		$qlt = $row['qlt'];
+	?>
+	<Placemark>
+	<styleUrl>#Link<?=$qlt?>Style</styleUrl>
+	<name>LQ <?=$qlt?></name>
+
+		<LineString>
+		  <coordinates><?echo $lng1?>,<?echo $lat1?> <?echo $lng2?>,<?echo $lat2?></coordinates> 
+		</LineString>
+	</Placemark>
+<?
 	}
 }
 ?>
