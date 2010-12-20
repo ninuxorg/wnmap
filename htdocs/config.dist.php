@@ -55,6 +55,8 @@ define ("MAP_CENTER_LAT", 41.89);
 define ("MAP_CENTER_LONG", 12.48);
 define ("ACCEPTABLE_DISTANCE", 70); // in miles
 
+define ("MOBILE_MAP_URL", "http://mm.ninux.org/");
+
 $JS_CONFIG = array(
 	// WNMAP_GEOCODE_STATE_ABBR
 	//   Abbreviation of the state name we wish to restrict geocoding to.
