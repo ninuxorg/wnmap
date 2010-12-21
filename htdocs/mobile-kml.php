@@ -20,17 +20,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require ("config.php");
 
-if ($_GET["xml"] == null) {
-	header ("Content-Type: application/vnd.google-earth.kml+xml"); 
-} else {
-	header ("Content-Type: text/xml");
-}
-echo "ciao"
-
+header ("Content-Type: application/vnd.google-earth.kml+xml"); 
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
 ?>
+
 <kml xmlns="http://earth.google.com/kml/2.0">
 <Document>
 	<name><?php echo ORG_NAME;?></name>
@@ -54,6 +49,7 @@ mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 	<?php DoNodes (1); ?>
 	<?php DoLinks(); ?>
 </Document>
+</kml>
 <?php 
 	mysql_close ($connection);
 
@@ -85,7 +81,7 @@ function DoNodes ($statusId) {
 
 function DoLinks() {
 	global $connection;
-	$query = "SELECT n1.name AS name1, n1.lat AS lat1, n1.lng AS lng1, n2.name AS name2, n2.lat AS lat2, n2.lng AS lng2, links.quality AS qlt FROM (links JOIN nodes AS n1 ON links.node1 = n1.id) JOIN nodes AS n2 ON links.node2 = n2.id";
+	$query = "SELECT n1.nodeName AS name1, n1.lat AS lat1, n1.lng AS lng1, n2.nodeName AS name2, n2.lat AS lat2, n2.lng AS lng2, links.quality AS qlt FROM (links JOIN nodes AS n1 ON links.node1 = n1.id) JOIN nodes AS n2 ON links.node2 = n2.id";
 	$result = mysql_query ($query, $connection) or die (mysql_error());
 	while ($row = mysql_fetch_assoc($result)) {
 		$lat1 = $row['lat1'];
@@ -97,7 +93,7 @@ function DoLinks() {
 		$qlt = $row['qlt'];
 	?>
 	<Placemark>
-	<name><?php echo $name1 . "-" $name2 . " LQ " . $qlt;?></name>
+	<name><?php echo $name1 . "-" . $name2 . " QLTY " . $qlt; ?></name>
 	<styleUrl>#Link<?php echo $qlt;?>Style</styleUrl>
 		<LineString>
 		  <coordinates><?php echo $lng1;?>,<?php echo $lat1;?> <?php echo $lng2;?>,<?php echo $lat2;?></coordinates> 
@@ -107,5 +103,4 @@ function DoLinks() {
 	}
 }
 ?>
-</kml>
 
