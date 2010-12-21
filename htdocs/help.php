@@ -25,7 +25,7 @@ require ("config.php");
 		<title><?php echo SITE_TITLE;?> - Help</title>
 	</head>
 	<body>
-		<p><b><?php echo THINK_ABOUT?></b></p>
+		<p><b><?php echo THINK_ABOUT;?></b></p>
 		<ol style="padding-left: 2em;">
 			<li><?php echo THINK_ABOUT_DESC_1;?><br/><br/></li>
 			<li><?php echo THINK_ABOUT_DESC_2;?><br/><br/></li>

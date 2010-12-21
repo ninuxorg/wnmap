@@ -154,7 +154,7 @@ if ( tooFarFromCenter($y, $x) ) {
 						<span class="reallysmall"><?php echo ENTER_IP;?></span>
 					</td>
 					<td>
-						<input type="text" id="nodeip" name="nodeip" value="<?php echo $ip?>"/>
+						<input type="text" id="nodeip" name="nodeip" value="<?php echo $ip;?>"/>
 					</td>
 				</tr>
 				<tr>

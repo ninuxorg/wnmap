@@ -142,7 +142,7 @@ function DoNodes ($statusId) {
 			<heading>3</heading>
 		</LookAt>
 		<Point>
-			<coordinates><?php echo $lng?>,<? echo $lat ?></coordinates>
+			<coordinates><?php echo $lng;?>,<? echo $lat; ?></coordinates>
 		</Point>
 	</Placemark>
 	<?php
@@ -165,7 +165,7 @@ function DoLinks() {
 	<name>LQ <?php echo $qlt;?></name>
 
 		<LineString>
-		  <coordinates><?php echo $lng1?>,<?php echo $lat1?> <?php echo $lng2?>,<?php echo $lat2?></coordinates> 
+		  <coordinates><?php echo $lng1;?>,<?php echo $lat1;?> <?php echo $lng2;?>,<?php echo $lat2;?></coordinates> 
 		</LineString>
 	</Placemark>
 <?php
