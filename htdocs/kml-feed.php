@@ -31,25 +31,25 @@ if ($_GET["xml"] == null) {
 <?php if ($_GET["BBOX"] == null) { ?>
 <kml xmlns="http://earth.google.com/kml/2.0">
 	<NetworkLink>
-		<name><?=ORG_NAME?> Nodes</name>
-		<description><?=ORG_DESC?></description>
+		<name><?php echo ORG_NAME;?> Nodes</name>
+		<description><?php echo ORG_DESC;?></description>
 		<Url>
-			<href><?=MAP_URL?>/kml-feed.php</href>
+			<href><?php echo MAP_URL;?>/kml-feed.php</href>
 			<viewRefreshMode>onRequest</viewRefreshMode>
 		</Url>
 	</NetworkLink>
 </kml>
 
-<? } else {
+<?php } else {
 	$connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 	mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 ?>
 <Document>
-	<name><?=ORG_NAME?></name>
-	<description><?=ORG_DESC?></description>
+	<name><?php echo ORG_NAME;?></name>
+	<description><?php echo ORG_DESC;?></description>
 	<LookAt>
-		<longitude><?=MAP_CENTER_LONG?></longitude>
-		<latitude><?=MAP_CENTER_LAT?></latitude>
+		<longitude><?php echo MAP_CENTER_LONG;?></longitude>
+		<latitude><?php echo MAP_CENTER_LAT;?></latitude>
 		<range>100000</range>
 		<tilt>0</tilt>
 		<heading>0</heading>
@@ -57,14 +57,14 @@ if ($_GET["xml"] == null) {
 	<Style id="activeNodeStyle">
 		<IconStyle id="activeNodeIconStyle">
 			<Icon>
-				<href><?=MAP_URL?>/images/marker_active.png</href>
+				<href><?php echo MAP_URL;?>/images/marker_active.png</href>
 			</Icon>
 		</IconStyle>
 	</Style>
 	<Style id="potentialNodeStyle">
 		<IconStyle id="potentialNodeIconStyle">
 			<Icon>
-				<href><?=MAP_URL?>/images/marker_potential.png</href>
+				<href><?php echo MAP_URL;?>/images/marker_potential.png</href>
 			</Icon>
 		</IconStyle>
 	</Style>
@@ -90,24 +90,24 @@ if ($_GET["xml"] == null) {
 	<Folder>
 		<name>Active Nodes</name>
 		<description>Nodes that are up and running</description>
-		<? DoNodes (2); ?>
+		<?php DoNodes (2); ?>
 	</Folder>	
 
 	<Folder>
 		<name>Potential Nodes</name>
 		<description>Potential node locations</description>
-		<? DoNodes (1); ?>
+		<?php DoNodes (1); ?>
 	</Folder>
 	
 	<Folder>
 		<name>Active Links</name>
 		<description>The Links that are active</description>
-		<? DoLinks(); ?>
+		<?php DoLinks(); ?>
 	</Folder>	
 
 
 </Document>
-<? 
+<?php 
 	mysql_close ($connection);
 }
 
@@ -125,14 +125,14 @@ function DoNodes ($statusId) {
 	?>
 
 	<Placemark>
-		<description><![CDATA[<? echo $desc ?> (<a href="<? printf (NODE_URL_FORMAT, $name); ?>">View Wiki Page</a>)]]></description>
-		<name><? echo $name ?></name>
+		<description><![CDATA[<?php echo $desc ;?> (<a href="<?php printf (NODE_URL_FORMAT, $name); ?>">View Wiki Page</a>)]]></description>
+		<name><?php echo $name ?></name>
 
-		<? if ($status == 2) { ?>
+		<?php if ($status == 2) { ?>
 		<styleUrl>#activeNodeStyle</styleUrl>
-		<? } else { ?>
+		<?php } else { ?>
 		<styleUrl>#potentialNodeStyle</styleUrl>
-		<? } ?>
+		<?php } ?>
 
 		<LookAt>
 			<longitude><?php echo $lng;?></longitude>
@@ -142,7 +142,7 @@ function DoNodes ($statusId) {
 			<heading>3</heading>
 		</LookAt>
 		<Point>
-			<coordinates><? echo $lng?>,<? echo $lat ?></coordinates>
+			<coordinates><?php echo $lng?>,<? echo $lat ?></coordinates>
 		</Point>
 	</Placemark>
 	<?php
@@ -161,14 +161,14 @@ function DoLinks() {
 		$qlt = $row['qlt'];
 	?>
 	<Placemark>
-	<styleUrl>#Link<?=$qlt?>Style</styleUrl>
-	<name>LQ <?=$qlt?></name>
+	<styleUrl>#Link<?php echo $qlt;?>Style</styleUrl>
+	<name>LQ <?php echo $qlt;?></name>
 
 		<LineString>
-		  <coordinates><?echo $lng1?>,<?echo $lat1?> <?echo $lng2?>,<?echo $lat2?></coordinates> 
+		  <coordinates><?php echo $lng1?>,<?php echo $lat1?> <?php echo $lng2?>,<?php echo $lat2?></coordinates> 
 		</LineString>
 	</Placemark>
-<?
+<?php
 	}
 }
 ?>

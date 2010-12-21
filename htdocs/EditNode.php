@@ -112,78 +112,78 @@ while ($row = mysql_fetch_assoc($result)) {
 $y = $lat;
 $x = $lon;
 ?>
-		<h1><?=EDIT_NODE?></h1>
+		<h1><?php echo EDIT_NODE;?></h1>
 		<form action="EditNodeSubmit.php" method="POST">
 			<table border="0" cellspacing="0" cellpadding="5">
 				<tr>
 					<td colspan="2" style="border-bottom: 1px solid #eee">
-						<h2><?=NODE_INFORMATION?></h2>
-						<input type="hidden" value="<?=$hash?>" name="hash" />
+						<h2><?php echo NODE_INFORMATION;?></h2>
+						<input type="hidden" value="<?php echo $hash;?>" name="hash" />
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<?=LATITUDE_?>
+						<?php echo LATITUDE_;?>
 					</td>
 					<td>
-						<input type="text" readonly="true" value="<?=$lat?>" name="lat" id="y"/>
+						<input type="text" readonly="true" value="<?php echo $lat;?>" name="lat" id="y"/>
 					</td>
 				</tr>
 				<tr class="alt">
 					<td>
-						<?=LONGITUDE_?>
+						<?php echo LONGITUDE_;?>
 					</td>
 					<td>
-						<input type="text" readonly="true" value="<?=$lon?>" name="lon" id="y"/>
+						<input type="text" readonly="true" value="<?php echo $lon;?>" name="lon" id="y"/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<?=ELEVATION_?>
+						<?php echo ELEVATION_;?>
 					</td>
 					<td>
-						<input type="text" value="<?=$ele?>" name="ele" />
+						<input type="text" value="<?php echo $ele;?>" name="ele" />
 					</td>
 				</tr>
 				<tr class="alt">
 					<td>
-						<label for="nodename"><?=NODE_NAME_?></label>
+						<label for="nodename"><?php echo NODE_NAME_;?></label>
 						<br/>
-						<span class="reallysmall"><?=PICK_A_NAME?></span>
+						<span class="reallysmall"><?php echo PICK_A_NAME;?></span>
 					</td>
 					<td>
-						<input type="text" id="nodename" name="nodename" value="<?=$name?>"/>
+						<input type="text" id="nodename" name="nodename" value="<?php echo $name;?>"/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="description"><?=DESCRIPTION_?></label>
+						<label for="description"><?php echo DESCRIPTION_;?></label>
 						<br/>
-						<span class="reallysmall"><?=DESCRIPTION_DESC?></span>
+						<span class="reallysmall"><?php echo DESCRIPTION_DESC;?></span>
 					</td>
 					<td>
-						<input type="text" name="description" id="description" value="<?=$desc?>"/>
+						<input type="text" name="description" id="description" value="<?php echo $desc;?>"/>
 					</td>
 
 				</tr>
 				<tr class="alt">
 					<td>
-						<label for="nodeip"><?=NODE_IP_?></label>
+						<label for="nodeip"><?php echo NODE_IP_;?></label>
 						<br/>
-						<span class="reallysmall"><?=ENTER_IP?></span>
+						<span class="reallysmall"><?php echo ENTER_IP;?></span>
 					</td>
 					<td>
-						<input type="text" id="nodeip" name="nodeip" value="<?=$ip?>"/>
+						<input type="text" id="nodeip" name="nodeip" value="<?php echo $ip;?>"/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="nodeaddr"><?=NODE_STREET_ADDRESS_?></label>
+						<label for="nodeaddr"><?php echo NODE_STREET_ADDRESS_;?></label>
 						<br/>
-						<span class="reallysmall"><?=NODE_STREET_ADDRESS_DESC?></span>
+						<span class="reallysmall"><?php echo NODE_STREET_ADDRESS_DESC;?></span>
 					</td>
 					<td>
-						<input type="text" id="nodeaddr" name="nodeaddr" value="<?=$addr?>"/>
+						<input type="text" id="nodeaddr" name="nodeaddr" value="<?php echo $addr;?>"/>
 					</td>
 				</tr>
 			</table>
@@ -191,58 +191,58 @@ $x = $lon;
 			<table>
 				<tr>
 					<td colspan="2" style="border-bottom: 1px solid #eee;">
-						<h2><?=YOUR_INFORMATION_?></h2>
-						<span class="reallysmall"><?=SOMEBODY_NEARBY?></span>
+						<h2><?php echo YOUR_INFORMATION_;?></h2>
+						<span class="reallysmall"><?php echo SOMEBODY_NEARBY;?></span>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="yourname"><?=YOUR_FULL_NAME_?></label>
+						<label for="yourname"><?php echo YOUR_FULL_NAME_;?></label>
 					</td>
 					<td>
-						<input type="text" id="yourname" name="yourname" value="<?=$owner?>"/>
+						<input type="text" id="yourname" name="yourname" value="<?php echo $owner;?>"/>
 					</td>
 				</tr>
 				<tr class="alt">
 					<td>
-						<label for="email"><?=EMAIL_ADDRESS_?></label>
+						<label for="email"><?php echo EMAIL_ADDRESS_;?></label>
 						<br/>
-						<span class="reallysmall"><?=EMAIL_ADDRESS_DESC?></span>
+						<span class="reallysmall"><?php echo EMAIL_ADDRESS_DESC;?></span>
 					</td>
 					<td>
-						<input type="text" id="email" name="email" onChange="setJabberId();" value="<?=$email?>"/>
+						<input type="text" id="email" name="email" onChange="setJabberId();" value="<?php echo $email;?>"/>
 						<br/>
-					<?
+					<?php
 					if ($publish_email == 1) {
 					?>
 						<input type="checkbox" id="publishEmail" name="publishEmail" checked="checked" />
-					<?  } else { ?>
+					<?php  } else { ?>
 						<input type="checkbox" id="publishEmail" name="publishEmail" checked="unchecked" />
 
-					<?
+					<?php
 					}
 					?>
-						<label for="publishEmail"><?=PUBLISH_EMAIL_?></label>
+						<label for="publishEmail"><?php echo PUBLISH_EMAIL_;?></label>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="jid"><?=JABBER_ID_?></label>
+						<label for="jid"><?php echo JABBER_ID_;?></label>
 						<br/>
-						<span class="reallysmall"><?=JABBER_ID_DESC?></span>
+						<span class="reallysmall"><?php echo JABBER_ID_DESC;?></span>
 					</td>
 					<td>
-						<input type="text" id="jid" name="jid" value="<?=$jabber?>"/>
+						<input type="text" id="jid" name="jid" value="<?php echo $jabber;?>"/>
 					</td>
 				</tr>
 				<tr class="alt">
 					<td>
-						<label for="website"><?=WEBSITE_URL?></label>
+						<label for="website"><?php echo WEBSITE_URL;?></label>
 						<br/>
-						<span class="reallysmall"><?=WEBSITE_URL_DESC?></span>
+						<span class="reallysmall"><?php echo WEBSITE_URL_DESC;?></span>
 					</td>
 					<td>
-						<input type="text" id="website" name="website" value="<?=$website?>"/>
+						<input type="text" id="website" name="website" value="<?php echo $website;?>"/>
 					</td>
 				</tr>
 			</table>

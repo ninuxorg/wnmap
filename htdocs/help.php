@@ -22,20 +22,20 @@ require ("config.php");
 ?>
 <html>
 	<head>
-		<title><?=SITE_TITLE?> - Help</title>
+		<title><?php echo SITE_TITLE;?> - Help</title>
 	</head>
 	<body>
-		<p><b><?=THINK_ABOUT?></b></p>
+		<p><b><?php echo THINK_ABOUT?></b></p>
 		<ol style="padding-left: 2em;">
-			<li><?=THINK_ABOUT_DESC_1?><br/><br/></li>
-			<li><?=THINK_ABOUT_DESC_2?><br/><br/></li>
-			<li><?=THINK_ABOUT_DESC_3?><br/><br/></li>
-			<li><?=THINK_ABOUT_DESC_4?></li>
+			<li><?php echo THINK_ABOUT_DESC_1;?><br/><br/></li>
+			<li><?php echo THINK_ABOUT_DESC_2;?><br/><br/></li>
+			<li><?php echo THINK_ABOUT_DESC_3;?><br/><br/></li>
+			<li><?php echo THINK_ABOUT_DESC_4;?></li>
 		</ol>
-		<p><a href="<?=GETTING_STARTED_URL?>" target="_blank"><?=GETTING_STARTED_TEXT?></a><p>
+		<p><a href="<?php echo GETTING_STARTED_URL;?>" target="_blank"><?php echo GETTING_STARTED_TEXT;?></a><p>
 
-		<p><b><?=MAP_LEGEND_TITLE?></b></p>
-		<p><img src="<?=MAP_URL?>/images/marker_potential_small.png"/><?=MAP_LEGEND_POTENTIAL?></p>
-		<p><img src="<?=MAP_URL?>/images/marker_active_small.png"/><?=MAP_LEGEND_ACTIVE?></p>
+		<p><b><?php echo MAP_LEGEND_TITLE;?></b></p>
+		<p><img srcphp echo "<?php echo MAP_URL;?>/images/marker_potential_small.png"/><?php echo MAP_LEGEND_POTENTIAL;?></p>
+		<p><img srcphp echo "<?php echo MAP_URL;?>/images/marker_active_small.png"/><?php echo MAP_LEGEND_ACTIVE;?></p>
 	</body>
 </html>

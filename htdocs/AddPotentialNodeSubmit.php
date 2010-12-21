@@ -162,10 +162,10 @@ mail ($to, $subject, $message, $headers) or die ("Failed to send mail!!");
 
 ?>
 
-<h1><?=THANK_YOU_?></h1>
-<p><?=HELLO_?> <b><? echo ($_POST["yourname"]); ?></b>, <?=AN_EMAIL_WAS_SENT?> <a href="<? echo ($_POST["email"]); ?>"><? echo ($_POST["email"]); ?></a> <?=WITH_INSTRUCTIONS?> </p>
+<h1><?php echo THANK_YOU_;?></h1>
+<p><?php echo HELLO_;?> <b><? echo ($_POST["yourname"]); ?></b>, <?php echo AN_EMAIL_WAS_SENT;?> <a href="<? echo ($_POST["email"]); ?>"><? echo ($_POST["email"]); ?></a> <?php echo WITH_INSTRUCTIONS;?> </p>
 
-<? 
+<?php 
 	return;
 }
 echo '<br/><a href="javascript:history.go(-1);">&laquo; '. GO_BACK_ .'</a>';

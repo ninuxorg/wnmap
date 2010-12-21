@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 WNMap
 Copyright (C) 2006 Eric Butler <eric@extremeboredom.net>

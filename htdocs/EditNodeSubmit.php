@@ -101,9 +101,9 @@ mysql_close ($connection);
 
 ?>
 
-<h1><?=THANK_YOU_?></h1>
-<?=UPDATE_SUCCESSFUL?>
-<? 
+<h1><?php echo THANK_YOU_;?></h1>
+<?php echo UPDATE_SUCCESSFUL;?>
+<?php 
 	return;
 }
 echo '<br/><a href="javascript:history.go(-1);">&laquo; '. GO_BACK_ .'</a>';
