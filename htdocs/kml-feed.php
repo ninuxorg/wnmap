@@ -142,7 +142,7 @@ function DoNodes ($statusId) {
 			<heading>3</heading>
 		</LookAt>
 		<Point>
-			<coordinates><?php echo $lng;?>,<? echo $lat; ?></coordinates>
+			<coordinates><?php echo $lng;?>,<?php echo $lat; ?></coordinates>
 		</Point>
 	</Placemark>
 	<?php
