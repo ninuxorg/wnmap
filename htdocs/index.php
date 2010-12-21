@@ -46,17 +46,17 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
-		<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?=GOOGLE_MAP_KEY?>" type="text/javascript"></script>
+		<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php echo GOOGLE_MAP_KEY;?>" type="text/javascript"></script>
 		<script src="js.php?file=currentLanguage" type="text/javascript"></script>
 		<script src="js.php?file=nodemap" type="text/javascript"></script>
 		<script src="js.php?file=gui" type="text/javascript"></script>
 		<script src="js.php?file=geocode" type="text/javascript"></script>
 		<script src="js.php?file=cookies" type="text/javascript"></script>
 
-		<title><? echo SITE_TITLE; ?></title>
+		<title><?php echo SITE_TITLE; ?></title>
 
 		<style type="text/css">v\:* {behavior:url(#default#VML);}</style>
-		<link rel="stylesheet" href="themes/<?=THEME_NAME?>/theme.css" type="text/css" media="screen" title="Right sidebar - Blue/Gray" />
+		<link rel="stylesheet" href="themes/<?php echo THEME_NAME;?>/theme.css" type="text/css" media="screen" title="Right sidebar - Blue/Gray" />
 		<link rel="alternate stylesheet" href="themes/rightsidebar.css" type="text/css" media="screen" title="Right sidebar - No Theme"/>
     		<link rel="alternate" title="ninux.org map RSS 2.0 feed" type="application/rss+xml" href="rss.php" />
 
@@ -90,7 +90,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	<body onload="load();" onunload="unload()">
 		<div id="main">
 			<div id="header">
-				<h1><span><?=ORG_NAME?></span></h1>
+				<h1><span><?php echo ORG_NAME;?></span></h1>
 			</div>
 			<div id="pageTitle">
 				<!--
@@ -108,8 +108,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					</div>
 				</div>
 				-->
-				<div style="float: right; padding: 11px;"><a href="#" id="pageLink"><?=LINK_TO_THIS_PAGE?></a></div>
-				<h2><span><?=NETWORK_MAP?></span></h2>
+				<div style="float: right; padding: 11px;"><a href="#" id="pageLink"><?php echo LINK_TO_THIS_PAGE;?></a></div>
+				<h2><span><?php echo NETWORK_MAP;?></span></h2>
 			</div>
 			<div id="columns">
 				<div id="mapColumn">
@@ -118,30 +118,30 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 				<div id="sideColumn">
 					<div class="sideItem" id="welcomeSideItem">
 						<div class="sideItemTitle">
-						<h3 style="float: left;"><?=WELCOME_TITLE?></h3>
-							<a href="javascript:toggleVisible ('welcomeContent'); swapImage ('welcomeCollapseImage', '<?=MAP_URL?>images/collapse.png', '<?=MAP_URL?>images/expand.png');"><img src="images/collapse.png" alt="Toggle" id="welcomeCollapseImage" /></a>
+						<h3 style="float: left;"><?php echo WELCOME_TITLE;?></h3>
+							<a href="javascript:toggleVisible ('welcomeContent'); swapImage ('welcomeCollapseImage', '<?php echo MAP_URL;?>images/collapse.png', '<?php echo MAP_URL;?>images/expand.png');"><img src="images/collapse.png" alt="Toggle" id="welcomeCollapseImage" /></a>
 						</div>
 						<div class="sideItemContent" id="welcomeContent">
-						<p style="margin-top: 0px;"><?=WELCOME_TO_THE?></p>
+						<p style="margin-top: 0px;"><?php echo WELCOME_TO_THE;?></p>
 							<ul style="padding-left: 2em; list-style: square;">
-								<li style="padding-bottom: 0.5em;"><a href="<?=ORG_URL?>"><?=WHAT_IS?></a></li>
-								<li><a href="javascript:void(0);" onclick="window.open ('help.php', 'help', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=600,height=400');"><?=HOW_TO_USE_MAP?></a></li>
+								<li style="padding-bottom: 0.5em;"><a href="<?php echo ORG_URL;?>"><?php echo WHAT_IS;?></a></li>
+								<li><a href="javascript:void(0);" onclick="window.open ('help.php', 'help', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=600,height=400');"><?php echo HOW_TO_USE_MAP;?></a></li>
 							</ul>
 						</div>
 					</div>	
 					<div id="findLocation" class="sideItem">
 						<div class="sideItemTitle">
-							<h3><?=FIND_LOCATION?></h3>
-							<a href="javascript:toggleVisible ('findLocationContent'); swapImage ('findLocationCollapseImage', '<?=MAP_URL?>images/collapse.png', '<?MAP_URL?>images/expand.png');" ><img id="findLocationCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
+							<h3><?php echo FIND_LOCATION;?></h3>
+							<a href="javascript:toggleVisible ('findLocationContent'); swapImage ('findLocationCollapseImage', '<?php echo MAP_URL;?>images/collapse.png', '<?php echo MAP_URL;?>images/expand.png');" ><img id="findLocationCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
 						</div>
 						<div class="sideItemContent" id="findLocationContent">
 							<form onsubmit="geocode(document.getElementById('address').value); return false;" action="">
-								<p style="margin: 0px;"><label for="address"><?=ADDRESS_LABEL?></label>
+								<p style="margin: 0px;"><label for="address"><?php echo ADDRESS_LABEL;?></label>
 								<br/>
 								<input type="text" id="address" class="text" />
 								</p>
 								<p class="buttonBox">
-									<input type="submit" value="<?=ADDRESS_SUBMIT_LABEL?>" class="button" id="submitLocationSearchButton"/>
+									<input type="submit" value="<?php echo ADDRESS_SUBMIT_LABEL;?>" class="button" id="submitLocationSearchButton"/>
 								</p>
 							</form>
 							<div id="findLocationResponse"></div>
@@ -149,43 +149,43 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					</div>
 					<div id="mapSettings" class="sideItem">
 						<div class="sideItemTitle">
-							<h3><?=MAP_SETTINGS_TITLE?></h3>
-							<a href="javascript:toggleVisible ('mapSettingsContent'); swapImage ('mapSettingsCollapseImage', '<?=MAP_URL?>images/collapse.png', '<?=MAP_URL?>images/expand.png');" ><img id="mapSettingsCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
+							<h3><?php echo MAP_SETTINGS_TITLE;?></h3>
+							<a href="javascript:toggleVisible ('mapSettingsContent'); swapImage ('mapSettingsCollapseImage', '<?php echo MAP_URL;?>images/collapse.png', '<?php echo MAP_URL;?>images/expand.png');" ><img id="mapSettingsCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
 						</div>
 						<div class="sideItemContent" id="mapSettingsContent">
 							<ul class="nobullets">
 								<li>
 									<input class="checkbox" type="checkbox" id="showActive" checked="checked" onclick="settingChanged();"/>
-									<label for="showActive"><?=SHOW_ACTIVE_NODES?></label>
+									<label for="showActive"><?php echo SHOW_ACTIVE_NODES;?></label>
 								</li>
 								<li>
 									<input class="checkbox" type="checkbox" id="showPotential" checked="checked" onclick="settingChanged();"/>
-									<label for="showPotential"><?=SHOW_POTENTIAL_NODES?></label>
+									<label for="showPotential"><?php echo SHOW_POTENTIAL_NODES;?></label>
 								</li>
 								<li>
 									<input class="checkbox" type="checkbox" id="showLinks" checked="checked" onclick="settingChanged();"/>
-									<label for="showLinks"><?=SHOW_WIRELESS_LINKS?></label>
+									<label for="showLinks"><?php echo SHOW_WIRELESS_LINKS;?></label>
 								</li>
 								<li>
 									<input class="checkbox" type="checkbox" id="showTun" onclick="settingChanged();"/>
-									<label for="showTun"><?=SHOW_INTERNET_TUNNELS?></label>
+									<label for="showTun"><?php echo SHOW_INTERNET_TUNNELS;?></label>
 								</li>
 							</ul>
 						</div>
 					</div>
 					<div id="tabs" class="sideItem">
 						<ul class="tabSwitcher">
-							<li id="nodesTab" class="selected"><a href="javascript:showNodes();"><?=NODES_?></a></li>
-							<li id="myMarkersTab"><a href="javascript:showMarkers();"><?=MY_MARKERS?></a></li>
+							<li id="nodesTab" class="selected"><a href="javascript:showNodes();"><?php echo NODES_;?></a></li>
+							<li id="myMarkersTab"><a href="javascript:showMarkers();"><?php echo MY_MARKERS;?></a></li>
 						</ul>
 						<div id="nodesTabContent" class="tabContent">
 							<ul id="nodeList">
-								<li><?=LOADING_?></li>
+								<li><?php echo LOADING_;?></li>
 							</ul>
 						</div>
 						<div id="myMarkersTabContent" class="tabContent" style="display: none;">
 							<ul id="markerList">
-								<li><?=LOADING_?></li>
+								<li><?php echo LOADING_;?></li>
 							</ul>
 						</div>
 					</div>
@@ -193,10 +193,10 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 			</div>
 			<div id="footer">
 				<div style="float: right; margin-top: -2px;">
-				    <a href="<?=MOBILE_MAP_URL?>"><img src="images/addandroid.png" alt="Mobile Map for Android" style="border: 0px;" /></a>
-					<a href="<?=MAP_URL?>/kml-feed.php"><img src="images/google_earth_feed.png" alt="Google Earth Feed" style="border: 0px;" /></a>
+				    <a href="<?php echo MOBILE_MAP_URL;?>"><img src="images/addandroid.png" alt="Mobile Map for Android" style="border: 0px;" /></a>
+					<a href="<?php echo MAP_URL;?>/kml-feed.php"><img src="images/google_earth_feed.png" alt="Google Earth Feed" style="border: 0px;" /></a>
 				</div>
-				The <a href="<?=ORG_URL?>"><?=ORG_NAME?></a> Network Map is powered by <a href="http://hg.ninux.org/wnmap">WNMap</a>.
+				The <a href="<?php echo ORG_URL;?>"><?php echo ORG_NAME;?></a> Network Map is powered by <a href="http://hg.ninux.org/wnmap">WNMap</a>.
 			</div>
 		</div>
 	</body>
