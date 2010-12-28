@@ -102,9 +102,10 @@ for line in topology_file.readlines():
 			elif avg_etx >= bad_link:
 				link_quality = quality_values['bad'] 
 			if id_endpoint1 != id_endpoint2:	
-				if mysql_query != '': 
-					mysql_query = mysql_query + ','
-				mysql_query = mysql_query + '(%s,%s,"wifi",%s,\"%s\")' % (id_endpoint1,id_endpoint2,link_quality,ninuxcity)
+				if avg_etx < 9:
+					if mysql_query != '': 
+						mysql_query = mysql_query + ','
+					mysql_query = mysql_query + '(%s,%s,"wifi",%s,\"%s\")' % (id_endpoint1,id_endpoint2,link_quality,ninuxcity)
 			else: 
 				print "same ids"		
 				
