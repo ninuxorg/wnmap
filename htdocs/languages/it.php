@@ -33,7 +33,7 @@ define ("ADDRESS_LABEL","Indirizzo, via e citt&agrave;, stato o codice postale:"
 define ("ADDRESS_SUBMIT_LABEL","Trova");
 define ("MAP_SETTINGS_TITLE","Impostazioni della mappa");
 define ("SHOW_ACTIVE_NODES","Visualizza nodi attivi");
-define ("SHOW_POTENTIAL_NODES","Visualizza ubicazione dei nodi potenziali");
+define ("SHOW_POTENTIAL_NODES","Visualizza nodi potenziali");
 define ("SHOW_WIRELESS_LINKS","Visualizza collegamenti wireless");
 define ("SHOW_INTERNET_TUNNELS","Visualizza collegamenti via tunnel su Internet");
 define ("NODES_","Nodi");
@@ -86,7 +86,7 @@ define ("INVALID_IP_","IP non valido.");
 define ("INVALID_ELEVATION_","Altitudine non valida.");
 define ("INVALID_NAME_","Nome non valido.");
 define ("ADD_LOCATION_","Aggiungi segnaposto");
-define ("SPECIFY_DESCRIPTION","Per favore includi una descrizione di questa ubicazione.");
+define ("SPECIFY_DESCRIPTION","Per favore includi una descrizione del luogo.");
 define ("NODE_ALREADY_EXISTS","Un nodo in questo punto esiste gi&agrave; nel nostro database.");
 define ("NODE_NAME_ALREADY_EXISTS","Un nodo con questo nome esiste gi&agrave; nel nostro database.");
 define ("ADDNODE_EMAIL_BODY","Grazie per il tuo interesse in %s!
