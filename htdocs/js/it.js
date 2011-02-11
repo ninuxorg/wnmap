@@ -13,6 +13,7 @@
 
 WNMAP_ACTIVE_NODE = "Nodo attivo";
 WNMAP_POTENTIAL_NODE = "Nodo potenziale";
+WNMAP_HOTSPOT_NODE = "Nodo hotspot";
 WNMAP_MARKER = "Segnaposto";
 WNMAP_INVALID_STATE = "Stato non valido";
 WNMAP_RENAME = "Rinomina";

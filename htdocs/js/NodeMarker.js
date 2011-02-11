@@ -51,6 +51,16 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 
 			NodeMarker.baseConstructor.call (this, point, icon);
 			break;
+		case 'hotspot':
+			this.statePretty = WNMAP_HOTSPOT_NODE;
+
+			var icon = new GIcon ();
+			icon.image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
+			icon.iconSize = new GSize(20, 34);
+			icon.iconAnchor = new GPoint(9, 34);
+			icon.infoWindowAnchor = new GPoint(20, 1);
+
+			NodeMarker.baseConstructor.call (this, point, icon);
 		case 'marker':
 			this.statePretty = WNMAP_MARKER;
 
