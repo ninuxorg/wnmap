@@ -51,7 +51,7 @@ mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 				else if ($status == 2)
 					$state = "active";
 				else if ($status == 3)
-					$state = "hotspots";
+					$state = "hotspot";
 
 
 				if ($publish_email == 1) {
