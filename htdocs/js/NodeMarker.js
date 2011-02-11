@@ -28,52 +28,37 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 	
 	var point = new GLatLng (lat, lng);
 
+	/* Prepare new marker */
+	var icon = new GIcon ();
+	icon.iconSize = new GSize(20, 34);
+ 	icon.iconAnchor = new GPoint(9, 34);
+	icon.infoWindowAnchor = new GPoint(20, 1);
+			
 	switch (state.toLowerCase()) {
 		case 'active':
 			this.statePretty = WNMAP_ACTIVE_NODE;
-
-			var icon = new GIcon ();
 			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
-			icon.iconSize = new GSize(20, 34);
-		 	icon.iconAnchor = new GPoint(9, 34);
-			icon.infoWindowAnchor = new GPoint(20, 1);
-			
-			NodeMarker.baseConstructor.call (this, point, icon);
 			break;
 		case 'potential':
 			this.statePretty = WNMAP_POTENTIAL_NODE;
-
-			var icon = new GIcon ();
 			icon.image = WNMAP_MAP_URL + "/images/marker_potential.png";
-			icon.iconSize = new GSize(20, 34);
-			icon.iconAnchor = new GPoint(9, 34);
-			icon.infoWindowAnchor = new GPoint(20, 1);
-
-			NodeMarker.baseConstructor.call (this, point, icon);
 			break;
 		case 'hotspot':
 			this.statePretty = WNMAP_HOTSPOT_NODE;
-
-			var icon = new GIcon ();
 			icon.image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
-			icon.iconSize = new GSize(20, 34);
-			icon.iconAnchor = new GPoint(9, 34);
-			icon.infoWindowAnchor = new GPoint(20, 1);
-
-			NodeMarker.baseConstructor.call (this, point, icon);
 		case 'marker':
 			this.statePretty = WNMAP_MARKER;
-
-
-			NodeMarker.baseConstructor.call (this, point, {draggable:true});
 			this.enableDragging();
-
 			break;
 		default:
 			alert (WNMAP_INVALID_STATE);
 			return;
 			break;
 	}
+
+	/* Add the node to the maps */
+	NodeMarker.baseConstructor.call (this, point, icon);
+
 
 	this.getOverviewHtml = function () {
 		var html = "";
@@ -127,63 +112,6 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			deleteActionItem.appendChild (deleteActionLink);
 			actionList.appendChild (deleteActionItem);
 
-
-			/*
-			var form = document.createElement ("form");
-			thing.appendChild (form);
-
-			var stepTitle = document.createElement ("div");
-			stepTitle.innerHTML = "Step 1. Pick a name for this location.";
-			stepTitle.className = "stepTitle";
-			form.appendChild (stepTitle);
-
-			var directionsText = document.createElement ("div");
-			directionsText.innerHTML = "Names should begin with the word \"Node\" and may only contain letters and numbers.";
-			form.appendChild (directionsText);
-
-			form.appendChild (document.createElement ("br"));
-
-			var nameLabel = document.createElement ("label");
-			nameLabel.htmlFor = "nameInput";
-			nameLabel.innerHTML = "Name:";
-			form.appendChild (nameLabel);
-
-			form.appendChild (document.createElement ("br"));
-
-			var nameInput = document.createElement ("input");
-			nameInput.style.width = "100%";
-			nameInput.type = "text";
-			nameInput.id = "nameInput";
-			form.appendChild (nameInput);	
-
-			form.appendChild (document.createElement ("br"));
-
-			var exampleText = document.createElement ("div");
-			exampleText.className = "exampleText";
-			exampleText.innerHTML = 'eg. "NodeQueenAnnSouth", "Node4578" (Your house number), "NodeIsBetterThanYours", etc.';
-			form.appendChild (exampleText);
-
-			var buttonBox = document.createElement ("div");
-			buttonBox.className = "buttonBox";
-			thing.appendChild (buttonBox);
-
-			var cancelLink = document.createElement ("a");
-			cancelLink.href = "javascript:markers['" + this.name + "'].removeMarker();";
-			cancelLink.innerHTML = "Cancel";
-			buttonBox.appendChild (cancelLink);
-
-			var nextLink = document.createElement ("a");
-			nextLink.href = 'javascript:nextStep();';
-			nextLink.innerHTML = "Next &raquo;";
-			buttonBox.appendChild (nextLink);
-
-			*/
-
-			/*
-			var f = document.createElement ("div");
-			f.appendChild (thing);
-			return f.innerHTML;
-			*/
 			return thing;
 
 		} else {
