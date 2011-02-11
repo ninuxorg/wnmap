@@ -205,13 +205,16 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 		address.className = "position";
 		address.innerHTML = "<b>" + WNMAP_IP_ + "</b> " + this.ip;
 		thing.appendChild (ip);
-		//var distance = document.createElement ("div");
-		//distance.className = "position";
-		//distance.innerHTML = "<b>Distance to center:</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
-		//thing.appendChild (distance);
 
-	//	f.appendChild (thing);
-	//	return f.innerHTML;	
+		/* Tab manager */
+		var manager = document.createElement ("div");
+		manager.className = "position"
+		manager.innerHTML = "<b>Gestione nodo:</b> "+ 
+		thing.appendChild (manager);
+		f.appendChild (manager);
+
+	//	return f.innerHTML;
+	
 		return thing;
 	}
 
