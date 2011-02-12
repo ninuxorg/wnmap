@@ -23,8 +23,9 @@ require ("config.php");
 header ("Content-Type: text/xml");
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
-?>
 
+?>
+<?php echo "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" ?>
 <map>
 	<nodes>
 		<?php
