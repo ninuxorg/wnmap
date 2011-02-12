@@ -209,6 +209,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 		var ip = document.createElement ("div");
 		address.className = "position";
 		address.innerHTML = "<b>" + WNMAP_IP_ + "</b> " + this.ip;
+		address.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=ip1', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Modifica</a>";
 		thing.appendChild (ip);
 
 		/* Tab manager */

@@ -33,26 +33,47 @@ $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could 
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
 $name = mysql_real_escape_string ($_GET["name"]);
-if ($name == '')
-	die ("Error: name must be specified!");
 $val = mysql_real_escape_string ($_GET["val"]);
 
-/* Status change - manager.php?name='+name+'&action=status&val='+new_value */
-if (isset($_GET["action"]) &&  $_GET["action"] == "status" ) {
+if (isset($_GET["action"])){
+ 
+	/* Status change - manager.php?name='+name+'&action=status&val='+new_value */
+	if ($_GET["action"] == "status" ) {
 
-	$query = "UPDATE nodes SET status=" . $val . " WHERE nodeName='". $name ."';";
+		$query = "UPDATE nodes SET status=" . $val . " WHERE nodeName='". $name ."';";
+		$result = mysql_query ($query, $connection) or die (mysql_error());
 
-	$result = mysql_query ($query, $connection) or die (mysql_error());
+		mail (MANAGEMENT_MAIL, "Node update", "Il nodo $name è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
-	echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver se non dovesse essere aggiornata.<br>";
+	}
 
-	mail (MANAGEMENT_MAIL, "Node update", "Il nodo $name è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+	/* Ip change */
+	if ($_GET["action"] == "ip1" ) {
+		$query = "SELECT nodeIp FROM nodes WHERE nodeName='". $name ."';";
+		$result = mysql_query ($query, $connection) or die (mysql_error());
+		
+		$row = mysql_fetch_assoc($result);
+		$ip= $row['nodeIp'];	
 
+		echo "<form method=post action='manager.php?action=ip2'>
+			Modifica gli ip/subnet associate al nodo. Usa spazio come separazione.<br>
+			<textarea name=new_ip>$ip</textarea>
+			<input type=hidden name=old_ip value=$ip>
+			<input type=hidden name=name value=$name><br>
+			<input type=submit value='Modifica classe/i Ip'>
+		      <form>"; 
+	}
+	if ($_GET["action"] == "ip2" ) {
+		$ip =  mysql_real_escape_string ($_POST["new_ip"]);
+
+		$query = "UPDATE nodes SET nodeIp='" . $ip . "' WHERE nodeName='". $_POST["name"] ."';";
+
+		$result = mysql_query ($query, $connection) or die (mysql_error());
+
+		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver se non dovesse essere aggiornata.<br>";
+	}
 }
-
-echo "<a href=\"javascript:void(0);\" onclick=\"window.close();\">Chiudi</a>";
-
-/* TODO: Ip Change */
+echo "<br><a href=\"javascript:void(0);\" onclick=\"window.close();\">Chiudi</a>";
 
 
 ?>
