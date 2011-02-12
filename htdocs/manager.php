@@ -43,8 +43,9 @@ if (isset($_GET["action"])){
 		$query = "UPDATE nodes SET status=" . $val . " WHERE nodeName='". $name ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 
-		mail (MANAGEMENT_MAIL, "Node update", "Il nodo $name è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+		mail (MANAGEMENT_MAIL, "Node status change", "Il nodo $name è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
+		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
 	}
 
 	/* Ip change */
@@ -67,10 +68,11 @@ if (isset($_GET["action"])){
 		$ip =  mysql_real_escape_string ($_POST["new_ip"]);
 
 		$query = "UPDATE nodes SET nodeIp='" . $ip . "' WHERE nodeName='". $_POST["name"] ."';";
-
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 
-		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver se non dovesse essere aggiornata.<br>";
+		mail (MANAGEMENT_MAIL, "Node ip change", "Il nodo $name è passato dall'ip --". $_POST["old_ip"] ."-- a ". $_GET['new_ip'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+
+		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
 	}
 }
 echo "<br><a href=\"javascript:void(0);\" onclick=\"window.close();\">Chiudi</a>";
