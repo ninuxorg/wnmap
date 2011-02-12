@@ -24,6 +24,11 @@ require ("config.php");
 
 echo "<h2>Manager</h2>";
 
+if ( MANAGEMENT == 0)
+ 	die ("Manager disable due to configuration");
+
+//TODO: anti rompiballs system here
+
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
@@ -39,7 +44,9 @@ if (isset($_GET["action"]) &&  $_GET["action"] == "status" ) {
 
 	$result = mysql_query ($query, $connection) or die (mysql_error());
 
-	echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver se non dovesse essere aggiornata.";
+	echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver se non dovesse essere aggiornata.<br>";
+
+	mail (MANAGEMENT_MAIL, "Node update", "Il nodo $name è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
 }
 

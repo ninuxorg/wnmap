@@ -57,6 +57,12 @@ define ("ACCEPTABLE_DISTANCE", 70); // in miles
 
 define ("MOBILE_MAP_URL", "http://mm.ninux.org/");
 
+
+// Management
+define ("MANAGEMENT", 1);			// set to 0 to disable this function
+define ("MANAGEMENT_MAIL", "info@me.lol");
+
+
 $JS_CONFIG = array(
 	// WNMAP_GEOCODE_STATE_ABBR
 	//   Abbreviation of the state name we wish to restrict geocoding to.
@@ -99,5 +105,5 @@ $JS_CONFIG = array(
 );
 
 // remove this line
-//die ("Please configure the map!");
+die ("Please configure the map!");
 ?>

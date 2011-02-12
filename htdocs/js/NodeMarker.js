@@ -174,7 +174,7 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			type.className ="position";
 			type.innerHTML ="<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
 			if (state == "potential") {
-				type.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=2', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Enable</a> <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=3', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Hotspot</a>";
+				type.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=2&ex_val="+this.statePretty+"', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Enable</a> <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=3&ex_val="+this.statePretty+"', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Hotspot</a>";
 			} else {
 				type.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=1', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Disable</a>";
 			}
