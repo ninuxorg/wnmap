@@ -27,8 +27,27 @@ echo "<h2>Manager</h2>";
 if ( MANAGEMENT == 0)
  	die ("Manager disable due to configuration");
 
-//TODO: anti rompiballs system here
+/* ratelimit changes */
+/* Max 2 changes per 5 mins*/
+$lock = open ("/tmp/wnmap.lock","w+");
+while (flock($lock, LOCK_EX) == 0);
 
+file_get_contents ("ip2time.dat" , $iptime) || $iptime = array(0 => time()+5*60, 1=> 2);
+
+$iptime[1] == $iptime[1] - 1;
+if ( $iptime[1] < 0 ) {
+	die ("Spiacente per prevenire attacchi la tua operazione non può essere eseguita ora");
+}
+
+$iptime[1] += ((time() - $iptime[0]) / 5*60)>2 ? 2 : ((time() - $iptime[0]) / 5*60);
+$iptime[0] = time();
+
+file_put_contents ("ip2time.dat" , $iptime);
+
+flock($lock, LOCK_UN);
+close($lock);
+
+/*connect to db and escape common vars*/
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
