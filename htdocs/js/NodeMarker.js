@@ -10,20 +10,19 @@
 
 var url;
 
-function NodeMarker (name, base64name, owner, email, website, jabber, description, ip, state, lng, lat, ele)
+function urlmanager (get, h, w, linkname) {
+	return "<a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?" + get + "', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=" + w + " ,height=" + h + "' );\">" + linkname + "</a>";
+}
+function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, ele)
 {
 	this.name = name;
 	this.owner = owner;
-	this.email = email;
-	this.website = website;
-	this.jabber = jabber;
 	this.base64Name = base64name;
 	this.description = description;
 	this.ip = ip;
 	this.elevation = ele;
 	this.state = state;
 	this.visible = true;
-	this.streetAddress = "";
 	this.tooltip = this.name;
 	
 	var point = new GLatLng (lat, lng);
@@ -149,43 +148,23 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			thing.appendChild (description);
 
 			var owner = document.createElement ("div");
-
-			if (this.website != "") {
-				owner.innerHTML = '<b>' + WNMAP_OWNER_ + '</b> <a href="' + this.website + '">' + this.owner + '</a>';
-			} else {
-				owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner;
-			}
-
-			if (this.email != "") {
-				owner.innerHTML += " - <a href=\"mailto:" + this.email + "\">" + WNMAP_SEND_MAIL + "</a>";
-				if (this.jabber != "") {
-					owner.innerHTML += " <a href=\"xmpp:" + this.jabber + "?message\">" + WNMAP_SEND_IM + "</a>";
-				}
-			} else {
-				if (this.jabber != "") {
-					owner.innerHTML += " - <a href=\"xmpp:" + this.jabber + "?message\">" + WNMAP_SEND_IM + "</a>";
-				}
-			}
-
+			owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner;
+			owner.innerHTML += urlmanager ("name="+this.name+"&action=contatti", 200, 300, "Contatta")
 			thing.appendChild (owner);
 
 
 			var type = document.createElement ("div");
 			type.className ="position";
 			type.innerHTML ="<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
+			
 			if (state == "potential") {
-				type.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=2&ex_val="+this.statePretty+"', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Enable</a> <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=3&ex_val="+this.statePretty+"', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Hotspot</a>";
+				type.innerHTML +=urlmanager ("name="+this.name+"&action=status&val=2&ex_val="+this.statePretty, 200, 300, "Enable") + urlmanager ("name="+this.name+"&action=status&val=3&ex_val="+this.statePretty, 200, 300, "Hotspot")
 			} else {
-				type.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=1', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Disable</a>";
+				type.innerHTML +=urlmanager ("name="+this.name+"&action=status&val=1", 200, 300, "Disable")
 			}
 			thing.appendChild (type);
 
 			return thing;
-			/*
-			var f = document.createElement ("div");
-			f.appendChild (thing);
-			return f.innerHTML;
-			*/
 		}
 	}
 
@@ -199,30 +178,19 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 		pos.className = "position";
 		pos.innerHTML = "<b>" + WNMAP_LATITUDE_ + "</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>" + WNMAP_LONGITUDE_ + "</b> " + Math.round(this.getPoint().lng()*1000000)/1000000 + "<br/><b>" + WNMAP_ELEVATION_ + "</b> " + this.elevation + " " + WNMAP_AMSL;
 		thing.appendChild (pos);
-
-		var address = document.createElement ("div");
-		address.className = "position";
-		address.innerHTML = "<b>" + WNMAP_STREET_ADDRESS_ + "</b> " + this.streetAddress;
-		thing.appendChild (address);
-
 		
 		var ip = document.createElement ("div");
 		address.className = "position";
 		address.innerHTML = "<b>" + WNMAP_IP_ + "</b> " + this.ip;
-		address.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=ip1', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Modifica</a>";
+		address.innerHTML +=urlmanager ("name="+this.name+"&action=ip1", 200, 300, "Modifica")
 		thing.appendChild (ip);
 
-		/* Tab manager */
 		var manager = document.createElement ("div");
 		manager.className = "position"
-		manager.innerHTML = "<b>Cancella:</b>  <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=del1', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Cancella nodo</a>" 
+		manager.innerHTML = "<b>Cancella:</b>" + urlmanager ("name="+this.name+"&action=del1", 200, 300, "Cancella nodo")
 		thing.appendChild (manager);
 	
 		return thing;
-	}
-
-	this.setStreetAddress = function (addr) {
-		this.streetAddress = addr;
 	}
 
 	this.select = function () {
