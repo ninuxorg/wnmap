@@ -125,7 +125,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 						<p style="margin-top: 0px;"><?php echo WELCOME_TO_THE;?></p>
 							<ul style="padding-left: 2em; list-style: square;">
 								<li style="padding-bottom: 0.5em;"><a href="<?php echo ORG_URL;?>"><?php echo WHAT_IS;?></a></li>
-								<li><a href="javascript:void(0);" onclick="window.open ('help.php', 'help', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=600,height=400');"><?php echo HOW_TO_USE_MAP;?></a></li>
+								<li><a href="javascript:void(0);" onclick="window.open ('http://wiki.ninux.org/MapServer', 'help', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=800,height=500');"><?php echo HOW_TO_USE_MAP;?></a></li>
 							</ul>
 						</div>
 					</div>	
