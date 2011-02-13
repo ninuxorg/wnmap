@@ -87,17 +87,12 @@ function createMap (containerId)
 				var owner = markersFromXml[i].getAttribute("owner");
 				var desc = markersFromXml[i].getAttribute("description");
 				var ip = markersFromXml[i].getAttribute("ip");
-				var website = markersFromXml[i].getAttribute("website");
-				var email = markersFromXml[i].getAttribute("email");
-				var jabber = markersFromXml[i].getAttribute("jabber");
 				var state = markersFromXml[i].getAttribute("state");
-				var addr = markersFromXml[i].getAttribute("streetAddress");
 				var lng = parseFloat(markersFromXml[i].getAttribute("lng"));
 				var lat = parseFloat(markersFromXml[i].getAttribute("lat"));
 				var ele = parseFloat(markersFromXml[i].getAttribute("elevation"));
 
-				var node = new NodeMarker (name, base64Name, owner, email, website, jabber, desc, ip, state, lng, lat, ele);
-				node.setStreetAddress (addr);
+				var node = new NodeMarker (name, base64Name, owner, desc, ip, state, lng, lat, ele);
 
 				markers[node.name] = node;
 			}
