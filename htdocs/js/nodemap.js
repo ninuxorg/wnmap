@@ -15,7 +15,9 @@ var markerCount = 0;
 
 var firstLoad = true;
 
-var showActive = true;
+var showActiveIPv4 = true;
+var showActiveIPv6 = true;
+var showHotSpot = true;
 var showPotential = true;
 var showLinks = true;
 var showTunnels = true;
@@ -65,7 +67,9 @@ function createMap (containerId)
 	window.addEventListener('DOMMouseScroll', wheelZoom, false);
 	
 	map.enableContinuousZoom();
-	//wap.enableDoubleClickZoom();
+	
+	//Double Click is used to add a marker!!!
+	//map.enableDoubleClickZoom(); 
 
 	var request = GXmlHttp.create ();
 	request.open ('GET', 'data.php', true);
@@ -177,7 +181,16 @@ function populateMap ()
 	for (var key in markers) {
 		var node = markers[key];
 	
-		if (node.state == 'active' && showActive == false) {
+		if (node.state == 'activeipv4' && showActiveIPv4 == false) {
+			node.visible = false;
+			continue;
+		} else if (node.state == 'activeipv6' && showActiveIPv6 == false) {
+			node.visible = false;
+			continue;
+		} else if (node.state == 'hotspot' && showHotSpot == false) {
+			node.visible = false;
+			continue;
+		} else if (node.state == 'vpn' && showTun == false) {
 			node.visible = false;
 			continue;
 		} else if (node.state == 'potential' && showPotential == false) {
@@ -189,7 +202,7 @@ function populateMap ()
 
 		map.addOverlay (node);
 
-		if (node.state == 'active' | node.state == 'potential') {
+		if (node.state == 'activeipv4' | node.state == 'activeipv6' | node.state == 'potential' | node.state == 'vpn' | node.state == 'hotspot') {
 			if (nodeList != null) {
 				nodeList.innerHTML += '<li onmouseover="getMarker(\'' + node.base64Name + '\').showTooltip();" onmouseout="getMarker(\'' + node.base64Name + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + node.base64Name + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.base64Name + '\').zoomTo();" class="zoomLink">zoom</a></li>';
 			}
@@ -221,14 +234,13 @@ function populateMap ()
                         return;	
 					}
 				}
-			} else {
+			} else if (links[i].type == 'vpn') {
 				if (showTunnels == true) {
 					map.addOverlay (new GPolyline (points,"#ff8080"));
 				}
 			}
 		}
 	}
-
 
 	saveMarkers();
 
@@ -291,7 +303,7 @@ function addMarker (lat, lng, b64addr)
         }
 
 	markerCount ++;
-	var newMarkerName = "Untitled Marker " + markerCount;
+	var newMarkerName = "New Node " + markerCount;
 	var marker = new NodeMarker (newMarkerName, encode64(newMarkerName), '', '', '', '', '', '', 'marker', lng, lat);
 
 	// store the street address if it was passed in

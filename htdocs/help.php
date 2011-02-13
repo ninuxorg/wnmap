@@ -36,6 +36,6 @@ require ("config.php");
 
 		<p><b><?php echo MAP_LEGEND_TITLE;?></b></p>
 		<p><img srcphp echo "<?php echo MAP_URL;?>/images/marker_potential_small.png"/><?php echo MAP_LEGEND_POTENTIAL;?></p>
-		<p><img srcphp echo "<?php echo MAP_URL;?>/images/marker_active_small.png"/><?php echo MAP_LEGEND_ACTIVE;?></p>
+		<p><img srcphp echo "<?php echo MAP_URL;?>/images/marker_active_ipv4_small.png"/><?php echo MAP_LEGEND_ACTIVE;?></p>
 	</body>
 </html>

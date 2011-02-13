@@ -19,14 +19,14 @@ h2 {
 
 #mapColumn {
 	margin-right: 260px;
-	height: 700px;
+	height: 800px;
 	overflow: hidden;
 }
 
 #sideColumn {
 	position: absolute;
 	width: 260px;
-	top: 100px; /* h1 height + h2 height +2 */
+	top: 65px; /* h1 height + h2 height +2 */
 	right: 0px;
 }
 

@@ -165,7 +165,23 @@ if ( tooFarFromCenter($y, $x) ) {
 					</td>
 					<td>
 						<input type="text" id="nodeaddr" name="nodeaddr" value="<?php echo $addr;?>"/>
+					</td>            
+				</tr>
+                	<tr>
+					<td>
+						<label for="nodetype"><?php echo NODE_TYPE_;?></label>
+						<br/>
+						<span class="reallysmall"><?php echo NODE_TYPE_DESC;?></span>
 					</td>
+					<!-- FIX ME: 
+                    <td>
+                    	<select name="nodetype" size="1" class="" id="nodetype" onChange="this.options.selectedIndex"> 
+                        <option value="potential">Link potenziale</option>
+						<option value="hotspot">HotSpot</option>
+						<option value="vpn">VPN</option>
+						</select> 
+					</td>
+                    -->    
 				</tr>
 			</table>
 			<br/>

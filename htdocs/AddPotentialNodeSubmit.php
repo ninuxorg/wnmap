@@ -81,6 +81,7 @@ $lat = mysql_real_escape_string ($lat);
 $ele = mysql_real_escape_string ($ele);
 $nodename = mysql_real_escape_string ($nodename);
 $nodeaddr = mysql_real_escape_string ($nodeaddr);
+#$nodetype = mysql_real_escape_string ($nodetype);
 $nodeip = mysql_real_escape_string ($nodeip);
 $publish_email = mysql_real_escape_string ($publish_email);
 

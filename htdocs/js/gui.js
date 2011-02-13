@@ -1,33 +1,39 @@
 function initGui ()
 {
-        if (readCookie ("showactive") == "false") {
-		showActive = false;
-		document.getElementById("showActive").checked = false;
+        if (readCookie ("showactiveipv4") == "false") {
+		showActiveIPv4 = false;
+				document.getElementById("showActiveIPv4").checked = false;
+	}
+	   if (readCookie ("showactiveipv6") == "false") {
+		showActiveIPv4 = false;
+				document.getElementById("showActiveIPv6").checked = false;
 	}
         if (readCookie ("showpotential") == "false") {
 		showPotential = false;
                 document.getElementById("showPotential").checked = false;
-        }
+    }
+		if (readCookie ("showhotspot") == "false") {
+		showHotSpot = false;
+				document.getElementById("showHotSpot").checked = false;
+	}
         if (readCookie ("showwireless") == "false") {
 		showLinks = false;
                 document.getElementById("showLinks").checked = false;
-        }
+    }
         if (readCookie ("showtunnels") == "false") {
 		showTunnels = false;
                 document.getElementById("showTun").checked = false;
-        }
+    }
 
 	GEvent.addListener (map, "moveend", function () {
-		updatePageLink();
+
 	});
 
 	GEvent.addListener (map, "zoomend", function () {
-		updatePageLink();
+		
 	});
 
 	GEvent.addListener (map, "infowindowopen", function () {
-		updatePageLink();
-
 		var selectedMarker = getSelectedMarker();
 		if (selectedMarker.state == "marker") {
 			showMarkers();
@@ -37,22 +43,10 @@ function initGui ()
 	});
 
 	GEvent.addListener (map, "infowindowclose", function () {
-		updatePageLink();
+	
 	});
 }
 
-function updatePageLink ()
-{
-	var center = map.getCenter();
-	var zoom = map.getZoom();
-
-	var selectedMarker = getSelectedMarker();
-	if (selectedMarker != null && selectedMarker.state != "marker") {
-		document.getElementById ("pageLink").href = "?centerlat=" + center.lat() + "&centerlng=" + center.lng() + "&zoom=" + zoom + "&select=" + URLEncode(selectedMarker.name);
-	} else {
-		document.getElementById ("pageLink").href = "?centerlat=" + center.lat() + "&centerlng=" + center.lng() + "&zoom=" + zoom;
-	}
-}
 
 function getSelectedMarker ()
 {
@@ -92,7 +86,7 @@ function showMarkers ()
 	resizeMe ();
 }
 
-
+/* NOT USED 
 function showLogin () {
 	document.getElementById ("accountOptions").style.display = "none";
 	document.getElementById ("login").style.display = "block";
@@ -101,6 +95,8 @@ function cancelLogin () {
 	document.getElementById ("accountOptions").style.display = "block";
 	document.getElementById ("login").style.display = "none";
 }
+
+*/
 
 function resetSearch ()
 {
@@ -116,6 +112,12 @@ function scrollMarkersToBottom ()
 {
 	var myMarkersTabContentDiv = document.getElementById ('myMarkersTabContent');
 	myMarkersTabContentDiv.scrollTop = myMarkersTabContentDiv.scrollHeight;
+}
+
+function scrollNodeToBottom ()
+{
+	var myNodeTabContentDiv = document.getElementById ('nodesTabContent');
+	myNodeTabContentDiv.scrollTop = myNodeTabContentDiv.scrollHeight;
 }
 
 // http://www.howtocreate.co.uk/tutorials/javascript/browserwindow
@@ -207,11 +209,17 @@ function swapImage (objId, image1, image2)
 
 function settingChanged ()
 {
-	showActive = document.getElementById("showActive").checked;
-        createCookie ("showactive", showActive, 300);
+	showActiveIPv4 = document.getElementById("showActiveIPv4").checked;
+        createCookie ("showActiveIPv4", showActiveIPv4, 300);
+		
+	showActiveIPv6 = document.getElementById("showActiveIPv6").checked;
+        createCookie ("showActiveIPv6", showActiveIPv6, 300);
 
 	showPotential = document.getElementById("showPotential").checked;
         createCookie ("showpotential", showPotential, 300);
+
+	showHotSpot = document.getElementById("showHotSpot").checked;
+        createCookie ("showhotspot", showHotSpot, 300);
 
 	showLinks = document.getElementById("showLinks").checked;
         createCookie ("showwireless", showLinks, 300);

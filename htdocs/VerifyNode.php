@@ -23,7 +23,21 @@ mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
 $hash = mysql_real_escape_string ($_GET["hash"]);
 
-$query = "UPDATE " . MYSQL_NODES_TABLE . " SET status='1' WHERE adminHash='$hash' AND status = '0'";
+
+//PLEASE ADJUST ME.....IT WORKS BUT IT CAN BE DONE BETTER!
+
+$sel_query = "SELECT NodeIP WHERE adminHash='$hash'";
+$pos = strpos($sel_query,":");
+
+if($pos == false) {
+//the IP is an IPv4
+ $query = "UPDATE " . MYSQL_NODES_TABLE . " SET status='1' WHERE adminHash='$hash' AND status = '0'";
+}
+	else {
+// The IP is an IPv6
+ $query = "UPDATE " . MYSQL_NODES_TABLE . " SET status='5' WHERE adminHash='$hash' AND status = '0'";
+}
+
 
 $result = mysql_query ($query, $connection) or die (mysql_error ());
 
