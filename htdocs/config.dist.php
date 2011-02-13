@@ -61,6 +61,7 @@ define ("MOBILE_MAP_URL", "http://mm.ninux.org/");
 // Management
 define ("MANAGEMENT", 1);			// set to 0 to disable this function
 define ("MANAGEMENT_MAIL", "info@me.lol");
+define ("MANAGEMENT_KEY", "njhbgyijjbhvtr5678u");	//keep key SECRET, random and longgggg
 
 
 $JS_CONFIG = array(

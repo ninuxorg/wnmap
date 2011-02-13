@@ -215,11 +215,8 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 		/* Tab manager */
 		var manager = document.createElement ("div");
 		manager.className = "position"
-		manager.innerHTML = "<b>Gestione nodo:</b> "+ 
+		manager.innerHTML = "<b>Cancella:</b>  <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=del1', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Cancella nodo</a>" 
 		thing.appendChild (manager);
-		f.appendChild (manager);
-
-	//	return f.innerHTML;
 	
 		return thing;
 	}

@@ -92,7 +92,30 @@ if (isset($_GET["action"])){
 		mail (MANAGEMENT_MAIL, "Node ip change", "Il nodo $name è passato dall'ip --". $_POST["old_ip"] ."-- a ". $_GET['new_ip'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
 		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
+	} else
+	/* Delete node */
+	if ($_GET["action"] == "del1" ) {
+		echo "Sei sicuro di voler cancellare il nodo $name? 
+			<form method=post action='manager.php?action=del2'>
+			<input type=hidden name=name value=$name><br>
+			<input type=submit value='Si'>    <input type=reset value='No' onclick=\"window.close();>
+                       <form>"; 
+	} else
+	if ($_GET["action"] == "del2" ) {
+		mail (MANAGEMENT_MAIL, "Node DELETE!", "L'utente ha richiesto di cancellare il nodo ". $_POST["name"] ." \nIpsorgente: ". $_SERVER['REMOTE_ADDR'] .".\nPer confermare la cencellazione vai su http://". MAP_URL . "/manager.php?action=del3&name=". $_POST["name"] ."&hash=". md5(MANAGEMENT_KEY.$name));
+
+		echo "La tua richiesta è stata inviata al gruppo di gestione.<br>";
+	} else
+	if ($_GET["action"] == "del3" ) {
+		//manage.php?action=del3&name=$name&hash=". md5(MANAGEMENT_KEY.$name)
+		if (md5(MANAGEMENT_KEY.$name) == $_GET["hash"]) {
+			$query = "UPDATE nodes SET status='-2' WHERE nodeName='". $name ."';";
+			$result = mysql_query ($query, $connection) or die (mysql_error());
+		}
+		mail (MANAGEMENT_MAIL, "Node ". $name ." DELETED!", "Il nodo ". $name ." è stato cancellato.");
+		echo "Nodo ". $name ." cancellato";
 	}
+
 }
 echo "<br><a href=\"javascript:void(0);\" onclick=\"window.close();\">Chiudi</a>";
 
