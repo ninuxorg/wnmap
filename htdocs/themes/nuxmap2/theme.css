@@ -3,7 +3,7 @@
 body {
 	font-family: Bitstream Vera Sans, Verdana;
 	font-size: 8pt;
-	background-color: #ffffff
+	background: url("images/background_spacer.png") repeat;
 }
 
 h1, h2 {
@@ -15,8 +15,8 @@ h1, h2 {
 
 h1 {
 /*	Place a link to your logo and its position attributes here. */
-	background: url("images/ninux_logo2011.png") no-repeat left;
-       	height: 63px;
+	background: url("images/background.png") no-repeat;
+       	height: 50px;
 	margin-bottom: 0px;	
 }
 
@@ -29,28 +29,34 @@ h2 span {
 }
 
 #pageTitle {
-	background-color: #f93;
-	height: 30px;
+	background-color: #f1592a;
+	height: 15px;
 }
 
 h2 {
-	background: url("images/title.png") no-repeat center left;
+	/*background: url("images/title.png") no-repeat center left;*/
+	height: 38px;
 }
 
 #mapColumn {
-	border-right: 2px solid #444;
+	border-top: 2px solid #444;
+	border-right: 1px solid #444;
+	border-left: 1px solid #444;
+	
 	/* background-color: #ffffff; */
 }
 
 #sideColumn {
-	 background-color: #f93;
-	 top: 142px;
-	 border-left: 4px solid #000000;
-	 border-right: 4px solid #000000;
+	 background-color: #f1592a;
+	 border-top:1px;
 }
 .sideItemTitle {
 	background-color: #ffffff;
-	border: 2px solid #000000;
+}
+
+.sideItemTitleTop {
+	background-color: #ffffff;
+	border-top: 1px solid #444;
 }
 
 .sideItemTitle a {
@@ -74,7 +80,7 @@ h2 {
 }
 input.text {
 	background-color: #cccccc;
-	border: 2px solid #000000 !important;
+	border: 1px solid #000000 !important;
 	width: 235px;
 	color: #000000;
 	padding: 3px;
@@ -96,13 +102,13 @@ input.button {
 	font-size: inherit;
 	color: #ffffff;
 	font-weight: bold;
-	border: 2px solid #000000 !important;
+	border: 1px solid #000000 !important;
 	background-color: #000000 !important;
 }
 
 input.checkbox {
 	background-color: #ffffff !important;
-	border: 2px solid #000000 !important;
+	border: 1px solid #000000 !important;
 }
 
 ul.nobullets li {
@@ -116,22 +122,21 @@ ul.nobullets li {
 }
 
 #tabs ul.tabSwitcher {
-	border-bottom: 2px solid black; 
 }
 
 #tabs ul.tabSwitcher li {
         background-color: #ffffff;
-        border-top: 2px solid black;
-        border-left: 2px solid black;
-        border-right: 2px solid black;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
 }
 
 #tabs ul.tabSwitcher li.selected, ul.tabSwitcher li:hover {
         background-color: #ffffff;
 }
 #tabs ul.tabSwitcher li.selected {
-        border-bottom: 1px solid #000000;
 }
+
 #tabs ul.tabSwitcher li.selected a {
         color: #000000;
 }
@@ -143,7 +148,6 @@ ul.nobullets li {
 
 .tabContent {
 	background-color: #ffffff;
-	border: 2px solid #000000;
 	color: #000000;
 }
 
@@ -177,13 +181,28 @@ ul.nobullets li {
 	text-decoration: none;
 }
 
-.nodeitem-active {
-	background: url('/images/marker_active_small.png') no-repeat;
+.nodeitem-activeipv4 {
+	background: url('/images/marker_active_ipv4_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-activeipv6 {
+	background: url('/images/marker_active_ipv6_small.png') no-repeat;
 	padding-left: 15px;
 }
 
 .nodeitem-potential {
 	background: url('/images/marker_potential_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-vpn {
+	background: url('/images/marker_active_vpn_small.png') no-repeat;
+	padding-left: 15px;
+}
+
+.nodeitem-hotspot {
+	background: url('/images/marker_hotspot_small.png') no-repeat;
 	padding-left: 15px;
 }
 
