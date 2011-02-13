@@ -65,7 +65,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 				if (GBrowserIsCompatible()) {
 					var map = createMap();
 					initGui();
-					updatePageLink();
 					resizeMe();
 					window.onresize = function () {
 						resize();
