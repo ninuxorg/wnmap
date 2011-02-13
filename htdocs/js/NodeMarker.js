@@ -35,9 +35,13 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 	icon.infoWindowAnchor = new GPoint(20, 1);
 			
 	switch (state.toLowerCase()) {
-		case 'active':
-			this.statePretty = WNMAP_ACTIVE_NODE;
-			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
+		case 'activeipv4':
+			this.statePretty = WNMAP_ACTIVEIPV4_NODE;
+			icon.image = WNMAP_MAP_URL + "/images/marker_active_ipv4.png";
+			break;
+		case 'activeipv6':
+			this.statePretty = WNMAP_ACTIVEIPV6_NODE;
+			icon.image = WNMAP_MAP_URL + "/images/marker_active_ipv6.png";
 			break;
 		case 'potential':
 			this.statePretty = WNMAP_POTENTIAL_NODE;
@@ -46,9 +50,13 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 		case 'hotspot':
 			this.statePretty = WNMAP_HOTSPOT_NODE;
 			icon.image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
+		case 'vpn':
+			this.statePretty = WNMAP_VPN_NODE;
+			icon.image = WNMAP_MAP_URL + "/images/marker_vpn.png";
 		case 'marker':
-			this.statePretty = WNMAP_MARKER;
 			this.enableDragging();
+			this.statePretty = WNMAP_MARKER;
+			icon.image = WNMAP_MAP_URL + "/images/marker.png";
 			break;
 		default:
 			alert (WNMAP_INVALID_STATE);
@@ -169,11 +177,11 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 
 			thing.appendChild (owner);
 
-
 			var type = document.createElement ("div");
 			type.className ="position";
 			type.innerHTML ="<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
-			if (state == "potential") {
+			
+			if (state != "potential") {
 				type.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=2&ex_val="+this.statePretty+"', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Enable</a> <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=3&ex_val="+this.statePretty+"', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Hotspot</a>";
 			} else {
 				type.innerHTML +=" <a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?name="+this.name+"&action=status&val=1', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=300,height=200');\">Disable</a>";
@@ -181,7 +189,8 @@ function NodeMarker (name, base64name, owner, email, website, jabber, descriptio
 			thing.appendChild (type);
 
 			return thing;
-			/*
+			
+			/*			
 			var f = document.createElement ("div");
 			f.appendChild (thing);
 			return f.innerHTML;

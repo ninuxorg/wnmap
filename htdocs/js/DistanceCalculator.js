@@ -15,9 +15,12 @@ function DistanceCalculator (node)
 		option.appendChild(document.createTextNode(WNMAP_SELECT_));
 		select.appendChild(option);
 		
-		var activegroup = document.createElement("optgroup");
-		activegroup.label = WNMAP_ACTIVE_NODES; 
-
+		var activegroupipv4 = document.createElement("optgroup");
+		activegroupipv4.label = WNMAP_ACTIVEIPV4_NODES; 
+		
+		var activegroupipv6 = document.createElement("optgroup");
+		activegroupipv6.label = WNMAP_ACTIVEIPV6_NODES;
+	
 		var inactivegroup = document.createElement("optgroup");
 		inactivegroup.label = WNMAP_POTENTIAL_NODES;
 
@@ -30,11 +33,13 @@ function DistanceCalculator (node)
 				option = document.createElement("option");
 				option.appendChild(document.createTextNode(marker.name));
 
-				if (marker.state == "active") {
-					activegroup.appendChild(option);
+				if (marker.state == "activeipv4") {
+					activegroupipv4.appendChild(option);
+				} else if (marker.state == "activeipv6") {
+					activegroupipv6.appendChild(option);
 				} else if (marker.state == "marker") {
 					markergroup.appendChild(option);
-				} else {
+				}else {
 					inactivegroup.appendChild(option);
 				}
 			}
@@ -43,8 +48,11 @@ function DistanceCalculator (node)
 		if (markergroup.childNodes.length > 0) {
 			select.appendChild(markergroup);
 		}	
-		if (activegroup.childNodes.length > 0) {
-			select.appendChild(activegroup);
+		if (activegroupipv4.childNodes.length > 0) {
+			select.appendChild(activegroupipv4);
+		}
+		if (activegroupipv6.childNodes.length > 0) {
+			select.appendChild(activegroupipv6);
 		}
 		if (inactivegroup.childNodes.length > 0) {
 			select.appendChild(inactivegroup);

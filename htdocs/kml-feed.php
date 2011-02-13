@@ -54,10 +54,31 @@ if ($_GET["xml"] == null) {
 		<tilt>0</tilt>
 		<heading>0</heading>
 	</LookAt>
-	<Style id="activeNodeStyle">
-		<IconStyle id="activeNodeIconStyle">
+	<Style id="activeIpv4NodeStyle">
+		<IconStyle id="activeIPv4NodeIconStyle">
 			<Icon>
-				<href><?php echo MAP_URL;?>/images/marker_active.png</href>
+				<href><?php echo MAP_URL;?>/images/marker_active_ipv4.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+    <Style id="activeIPv6NodeStyle">
+		<IconStyle id="activeIpv6NodeIconStyle">
+			<Icon>
+				<href><?php echo MAP_URL;?>/images/marker_active_ipv6.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+    <Style id="HotSpotNodeStyle">
+		<IconStyle id="HotSpotNodeIconStyle">
+			<Icon>
+				<href><?php echo MAP_URL;?>/images/marker_hotspot.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+    <Style id="VPNNodeStyle">
+		<IconStyle id="VPNNodeIconStyle">
+			<Icon>
+				<href><?php echo MAP_URL;?>/images/marker_vpn.png</href>
 			</Icon>
 		</IconStyle>
 	</Style>

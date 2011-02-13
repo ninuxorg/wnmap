@@ -57,11 +57,11 @@ if (isset($_GET["action"])){
 		$ip= $row['nodeIp'];	
 
 		echo "<form method=post action='manager.php?action=ip2'>
-			Modifica gli ip/subnet associate al nodo. Usa spazio come separazione.<br>
+			Modifica i parametri ip/subnet associate a nodo. Usa spazio come separatore.<br>
 			<textarea name=new_ip>$ip</textarea>
 			<input type=hidden name=old_ip value=$ip>
 			<input type=hidden name=name value=$name><br>
-			<input type=submit value='Modifica classe/i Ip'>
+			<input type=submit value='Conferma'>
 		      <form>"; 
 	}
 	if ($_GET["action"] == "ip2" ) {
