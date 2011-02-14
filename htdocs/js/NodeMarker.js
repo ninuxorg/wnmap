@@ -180,9 +180,9 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 		thing.appendChild (pos);
 		
 		var ip = document.createElement ("div");
-		address.className = "position";
-		address.innerHTML = "<b>" + WNMAP_IP_ + "</b> " + this.ip;
-		address.innerHTML +=urlmanager ("name="+this.name+"&action=ip1", 200, 300, "Modifica")
+		ip.className = "position";
+		ip.innerHTML = "<b>" + WNMAP_IP_ + "</b> " + this.ip;
+		ip.innerHTML +=urlmanager ("name="+this.name+"&action=ip1", 200, 300, "Modifica")
 		thing.appendChild (ip);
 
 		var manager = document.createElement ("div");
