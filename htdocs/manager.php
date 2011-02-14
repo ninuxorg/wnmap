@@ -65,8 +65,38 @@ if (isset($_GET["action"])){
 		mail (MANAGEMENT_MAIL, "Node status change", "Il nodo $name è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
 		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
-	}
+	} else 
+	/* Contatta utente */
+	if ($_GET["action"] == "contatti" ) {
+		$query = "SELECT userEmailPublish, streetAddress, userEmail, userRealName FROM nodes WHERE nodeName='". $name ."';";
+		$result = mysql_query ($query, $connection) or die (mysql_error());
+		
+		$row = mysql_fetch_assoc($result);
+		$uname = htmlspecialchars($row['userRealName']);
+		$email = htmlspecialchars($row['userEmail']);
+		$email_pub = $row['userEmailPublish'];
+		
+		echo "L'utente $uname può essere contattato utilizzando il form sottostante:<br>
+			<form method=post action='manager.php?action=contatti2&name=".$name."'>
+				<textarea name='text' rows=10 cols=50 >Il tuo messaggio</textarea>
+				<input type='hidden' name=name value=$name><br>
+				<input type='submit' value='Invia mail'>
+			</form>";
+		if ($email_pub == 1) {
+			echo "Inoltre l'utente ha deciso di rendere pubblica la sua e-mail che è $email<br>Se invece vuoi informazioni generali contatta la community all'indirizzo contatti@ninux.org<br><br>";
+		}
+	} else
+	if ($_GET["action"] == "contatti2" ) {
+		$query = "SELECT userEmail FROM nodes WHERE nodeName='". $name ."';";
+		$result = mysql_query ($query, $connection) or die (mysql_error());
+		
+		$row = mysql_fetch_assoc($result);
+		$email = htmlspecialchars($row['userEmail']);
+		
+		echo "La tua mail è stata inviata corettamente";
+		mail ($email, "Contatto dal MapServer ninux.org", $_POST["text"]. "\n------------\nQuesto messaggio è stato generato attraverso il  mapserver di ninux.\nPer segnalare eventuali abusi scrivi a contatti@ninux.org");
 
+	}
 	/* Ip change */
 	if ($_GET["action"] == "ip1" ) {
 		$query = "SELECT nodeIp FROM nodes WHERE nodeName='". $name ."';";

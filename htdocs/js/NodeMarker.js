@@ -149,7 +149,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 
 			var owner = document.createElement ("div");
 			owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner;
-			owner.innerHTML += urlmanager ("name="+this.name+"&action=contatti", 200, 300, "Contatta")
+			owner.innerHTML += urlmanager ("name="+this.name+"&action=contatti", 400, 600, "Contatta")
 			thing.appendChild (owner);
 
 
