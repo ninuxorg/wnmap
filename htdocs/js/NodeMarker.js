@@ -160,7 +160,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 			if (state == "potential") {
 				type.innerHTML +=urlmanager ("name="+this.name+"&action=status&val=2&ex_val="+this.statePretty, 200, 300, "Enable") + urlmanager ("name="+this.name+"&action=status&val=3&ex_val="+this.statePretty, 200, 300, "Hotspot")
 			} else {
-				type.innerHTML +=urlmanager ("name="+this.name+"&action=status&val=1", 200, 300, "Disable")
+				type.innerHTML +=urlmanager ("name="+this.name+"&action=status&val=1", 200, 300, "Disable") + urlmanager ("name="+this.name+"&action=status&val=3&ex_val="+this.statePretty, 200, 300, "Hotspot")
 			}
 			thing.appendChild (type);
 
