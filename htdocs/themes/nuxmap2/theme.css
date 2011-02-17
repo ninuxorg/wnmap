@@ -181,7 +181,7 @@ ul.nobullets li {
 	text-decoration: none;
 }
 
-.nodeitem-activeipv4 {
+.nodeitem-active {
 	background: url('/images/marker_active_ipv4_small.png') no-repeat;
 	padding-left: 15px;
 }
