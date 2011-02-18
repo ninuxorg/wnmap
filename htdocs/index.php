@@ -107,7 +107,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					</div>
 				</div>
 				-->
-				<div style="float: right; padding: 11px;"><a href="#" id="pageLink"><?php echo LINK_TO_THIS_PAGE;?></a></div>
 				<h2><span><?php echo NETWORK_MAP;?></span></h2>
 			</div>
 			<div id="columns">
