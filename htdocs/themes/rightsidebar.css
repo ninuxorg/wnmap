@@ -1,6 +1,7 @@
 body {
 	margin: 0px;
 	padding: 0px;
+	height:auto;
 }
 
 #header {
@@ -19,14 +20,15 @@ h2 {
 
 #mapColumn {
 	margin-right: 260px;
-	height: 800px;
+	height: auto;
+	width:auto;
 	overflow: hidden;
 }
 
 #sideColumn {
 	position: absolute;
 	width: 260px;
-	top: 65px; /* h1 height + h2 height +2 */
+	top: 0px; /* h1 height + h2 height +2 */
 	right: 0px;
 }
 
@@ -71,7 +73,6 @@ ul.nobullets {
 }
 
 #tabs ul.tabSwitcher li {
-	display: block;
 	float: left;
 	padding-top: 6px;
 	padding-bottom: 0px;

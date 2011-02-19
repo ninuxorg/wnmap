@@ -88,38 +88,19 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 	<body onload="load();" onunload="unload()">
 		<div id="main">
-			<div id="header">
-				<h1><span><?php echo ORG_NAME;?></span></h1>
-			</div>
-			<div id="pageTitle">
-				<!--
-				<div id="accountInfo">
-					<div style="padding-top: 10px; padding-right: 10px;">
-						<div id="accountOptions">
-							<a href="javascript:showLogin();">Log In</a> | Create Account
-						</div>
-						<form id="login">
-							<label for="username">Username:</label> <input type="text" id="username" class="text" style="width: 100px; font-size: x-small; padding: 1px;" />&nbsp;
-							<label for="pasword">Password:</label> <input type="password" id="password" class="text" style="width: 100px; font-size: x-small; padding: 1px;" />
-							<input type="submit" value="Log In" style="font-size: x-small; padding: 1px;" />
-							<input type="button" value="Cancel" style="font-size: x-small; padding: 1px;" onclick="cancelLogin();" />
-						</form>
-					</div>
-				</div>
-				-->
-				<div style="float: right; padding: 11px;"><a href="#" id="pageLink"><?php echo LINK_TO_THIS_PAGE;?></a></div>
-				<h2><span><?php echo NETWORK_MAP;?></span></h2>
-			</div>
 			<div id="columns">
 				<div id="mapColumn">
 					<!-- Map is inserted here -->
 				</div>
 				<div id="sideColumn">
+                <div class="sideItemTop">
+						<!-- Ninux Right Logo is here -->
+				  </div>
 					<div class="sideItem" id="welcomeSideItem">
-						<div class="sideItemTitle">
+					  <div class="sideItemTitle">
 						<h3 style="float: left;"><?php echo WELCOME_TITLE;?></h3>
-							<a href="javascript:toggleVisible ('welcomeContent'); swapImage ('welcomeCollapseImage', '<?php echo MAP_URL;?>images/collapse.png', '<?php echo MAP_URL;?>images/expand.png');"><img src="images/collapse.png" alt="Toggle" id="welcomeCollapseImage" /></a>
-						</div>
+						  <a href="javascript:toggleVisible ('welcomeContent'); swapImage ('welcomeCollapseImage', 'images/collapse.png', 'images/expand.png');"><img src="images/collapse.png" alt="Toggle" id="welcomeCollapseImage" /></a>
+                          </div>
 						<div class="sideItemContent" id="welcomeContent">
 						<p style="margin-top: 0px;"><?php echo WELCOME_TO_THE;?></p>
 							<ul style="padding-left: 2em; list-style: square;">
@@ -131,9 +112,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					<div id="findLocation" class="sideItem">
 						<div class="sideItemTitle">
 							<h3><?php echo FIND_LOCATION;?></h3>
-							<a href="javascript:toggleVisible ('findLocationContent'); swapImage ('findLocationCollapseImage', '<?php echo MAP_URL;?>images/collapse.png', '<?php echo MAP_URL;?>images/expand.png');" ><img id="findLocationCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
+						  <a href="javascript:toggleVisible ('findLocationContent'); swapImage ('findLocationCollapseImage', 'images/collapse.png', 'images/expand.png');" ><img id="findLocationCollapseImage" src="images/expand.png" /></a>
 						</div>
-						<div class="sideItemContent" id="findLocationContent">
+					  <div class="sideItemContent" id="findLocationContent" style="display:none">
 							<form onsubmit="geocode(document.getElementById('address').value); return false;" action="">
 								<p style="margin: 0px;"><label for="address"><?php echo ADDRESS_LABEL;?></label>
 								<br/>
@@ -144,13 +125,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 								</p>
 							</form>
 							<div id="findLocationResponse"></div>
-						</div>
+					  </div>
 					</div>
 					<div id="mapSettings" class="sideItem">
-						<div class="sideItemTitle">
+					  <div class="sideItemTitle">
 							<h3><?php echo MAP_SETTINGS_TITLE;?></h3>
-							<a href="javascript:toggleVisible ('mapSettingsContent'); swapImage ('mapSettingsCollapseImage', '<?php echo MAP_URL;?>images/collapse.png', '<?php echo MAP_URL;?>images/expand.png');" ><img id="mapSettingsCollapseImage" src="images/collapse.png" alt="Toggle" /></a>
-						</div>
+						  <a href="javascript:toggleVisible ('mapSettingsContent'); swapImage ('mapSettings', 'images/collapse.png', 'images/expand.png');" ><img id="mapSettings" src="images/collapse.png" alt="Toggle" /></a>	
+                         </div>
 						<div class="sideItemContent" id="mapSettingsContent">
 							<ul class="nobullets">
 								<li>
@@ -191,7 +172,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 				</div>
 			</div>
 			<div id="footer">
-				<div style="float: right; margin-top: -2px;">
+				<div style="float: right; margin-top: 0px;">
 				    <a href="<?php echo MOBILE_MAP_URL;?>"><img src="images/addandroid.png" alt="Mobile Map for Android" style="border: 0px;" /></a>
 					<a href="<?php echo MAP_URL;?>/kml-feed.php"><img src="images/google_earth_feed.png" alt="Google Earth Feed" style="border: 0px;" /></a>
 				</div>
