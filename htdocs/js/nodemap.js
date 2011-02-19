@@ -58,7 +58,7 @@ function createMap (containerId)
 
 	GEvent.addListener (map, 'click', function (marker, point) {
 		if (!marker) {
-			addMarker (point.lat(), point.lng(), '');
+			addMarker (point.lat(), point.lng());
 		}
 	});
 
@@ -134,7 +134,7 @@ function createMap (containerId)
 
 							if (bad) { break; }
 
-							var marker = new NodeMarker (name, encode64(name), '', '', '', '', '', '', 'marker', x, y);
+							var marker = new NodeMarker (name, encode64(name), '', '', '', 'marker', x, y);
 							markers[marker.name] = marker;
 							markerCount ++;
 
@@ -282,7 +282,7 @@ function addMarker (lat, lng)
 
 	markerCount ++;
 	var newMarkerName = "Untitled Marker " + markerCount;
-	var marker = new NodeMarker (newMarkerName, encode64(newMarkerName), '', '', '', '', '', '', 'marker', lng, lat);
+	var marker = new NodeMarker (newMarkerName, encode64(newMarkerName), '', '', '', 'marker', lng, lat);
 
 	markers[marker.name] = marker;
 	populateMap ();
@@ -292,15 +292,13 @@ function addMarker (lat, lng)
 	return marker;
 }
 
-function renamePrompt (b64name) {
-	var name = decode64 (b64name);
+function renamePrompt (name) {
+	//var name = decode64 (b64name);
 
 	return prompt ('Enter a new name for this node:', name);
 }
 
-function renameMarker (oldB64Name, newName)
-{
-	var oldName = decode64 (oldB64Name);
+function renameMarker (oldName, newName) {
 
 	if ( markers[newName] != null ) {
 		alert("A marker named '" + newName + "' already exists!");
