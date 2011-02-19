@@ -33,7 +33,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
  	icon.iconAnchor = new GPoint(9, 34);
 	icon.infoWindowAnchor = new GPoint(20, 1);
 			
-	switch (state.toLowerCase()) {
+	switch (state) {
 		case 'active':
 			this.statePretty = WNMAP_ACTIVE_NODE;
 			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
@@ -45,6 +45,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 		case 'hotspot':
 			this.statePretty = WNMAP_HOTSPOT_NODE;
 			icon.image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
+			break;
 		case 'marker':
 			this.statePretty = WNMAP_MARKER;
 			icon.image = WNMAP_MAP_URL + "/images/marker.png";

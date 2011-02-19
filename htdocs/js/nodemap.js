@@ -176,11 +176,9 @@ function populateMap ()
 			continue;
 		}
 
-		node.visible = true;
-
 		map.addOverlay (node);
 
-		if (node.state == 'active' | node.state == 'potential') {
+		if (node.state == 'active' | node.state == 'potential' | node.state == 'hotspot') {
 			if (nodeList != null) {
 				nodeList.innerHTML += '<li onmouseover="getMarker(\'' + node.base64Name + '\').showTooltip();" onmouseout="getMarker(\'' + node.base64Name + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + node.base64Name + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.base64Name + '\').zoomTo();" class="zoomLink">zoom</a></li>';
 			}
