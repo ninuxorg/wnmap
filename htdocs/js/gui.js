@@ -17,17 +17,7 @@ function initGui ()
                 document.getElementById("showTun").checked = false;
         }
 
-	GEvent.addListener (map, "moveend", function () {
-		updatePageLink();
-	});
-
-	GEvent.addListener (map, "zoomend", function () {
-		updatePageLink();
-	});
-
 	GEvent.addListener (map, "infowindowopen", function () {
-		updatePageLink();
-
 		var selectedMarker = getSelectedMarker();
 		if (selectedMarker.state == "marker") {
 			showMarkers();
@@ -36,22 +26,6 @@ function initGui ()
 		}
 	});
 
-	GEvent.addListener (map, "infowindowclose", function () {
-		updatePageLink();
-	});
-}
-
-function updatePageLink ()
-{
-	var center = map.getCenter();
-	var zoom = map.getZoom();
-
-	var selectedMarker = getSelectedMarker();
-	if (selectedMarker != null && selectedMarker.state != "marker") {
-		document.getElementById ("pageLink").href = "?centerlat=" + center.lat() + "&centerlng=" + center.lng() + "&zoom=" + zoom + "&select=" + URLEncode(selectedMarker.name);
-	} else {
-		document.getElementById ("pageLink").href = "?centerlat=" + center.lat() + "&centerlng=" + center.lng() + "&zoom=" + zoom;
-	}
 }
 
 function getSelectedMarker ()
