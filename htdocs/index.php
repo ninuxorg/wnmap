@@ -89,13 +89,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	<body onload="load();" onunload="unload()">
 		<div id="main">
 			<div id="columns">
-				<div id="mapColumn">
+				<div id="mapColumn" style="display:block">
 					<!-- Map is inserted here -->
 				</div>
 				<div id="sideColumn">
-                <div class="sideItemTop">
+                	<div class="sideItemTop">
 						<!-- Ninux Right Logo is here -->
-				  </div>
+				  	</div>
 					<div class="sideItem" id="welcomeSideItem">
 					  <div class="sideItemTitle">
 						<h3 style="float: left;"><?php echo WELCOME_TITLE;?></h3>

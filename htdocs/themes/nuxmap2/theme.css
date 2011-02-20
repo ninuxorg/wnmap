@@ -12,6 +12,7 @@ h1, h2 {
 }
 
 #header {
+
 }
 
 h1 {
@@ -38,15 +39,6 @@ h2 span {
 h2 {
 	/*background: url("images/title.png") no-repeat center left;*/
 	height: 38px;
-}
-
-#mapColumn {
-	border-top: 2px solid #444;
-	border-right: 1px solid #444;
-	border-left: 1px solid #444;
-	height:auto;
-	width:auto;
-	/* background-color: #ffffff; */
 }
 
 #sideColumn {
@@ -129,6 +121,7 @@ ul.nobullets li {
 }
 
 #tabs ul.tabSwitcher {
+list-style: none;
 }
 
 #tabs ul.tabSwitcher li {
@@ -136,15 +129,19 @@ ul.nobullets li {
         border-top: 1px solid black;
         border-left: 1px solid black;
         border-right: 1px solid black;
+		list-style: none;
 }
 
 #tabs ul.tabSwitcher li.selected, ul.tabSwitcher li:hover {
         background-color: #ffffff;
+		list-style: none;
 }
 #tabs ul.tabSwitcher li.selected {
+		list-style: none;
 }
 
 #tabs ul.tabSwitcher li.selected a {
+		list-style: none;
         color: #000000;
 }
 #tabs ul.tabSwitcher li a {
@@ -160,11 +157,12 @@ ul.nobullets li {
 }
 
 #footer {
-	border-top: 0px solid #444;
+	border-top: 5px solid #444;
 	background-color: #444;
 	padding: 5px;
 	color: #ffffff;
 }
+
 #footer a {
 	color: inherit;
 }
