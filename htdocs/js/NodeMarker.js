@@ -33,7 +33,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
  	icon.iconAnchor = new GPoint(9, 34);
 	icon.infoWindowAnchor = new GPoint(20, 1);
 			
-	switch (state.toLowerCase()) {
+	switch (state) {
 		case 'active':
 			this.statePretty = WNMAP_ACTIVE_NODE;
 			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
@@ -45,8 +45,10 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 		case 'hotspot':
 			this.statePretty = WNMAP_HOTSPOT_NODE;
 			icon.image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
+			break;
 		case 'marker':
 			this.statePretty = WNMAP_MARKER;
+			icon.image = WNMAP_MAP_URL + "/images/marker.png";
 			this.enableDragging();
 			break;
 		default:
@@ -72,7 +74,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 			thing.appendChild (title);
 			
 			var renameLink = document.createElement ("a");
-			renameLink.href = "javascript:var newname = renamePrompt ('" + encode64 (this.name) + "'); if (newname != null) { renameMarker ('" + encode64 (this.name) + "', newname); getMarker (newname).select(); }";
+			renameLink.href = "javascript:var newname = renamePrompt ('" + this.name + "'); if (newname != null) { renameMarker ('" + this.name + "', newname); getMarker (newname).select(); }";
 			renameLink.innerHTML = WNMAP_RENAME;
 			title.appendChild (renameLink);
 
@@ -95,7 +97,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 			var addActionLink = document.createElement ("a");
 			addActionLink.innerHTML = WNMAP_ADD_THIS + "<br/>";
 
-			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&ip=" + this.ip + "&addr='" + encode64 (this.streetAddress) + "'";
+			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&ip=" + this.ip ;
 			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
 			
 
@@ -106,7 +108,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 			deleteActionItem.style.setProperty("background", "url(images/remove.png) no-repeat", "");
 			var deleteActionLink = document.createElement ("a");
 			deleteActionLink.innerHTML = WNMAP_REMOVE_MARKER;
-			deleteActionLink.href = "javascript:getMarker('" + encode64 (this.name) + "').removeMarker ();";
+			deleteActionLink.href = "javascript:getMarker('" + this.name + "').removeMarker ();";
 
 			deleteActionItem.appendChild (deleteActionLink);
 			actionList.appendChild (deleteActionItem);

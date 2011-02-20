@@ -3,7 +3,8 @@
 body {
 	font-family: Bitstream Vera Sans, Verdana;
 	font-size: 8pt;
-	background: url("images/background_spacer.png") repeat;
+	/*background: url("images/background_spacer.png") no-repeat;*/
+	
 }
 
 h1, h2 {
@@ -16,8 +17,9 @@ h1, h2 {
 h1 {
 /*	Place a link to your logo and its position attributes here. */
 	background: url("images/background.png") no-repeat;
-       	height: 50px;
 	margin-bottom: 0px;	
+	margin-top:0px;
+	height:126px;
 }
 
 h1 span {
@@ -42,7 +44,8 @@ h2 {
 	border-top: 2px solid #444;
 	border-right: 1px solid #444;
 	border-left: 1px solid #444;
-	
+	height:auto;
+	width:auto;
 	/* background-color: #ffffff; */
 }
 
@@ -59,6 +62,10 @@ h2 {
 	border-top: 1px solid #444;
 }
 
+.sideItemTop{
+	background: url("images/background.png") no-repeat;
+	height:126px;
+}
 .sideItemTitle a {
 	color: #000000;
 }
@@ -149,12 +156,13 @@ ul.nobullets li {
 .tabContent {
 	background-color: #ffffff;
 	color: #000000;
+	display:block;
 }
 
 #footer {
-	border-top: 15px solid #444;
+	border-top: 0px solid #444;
 	background-color: #444;
-	padding: 10px;
+	padding: 5px;
 	color: #ffffff;
 }
 #footer a {
@@ -168,7 +176,9 @@ ul.nobullets li {
 }
 
 #nodeList li, #markerList li {
-	padding-bottom: 10px;
+	padding-bottom: 5px;
+		padding-top: 5px;
+
 }
 
 /* does this even work? */
