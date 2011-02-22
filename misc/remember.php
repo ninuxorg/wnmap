@@ -27,7 +27,7 @@ if ( isset ($_SERVER['REMOTE_ADDR']))
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
-$query = "SELECT * FROM " . MYSQL_NODES_TABLE . ";";
+$query = "SELECT * FROM " . MYSQL_NODES_TABLE . " WHERE status IN (1, 2, 3);";
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 $fd = fopen ("mail_text.txy", "r");
