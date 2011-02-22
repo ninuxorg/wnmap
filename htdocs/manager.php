@@ -43,7 +43,7 @@ if (isset($_GET["action"])){
 		$query = "UPDATE nodes SET status=" . $val . " WHERE nodeName='". $name ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 
-		mail (MANAGEMENT_MAIL, "Node status change", "Il nodo $name è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+		mail (MANAGEMENT_MAIL, "Node status change", "Il nodo". $name ."è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
 		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
 	} else 
@@ -57,7 +57,7 @@ if (isset($_GET["action"])){
 		$email = htmlspecialchars($row['userEmail']);
 		$email_pub = $row['userEmailPublish'];
 		
-		echo "L'utente $uname può essere contattato utilizzando il form sottostante:<br>
+		echo "L'utente $uname può essere contattato utilizzando il form sottostante:<br>Ricordati di aggiungere la tua mail come informazione per essere ricontattato,<br>
 			<form method=post action='manager.php?action=contatti2&name=".$name."'>
 				<textarea name='text' rows=10 cols=50 >Il tuo messaggio</textarea>
 				<input type='hidden' name=name value=$name><br>
@@ -100,7 +100,7 @@ if (isset($_GET["action"])){
 		$query = "UPDATE nodes SET nodeIp='" . $ip . "' WHERE nodeName='". $_POST["name"] ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 
-		mail (MANAGEMENT_MAIL, "Node ip change", "Il nodo $name è passato dall'ip --". $_POST["old_ip"] ."-- a ". $_GET['new_ip'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+		mail (MANAGEMENT_MAIL, "Node ip change", "Il nodo". $name ."è passato dall'ip --". $_POST["old_ip"] ."-- a ". $ip ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
 		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
 	} else
