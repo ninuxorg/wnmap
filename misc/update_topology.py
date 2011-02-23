@@ -1,114 +1,238 @@
 #! /usr/bin/env python
-import os
-import re
+
+#
+#  Copyright (C) 2011 Claudio Pisa <clauz at ninux dot org>
+#
+#  This is the reengineering of a script written by:
+#  OrazioPirataDelloSpazio, Don@TuX, Si_Mo, Nino
+#
+#  This file is part of WNMap.
+#
+#  WNMap is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  WNMap is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with WNMap.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+
+import urllib2
 import MySQLdb
+import sys
 
-# Authors: OrazioPirataDelloSpazio, Don@TuX, Si_Mo, Nino
-# This software is released under GPL3
-# Copyright Ninux.org 2008
+# OLSR host 
+TOPOLOGY_URL="http://127.0.0.1:2006/all"
 
-#This script reads the the txt file from olsrd_txtinfo plug-in and inserts in the wnmap database active wireless links
-#Needs python-mysql and wget packages
+# MySQL 
+DB_HOST = "localhost"
+DB_USER = "wnmap"
+DB_PASSWD = "wnmap" 
+DB_NAME = "wnmapunstable"
+DB_TABLE = "links"
+
+# Link quality thresholds
+ETX_GOOD_TRESHOLD = 1.6
+ETX_BAD_TRESHOLD = 2.9
+ETX_TRESHOLD = 7 # nodes with average etx over this treshold will not be drawn
+ETX_GOOD = 1
+ETX_MEDIUM = 2
+ETX_BAD = 3
+ETX_DONT_DRAW = -1
 
 
-#Mysql variables
-host = "127.0.0.1" 
-user="wnmap"
-passwd="wnmap"
-db="wnmapunstable"
-table="links"
-ninuxcity="roma"
-#Link quality threshold
-good_link=1.2
-bad_link=2
+class MySQLWrapper(object):
+		CLEAR_SQL = "DELETE FROM `links` WHERE `links`.`network`=\"%s\"" 
+		FIND_IP_SQL = 'SELECT `id` FROM `nodes` WHERE `nodeIP` REGEXP "[[:<:]]%s[[:>:]]"' 
+		INSERT_LINK_SQL = 'INSERT INTO `links` (`node1`,`node2`,`type`,`quality`,`network`) VALUES (%d, %d, "%s", %d, "%s")' 
+		def __init__(self, host, user, passwd, db, city):
+				try:
+						self.conn = MySQLdb.connect(host, user, passwd, db)
+						self.conn.autocommit(True)
+						self.tconn = MySQLdb.connect(host, user, passwd, db)
+						self.tconn.autocommit(False)
+				except Exception:
+						print("Database problems. Quitting.")
+						sys.exit(2)
+				self.city = city
+		def __executesql(self, sqlquery, transaction=False):
+				print(sqlquery)
+				if transaction:
+						c = self.tconn.cursor()
+				else:
+						c = self.conn.cursor()
+				c.execute(sqlquery)
+				return c
+		def clear(self):
+				self.__executesql(self.CLEAR_SQL % self.city, transaction=True)
+		def findIpId(self, ipaddress):
+				"Find an IP address' id"
+				c = self.__executesql(self.FIND_IP_SQL % ipaddress)
+				if c.rowcount == 0:
+						return -1
+				data = c.fetchone()
+				return data[0]
+		def insertLink(self, id1, id2, ltype, quality):
+				if id1 > 0 and id2 > 0:
+						self.__executesql(self.INSERT_LINK_SQL % (id1, id2, ltype, quality, self.city), transaction=True)
+		def commit(self):
+				self.tconn.commit()
 
-########################### IMPLEMENTATION #############################
 
-#download topology
-os.system(" wget http://127.0.0.1:2006/all -q -O topology.txt")
+class AliasManager(object):
+		"a MID is an IP alias in OLSR terminology. This class manages all IP addresses"
+		def __init__(self, mysqlwrapper):
+				self.aliasdict = dict() # keys are ip addresses, values are unique ids
+				self.idcounter = -2     # -1 is reserved, we start from -2
+				self.mysqlwrapper = mysqlwrapper # a MySQLWrapper istance
+				self.unknownIPs = list()
+		def addalias(self, ip, alias):
+				# all aliases of the same ip share the same unique id, stored as value of aliasdict.
+				if self.aliasdict.has_key(ip):
+						# if we already have this ip, use the same id for the alias
+						ipid = self.aliasdict[ip] 
+						self.aliasdict.update({alias: ipid})
+				elif self.aliasdict.has_key(alias):
+						# if we already have this alias, use the same id for the ip
+						ipid = self.aliasdict[alias] 
+						self.aliasdict.update({ip: ipid})
+				else:
+						# we need a new id
+						newid = self.idcounter
+						self.idcounter -= 1
+						self.aliasdict.update({ip: newid, alias: newid})
+		def updateIdsFromDb(self):
+				"retrieve real ids from the database"
+				# first pass: find id to realid (i.e. from the database) correspondances
+				old2realId = dict() 
+				for ip, id in self.aliasdict.iteritems():
+						if not old2realId.has_key(id):
+								# search in the DB
+								realid = self.mysqlwrapper.findIpId(ip)
+								if realid < 0: 
+										continue   # no match
+								old2realId.update({id: realid})
 
-#open file
-topology_file=open("topology.txt",'r')
-parsing=False
-#open 
-try:
-	conn = MySQLdb.connect(host,user,passwd,db)
-except MySQLdb.Error, e:
-	print "Error %d: %s" % (e.args[0], e.args[1])
-cursore = conn.cursor()
-deletequery = "DELETE FROM `links` WHERE `links`.`network`=\"%s\"" % ninuxcity
-cursore.execute(deletequery)
-assert good_link <=  bad_link, "Good link threshold must be lesser equal than bad link threshold !"
-mysql_query=''
-link_quality=''
-links_etx = {}
-#Wireless Nodes ID
-id_endpoint1=''
-id_endpoint2=''
-#quality_values
-quality_values = {'good' : 1, 'medium' : 2, 'bad': 3}
-for line in topology_file.readlines():
-	if parsing:
-		if line.isspace():
-			print "Executing query on DB..."
-			print "MySQL QUERY: INSERT INTO `links` (`node1`,`node2`,`type`,`quality`,`network`) VALUES %s" % (mysql_query)
-			if mysql_query=='':
-				print "NO DATA IN MY_SQL_TABLE"
-			else:
-				cursore.execute('INSERT INTO `links` (`node1`,`node2`,`type`,`quality`,`network`) VALUES %s' % mysql_query )
-			parsing=False
-			break
-		endpoint1=line.split()[0] #IP address of endpoint1
-		endpoint2=line.split()[1] #IP address of endpoint2
-		print "searching ip: %s and the other ip %s" % (endpoint1,endpoint2) 	
-		#look if there is already a link between these two nodes
-		cursore.execute('SELECT `id` FROM `links` WHERE `node1`="%s" AND `node2`="%s"' % (endpoint1,endpoint2))
-		if cursore.rowcount == 0 : # if no links between nodes...(i.e. no VPN links)
-			#cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint1+'%'))
-			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` REGEXP "%s"' % (endpoint1 + "[[:>:]]") )
-			data = cursore.fetchall()
-			if cursore.rowcount == 0: 
-				print "No nodes with IP: %s in the nodes table" % (endpoint1)
-				continue
-			id_endpoint1=data[0][0]
-			print "%s's Node ip is %d" % (endpoint1,id_endpoint1)	
-			#cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` LIKE "%s"' % ('%'+endpoint2+'%'))
-			cursore.execute('SELECT `id` FROM `nodes` WHERE `nodeIP` REGEXP "%s"' % (endpoint2 + "[[:>:]]") )
-			data = cursore.fetchall()
-			if cursore.rowcount == 0: 
-				print "No nodes with IP: %s in the nodes table" % (endpoint2)
-				continue
-			id_endpoint2=data[0][0]
-			print "%s's Node ip is %d" % (endpoint2,id_endpoint2)	
+				# second pass: update 
+				for ip, id in self.aliasdict.iteritems():
+						try:
+								realid = old2realId[id]
+								self.aliasdict.update({ip: realid})
+						except KeyError:
+								pass
+		def getIdFromIP(self, ip):
+				if self.aliasdict.has_key(ip):
+					return self.aliasdict[ip]
+				r = self.mysqlwrapper.findIpId(ip)
+				if r < 0:
+					self.unknownIPs.append(ip)
+				return r
 
-			try:
-				etx=float(line.split()[4])
-			except:
-				etx = 999999
+		def __str__(self):
+				return str(self.aliasdict)
 
-			if id_endpoint1 + id_endpoint2 not in links_etx:
-				links_etx[id_endpoint2 + id_endpoint1] = etx
-				continue #wait the other monodirectional link...
-			
-			# if found the other link, we can calculate the average etx and prepare the mysql query
-			avg_etx = (links_etx[id_endpoint1 + id_endpoint2] + etx )/ 2
-			del(links_etx[id_endpoint1 + id_endpoint2])
-			
-			print "Created link from node %s to node %s with medium etx %f" % (endpoint1, endpoint2, avg_etx)
-			if avg_etx <= good_link:
-				link_quality = quality_values['good'] 
-			elif good_link < avg_etx < bad_link:
-				link_quality = quality_values['medium'] 
-			elif avg_etx >= bad_link:
-				link_quality = quality_values['bad'] 
-			if id_endpoint1 != id_endpoint2:	
-				if avg_etx < 9:
-					if mysql_query != '': 
-						mysql_query = mysql_query + ','
-					mysql_query = mysql_query + '(%s,%s,"wifi",%s,\"%s\")' % (id_endpoint1,id_endpoint2,link_quality,ninuxcity)
-			else: 
-				print "same ids"		
+
+class TopologyParser(object):
+		def __init__(self, topology_url, mysqlwrapper):
+				self.mysqlwrapper = mysqlwrapper
+				print ("Retrieving topology...")
+				self.topologylines = urllib2.urlopen(TOPOLOGY_URL).readlines()
+				print ("Done...")
+				self.linklist = list()
+				self.aliasmanager = AliasManager(mysqlwrapper)
+		def parse(self):
+				"parse the txtinfo plugin output and make two lists: a link list and an alias (MID) list"
+				# parse Topology info
+				print ("Parsing Toplogy Information...")
+				i = 0
+				line = self.topologylines[i]
+				while line.find('Table: Topology') == -1:
+						i += 1
+						line = self.topologylines[i]
+
+				i += 2 # skip the heading line
+				line = self.topologylines[i]
+				while not line.isspace():
+						try:
+								ipaddr1, ipaddr2, lq, nlq, etx = line.split()
+								self.linklist.append((ipaddr1, ipaddr2, float(etx)))
+						except Exception:
+								pass
+						i+=1
+						line = self.topologylines[i]
 				
-	if line.find('Dest. IP') != -1:
-		parsing=True	
+				# parse MID info
+				print ("Parsing MID Information...")
+				while line.find('Table: MID') == -1:
+						i += 1
+						line = self.topologylines[i]
+
+				i += 1 # skip the heading line
+				line = self.topologylines[i]
+				while not line.isspace():
+						try:
+								ipaddr, alias = line.split()
+								self.aliasmanager.addalias(ipaddr, alias)
+						except Exception:
+								pass
+						i+=1
+						line = self.topologylines[i]
+
+		def processAndDraw(self):
+				"should be called after calling parse()"
+				# retrieve id info from the DB
+				self.aliasmanager.updateIdsFromDb()
+
+				linkdict = dict()
+				for ipaddr1, ipaddr2, etx in self.linklist:
+						id1 = self.aliasmanager.getIdFromIP(ipaddr1)
+						id2 = self.aliasmanager.getIdFromIP(ipaddr2)
+						if id1 < id2:
+								k = (id1, id2)
+						else:
+								k = (id2, id1)
+
+						if linkdict.has_key(k):
+								etx0 = linkdict[k]
+								linkdict.update({k: (etx0 + etx)*0.5}) # average
+						else:
+								linkdict.update({k: etx})
+
+				# draw the links
+				self.mysqlwrapper.clear() # clear the map
+				for k, etx in linkdict.iteritems():
+						if etx >= ETX_TRESHOLD:
+								continue # don't draw this link
+
+						if etx >= ETX_BAD_TRESHOLD:
+								lq = ETX_BAD
+						elif etx <= ETX_GOOD_TRESHOLD:
+								lq = ETX_GOOD
+						else:
+								lq = ETX_MEDIUM
+						id1, id2 = k
+						self.mysqlwrapper.insertLink(id1, id2, 'wifi', lq)
+
+				self.mysqlwrapper.commit()
+
+				print("Unknown IP Addressess:")
+				print(self.aliasmanager.unknownIPs)
+
+
+if __name__ == "__main__":
+		try:
+				dbcity = sys.argv[1]
+		except Exception:
+				print("Usage: %s <city name>" % (sys.argv[0]))
+				sys.exit(1)
+		msr = MySQLWrapper(DB_HOST, DB_USER, DB_PASSWD, DB_NAME, dbcity)
+		tp = TopologyParser(TOPOLOGY_URL, msr)
+		tp.parse()
+		tp.processAndDraw()
 
