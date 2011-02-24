@@ -68,7 +68,7 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 			thing.appendChild (title);
 			
 			var renameLink = document.createElement ("a");
-			renameLink.href = "javascript:var newname = renamePrompt ('" + this.name + "'); if (newname != null) { renameMarker ('" + this.name + "', newname); getMarker (newname).select(); }";
+			renameLink.href = "javascript:var newname = renamePrompt ('" + this.name + "'); if (newname != null) { renameMarker ('" + this.id + "', '" + this.name + "', newname); getMarker (newname).select(); }";
 			renameLink.innerHTML = WNMAP_RENAME;
 			title.appendChild (renameLink);
 

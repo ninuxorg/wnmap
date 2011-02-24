@@ -11,7 +11,7 @@ var markers = [];
 var tunnels = [];
 var links = [];
 var gotoAddressWindow;
-var markerCount = 0;
+var markerid = -1;
 
 var firstLoad = true;
 
@@ -32,7 +32,6 @@ function createMap (containerId)
 	}
 
 	embedScript ("js.php?file=NodeMarker");
-	embedScript ("js.php?file=cookies");
 	embedScript ("js.php?file=DistanceCalculator");
 
 	embedStyle ("themes/map.css");
@@ -56,7 +55,8 @@ function createMap (containerId)
 
 	GEvent.addListener (map, 'click', function (marker, point) {
 		if (!marker) {
-			addMarker (point.lat(), point.lng());
+			var nome = prompt ('Inserisci il nome di questo nuovo nodo:', 'nodo_potenziale');
+			addMarker (nome, point.lat(), point.lng());
 		}
 	});
 
@@ -106,39 +106,6 @@ function createMap (containerId)
 					alert ("ERROR WITH LINK: " + lnks[i].getAttribute("noed1")  + " <--> " + lnks[i].getAttribute("node2") + ":\n\n" + e);
 				}
 			}
-
-
-			// Add local markers
-			//XXX: Move cookie foo to gui.js
-			/*var markersText = readCookie ("markers");
-			if (markersText != null) {
-				var savedMarkers = markersText.split ('|');
-				for (var i = 0; i < savedMarkers.length; i++) {
-					if (savedMarkers[i] != '') {
-						var markerParameters = savedMarkers[i].split (',');
-						var name = decode64 (markerParameters [0]);
-						if (markers[name] == null) {
-							var y = markerParameters [2];
-							var x = markerParameters [1];
-
-							var bad = false;
-							for (key in markers) {
-								if (markers[key].getPoint().lng() == x & markers[key].getPoint().lat() == y) {
-									bad = true;
-									break;
-								}
-							}
-
-							if (bad) { break; }
-
-							var marker = new f ('', name, encode64(name), '', '', 0, x, y);
-							markers[marker.name] = marker;
-							markerCount ++;
-
-						}
-					}
-				}
-			}*/
 
 			populateMap ();
 		}
@@ -235,47 +202,29 @@ function populateMap ()
 	firstLoad = false;
 }
 
-function saveMarkers()
-{	
-	// Save Markers
-	var value = '';
-	var arr = new Array();
-	for (key in markers) {
-		var marker = markers[key];
-		if (marker.state == 'marker') {
-			arr.push(encode64 (marker.name) + ',' + marker.getPoint().lng() + ',' + marker.getPoint().lat());
-		}
-	}
-	value = arr.join("|");
-
-	//XXX: Move cookie foo to gui.js
-	if (value != '') {
-		createCookie ("markers", value, 300);
-	} else {
-		eraseCookie ("markers");
-	}
-}
-
 
 function getMarker (id) {
 	return markers[index];
 }
 
-function addMarker (lat, lng) 
+function addMarker (nome, lat, lng) 
 {
 
 	showMarkers ();
 
 	for (var key in markers) {
+                if (markers[key].name == nome) {
+                        alert ("A marker with this name already exists. Sorry!.");
+                        return;
+                }
                 if (markers[key].getPoint().lng() == lng & markers[key].getPoint().lat() == lat) {
                         alert ("A marker at this point already exists.");
                         return;
-                }
+                }		
         }
 
-	markerCount ++;
-	var newMarkerName = "Untitled Marker " + markerCount;
-	var marker = new NodeMarker ('', newMarkerName, '', '', 0, lng, lat);
+	markerid --;
+	var marker = new NodeMarker (nome, newMarkerName, '', '', 'marker', lng, lat);
 
 	markers[marker.id] = marker;
 	populateMap ();
@@ -285,32 +234,8 @@ function addMarker (lat, lng)
 	return marker;
 }
 
-function renamePrompt (name) {
-	//var name = decode64 (b64name);
-
-	return prompt ('Enter a new name for this node:', name);
-}
-
-function renameMarker (oldName, newName) {
-
-	if ( markers[newName] != null ) {
-		alert("A marker named '" + newName + "' already exists!");
-		return 0;
-	}
-
-	var marker = markers [oldName];
-	marker.name = newName;
-	marker.id = encode64 (newName);
-
-	markers [newName] = marker;
-	markers [oldName] = null;
-	delete markers[oldName];
-
-	populateMap ();
-}
 
 // some helper functions
-
 // based on code from
 // http://www.activsoftware.com/code_samples/code.cfm/CodeID/59/JavaScript/Get_Query_String_variables_in_JavaScript
 function getQueryVariable (variable) {

@@ -30,7 +30,7 @@ $file = $_GET['file'];
 $file = eregi_replace("[^[:alnum:]]", "", $file);
 
 // if the specified file doesn't match what we expect, set $file to an empty string
-if ( !ereg("^(NodeMarker|DistanceCalculator|cookies|geocode|gui|nodemap|textcontrol|currentLanguage)$", $file) ) {
+if ( !ereg("^(NodeMarker|DistanceCalculator|geocode|gui|nodemap|textcontrol|currentLanguage)$", $file) ) {
     $file = "";
 }
 

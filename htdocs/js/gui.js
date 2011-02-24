@@ -1,22 +1,5 @@
 function initGui ()
 {
-        if (readCookie ("showactive") == "false") {
-		showActive = false;
-		document.getElementById("showActive").checked = false;
-	}
-        if (readCookie ("showpotential") == "false") {
-		showPotential = false;
-                document.getElementById("showPotential").checked = false;
-        }
-        if (readCookie ("showwireless") == "false") {
-		showLinks = false;
-                document.getElementById("showLinks").checked = false;
-        }
-        if (readCookie ("showtunnels") == "false") {
-		showTunnels = false;
-                document.getElementById("showTun").checked = false;
-        }
-
 	GEvent.addListener (map, "infowindowopen", function () {
 		var selectedMarker = getSelectedMarker();
 		if (selectedMarker.state == "marker") {
@@ -182,16 +165,9 @@ function swapImage (objId, image1, image2)
 function settingChanged ()
 {
 	showActive = document.getElementById("showActive").checked;
-        createCookie ("showactive", showActive, 300);
-
 	showPotential = document.getElementById("showPotential").checked;
-        createCookie ("showpotential", showPotential, 300);
-
 	showLinks = document.getElementById("showLinks").checked;
-        createCookie ("showwireless", showLinks, 300);
-
 	showTunnels = document.getElementById("showTun").checked;
-        createCookie ("showtunnels", showTunnels, 300);
 
 	populateMap();
 }

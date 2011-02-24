@@ -51,7 +51,6 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<script src="js.php?file=nodemap" type="text/javascript"></script>
 		<script src="js.php?file=gui" type="text/javascript"></script>
 		<script src="js.php?file=geocode" type="text/javascript"></script>
-		<script src="js.php?file=cookies" type="text/javascript"></script>
 
 		<title><?php echo SITE_TITLE; ?></title>
 
