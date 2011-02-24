@@ -56,59 +56,15 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 
 
 	this.getOverviewHtml = function () {
-		var html = "";
-
 		if (state == "marker") {
-			var thing = document.createElement ("div");
-			thing.className = "marker_balloon";
-
-			var title = document.createElement ("div");
-			title.className = "title";
-			title.innerHTML = this.name;
-			thing.appendChild (title);
-			
-			var renameLink = document.createElement ("a");
-			renameLink.href = "javascript:var newname = renamePrompt ('" + this.name + "'); if (newname != null) { renameMarker ('" + this.id + "', '" + this.name + "', newname); getMarker (newname).select(); }";
-			renameLink.innerHTML = WNMAP_RENAME;
-			title.appendChild (renameLink);
-
-			var type = document.createElement ("div");
-			type.className ="position";
-			type.innerHTML = "<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
-			thing.appendChild (type);
-
-			var distance = document.createElement ("div");
-			distance.className = "position";
-			distance.innerHTML = "<b>" + WNMAP_DISTANCE_2_CENTER + "</b> " + distanceToCenterPretty(this.getPoint().lat(), this.getPoint().lng());
-			//thing.appendChild (distance);
-
-			var actionList = document.createElement ("ul");
-			thing.appendChild (actionList);
-	
-			var addActionItem = document.createElement ("li");
-			addActionItem.style.setProperty("background", "#ffffff url(images/add.png) no-repeat 0px 5px", null);
-
-			var addActionLink = document.createElement ("a");
-			addActionLink.innerHTML = WNMAP_ADD_THIS + "<br/>";
-
-			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + escape(this.name) + "&ip=" + this.ip ;
-			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
-			
-
-			addActionItem.appendChild (addActionLink);
-			actionList.appendChild (addActionItem);
-	
-			var deleteActionItem = document.createElement ("li");
-			deleteActionItem.style.setProperty("background", "url(images/remove.png) no-repeat", "");
-			var deleteActionLink = document.createElement ("a");
-			deleteActionLink.innerHTML = WNMAP_REMOVE_MARKER;
-			deleteActionLink.href = "javascript:getMarker('" + this.name + "').removeMarker ();";
-
-			deleteActionItem.appendChild (deleteActionLink);
-			actionList.appendChild (deleteActionItem);
-
-			return thing;
-
+			return "<div class='marker_balloon'> \
+					<div class='title'> \
+					"+ this.name +" \
+					</div> \
+					<ul style='background, #ffffff url(images/add.png) no-repeat 0px 5px'> \
+					<a href='" + WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + escape(this.name) + "' target='_blank'>" +  WNMAP_ADD_THIS "</a> \
+					</ul> \
+				</div>";
 		} else {
 			var thing = document.createElement ("div");
 			thing.className = "marker_balloon";
