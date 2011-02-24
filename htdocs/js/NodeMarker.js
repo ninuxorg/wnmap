@@ -47,13 +47,20 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 		default:
 			this.statePretty = WNMAP_MARKER; 
 			icon.image = WNMAP_MAP_URL + "/images/marker.png";
-			//alert(name + state)
-			this.enableDragging();
+			//alert(name + state) 
+
 	}
 
 	/* Add the node to the maps */
-	NodeMarker.baseConstructor.call (this, point, icon);
 
+
+	//Enable dragging for marker node AFTER that it was added to the map
+	if (this.state == "marker") {
+		NodeMarker.baseConstructor.call (this, point, {draggable:true});
+		this.enableDragging();
+	} else {
+		NodeMarker.baseConstructor.call (this, point, icon);
+	}
 
 	this.getOverviewHtml = function () {
 		if (state == "marker") {
@@ -196,10 +203,6 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 	this.onDragStart = function () {
 		this.hideTooltip ();
 		map.closeInfoWindow();
-	}
-
-	this.onDragEnd = function () {
-		saveMarkers();
 	}
 
 	GEvent.addListener (this, 'click', this.select);
