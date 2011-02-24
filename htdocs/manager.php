@@ -22,8 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require ("config.php");
 
-echo "<h2>Manager</h2>";
-
 if ( MANAGEMENT == 0)
  	die ("Manager disable due to configuration");
 
@@ -32,24 +30,28 @@ if ( MANAGEMENT == 0)
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
-$name = mysql_real_escape_string ($_GET["name"]);
+$id = mysql_real_escape_string ($_GET["id"]);
 $val = mysql_real_escape_string ($_GET["val"]);
 
 if (isset($_GET["action"])){
  
+	/* Manager - Default action */
+	if ($_GET["action"] == "manager" ) {
+		readfile("manager.html");
+	} else 
 	/* Status change - manager.php?name='+name+'&action=status&val='+new_value */
 	if ($_GET["action"] == "status" ) {
 
-		$query = "UPDATE nodes SET status=" . $val . " WHERE nodeName='". $name ."';";
+		$query = "UPDATE nodes SET status=" . $val . " WHERE nodeId='". $id ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 
-		mail (MANAGEMENT_MAIL, "Node status change", "Il nodo". $name ."è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+		mail (MANAGEMENT_MAIL, "Node status change", "Il nodo". $id ."è passato allo stato $val da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
 		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
 	} else 
 	/* Contatta utente */
 	if ($_GET["action"] == "contatti" ) {
-		$query = "SELECT userEmailPublish, streetAddress, userEmail, userRealName FROM nodes WHERE nodeName='". $name ."';";
+		$query = "SELECT userEmailPublish, streetAddress, userEmail, userRealName FROM nodes WHERE nodeId='". $id ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 		
 		$row = mysql_fetch_assoc($result);
@@ -58,9 +60,9 @@ if (isset($_GET["action"])){
 		$email_pub = $row['userEmailPublish'];
 		
 		echo "L'utente $uname può essere contattato utilizzando il form sottostante:<br>Ricordati di aggiungere la tua mail come informazione per essere ricontattato,<br>
-			<form method=post action='manager.php?action=contatti2&name=".$name."'>
+			<form method=post action='manager.php?action=contatti2&name=".$id."'>
 				<textarea name='text' rows=10 cols=50 >Il tuo messaggio</textarea>
-				<input type='hidden' name=name value=$name><br>
+				<input type='hidden' name=name value=$id><br>
 				<input type='submit' value='Invia mail'>
 			</form>";
 		if ($email_pub == 1) {
@@ -68,7 +70,7 @@ if (isset($_GET["action"])){
 		}
 	} else
 	if ($_GET["action"] == "contatti2" ) {
-		$query = "SELECT userEmail FROM nodes WHERE nodeName='". $name ."';";
+		$query = "SELECT userEmail FROM nodes WHERE nodeId='". $id ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 		
 		$row = mysql_fetch_assoc($result);
@@ -80,7 +82,7 @@ if (isset($_GET["action"])){
 	}
 	/* Ip change */
 	if ($_GET["action"] == "ip1" ) {
-		$query = "SELECT nodeIp FROM nodes WHERE nodeName='". $name ."';";
+		$query = "SELECT nodeIp FROM nodes WHERE nodeId='". $id ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 		
 		$row = mysql_fetch_assoc($result);
@@ -90,47 +92,44 @@ if (isset($_GET["action"])){
 			Modifica gli ip/subnet associate al nodo. Usa spazio come separazione.<br>
 			<textarea name=new_ip>$ip</textarea>
 			<input type=hidden name=old_ip value=$ip>
-			<input type=hidden name=name value=$name><br>
+			<input type=hidden name=name value=$id><br>
 			<input type=submit value='Modifica classe/i Ip'>
 		      <form>"; 
 	}
 	if ($_GET["action"] == "ip2" ) {
 		$ip =  mysql_real_escape_string ($_POST["new_ip"]);
 
-		$query = "UPDATE nodes SET nodeIp='" . $ip . "' WHERE nodeName='". $_POST["name"] ."';";
+		$query = "UPDATE nodes SET nodeIp='" . $ip . "' WHERE nodeId='". $_POST["name"] ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
 
-		mail (MANAGEMENT_MAIL, "Node ip change", "Il nodo". $name ."è passato dall'ip --". $_POST["old_ip"] ."-- a ". $ip ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+		mail (MANAGEMENT_MAIL, "Node ip change", "Il nodo". $id ."è passato dall'ip --". $_POST["old_ip"] ."-- a ". $ip ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
 
 		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
 	} else
 	/* Delete node */
 	if ($_GET["action"] == "del1" ) {
-		echo "Sei sicuro di voler cancellare il nodo $name? 
+		echo "Sei sicuro di voler cancellare il nodo $id? 
 			<form method=post action='manager.php?action=del2'>
-			<input type=hidden name=name value=$name><br>
+			<input type=hidden name=name value=$id><br>
 			<input type=submit value='Si'>    <input type=reset value='No' onclick=\"window.close();>
                        <form>"; 
 	} else
 	if ($_GET["action"] == "del2" ) {
-		mail (MANAGEMENT_MAIL, "Node DELETE!", "L'utente ha richiesto di cancellare il nodo ". $_POST["name"] ." \nIpsorgente: ". $_SERVER['REMOTE_ADDR'] .".\nPer confermare la cencellazione vai su http://". MAP_URL . "/manager.php?action=del3&name=". $_POST["name"] ."&hash=". md5(MANAGEMENT_KEY.$name));
+		mail (MANAGEMENT_MAIL, "Node DELETE!", "L'utente ha richiesto di cancellare il nodo ". $_POST["name"] ." \nIpsorgente: ". $_SERVER['REMOTE_ADDR'] .".\nPer confermare la cencellazione vai su http://". MAP_URL . "/manager.php?action=del3&name=". $_POST["name"] ."&hash=". md5(MANAGEMENT_KEY.$id));
 
 		echo "La tua richiesta è stata inviata al gruppo di gestione.<br>";
 	} else
 	if ($_GET["action"] == "del3" ) {
-		//manage.php?action=del3&name=$name&hash=". md5(MANAGEMENT_KEY.$name)
-		if (md5(MANAGEMENT_KEY.$name) == $_GET["hash"]) {
-			$query = "UPDATE nodes SET status='-2' WHERE nodeName='". $name ."';";
+		//manage.php?action=del3&name=$id&hash=". md5(MANAGEMENT_KEY.$id)
+		if (md5(MANAGEMENT_KEY.$id) == $_GET["hash"]) {
+			$query = "UPDATE nodes SET status='-2' WHERE nodeId='". $id ."';";
 			$result = mysql_query ($query, $connection) or die (mysql_error());
 		}
-		mail (MANAGEMENT_MAIL, "Node ". $name ." DELETED!", "Il nodo ". $name ." è stato cancellato.");
-		echo "Nodo ". $name ." cancellato";
+		mail (MANAGEMENT_MAIL, "Node ". $id ." DELETED!", "Il nodo ". $id ." è stato cancellato.");
+		echo "Nodo ". $id ." cancellato";
 	}
 
 }
-echo "<br><a href=\"javascript:void(0);\" onclick=\"window.close();\">Chiudi</a>";
-
-
 ?>
 
 
