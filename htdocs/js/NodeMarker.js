@@ -13,18 +13,17 @@ var url;
 function urlmanager (get, h, w, linkname) {
 	return "<a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?" + get + "', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=" + w + " ,height=" + h + "' );\">" + linkname + "</a> ";
 }
-function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, ele)
+function NodeMarker (id, name, base64name, owner, description, state, lng, lat)
 {
 	this.name = name;
 	this.owner = owner;
 	this.base64Name = base64name;
 	this.description = description;
-	this.ip = ip;
-	this.elevation = ele;
+	this.id = id;
 	this.state = state;
 	this.visible = true;
 	this.tooltip = this.name;
-	
+
 	var point = new GLatLng (lat, lng);
 
 	/* Prepare new marker */
@@ -33,7 +32,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
  	icon.iconAnchor = new GPoint(9, 34);
 	icon.infoWindowAnchor = new GPoint(20, 1);
 			
-	switch (state) {
+	switch (this.state) {
 		case 'active':
 			this.statePretty = WNMAP_ACTIVE_NODE;
 			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
@@ -46,15 +45,11 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 			this.statePretty = WNMAP_HOTSPOT_NODE;
 			icon.image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
 			break;
-		case 'marker':
-			this.statePretty = WNMAP_MARKER;
-			icon.image = WNMAP_MAP_URL + "/images/marker.png";
-			this.enableDragging();
-			break;
 		default:
-			alert (WNMAP_INVALID_STATE);
-			return;
-			break;
+			this.statePretty = WNMAP_MARKER; 
+			icon.image = WNMAP_MAP_URL + "/images/marker.png";
+			//alert(name + state)
+			this.enableDragging();
 	}
 
 	/* Add the node to the maps */
@@ -64,7 +59,7 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 	this.getOverviewHtml = function () {
 		var html = "";
 
-		if (state == "marker") {
+		if (state == 0) {
 			var thing = document.createElement ("div");
 			thing.className = "marker_balloon";
 
@@ -125,14 +120,12 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 			titleLabel.innerHTML = "<b>" + WNMAP_NAME_ + "</b> ";
 			title.appendChild (titleLabel);
 
-			var titleLink = document.createElement ("a");
-			titleLink.className = "title";
+			var titleLink = document.createElement ("span");
 			titleLink.innerHTML = this.name;
-			titleLink.href = WNMAP_NODE_URL + this.name;
 			title.appendChild (titleLink);
 
 			var linkTo = document.createElement ("span");
-			linkTo.innerHTML = ' - <a href="?select=' + this.name + '">' + WNMAP_MAP_LINK_ + '</a>';
+			linkTo.innerHTML = ' - <a href="?select=' + this.id + '">' + WNMAP_MAP_LINK_ + '</a>';
 			title.appendChild (linkTo);
 
 			thing.appendChild (title);
@@ -150,56 +143,30 @@ function NodeMarker (name, base64name, owner, description, ip, state, lng, lat, 
 			thing.appendChild (description);
 
 			var owner = document.createElement ("div");
-			owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner;
-			owner.innerHTML += urlmanager ("name="+this.name+"&action=contatti", 400, 600, "Contatta")
+			owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner + " ";
+			owner.innerHTML += urlmanager ("id="+this.id+"&action=contatti", 400, 600, "Contatta")
 			thing.appendChild (owner);
 
 
 			var type = document.createElement ("div");
 			type.className ="position";
 			type.innerHTML ="<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
-			
-			if (state == "potential") {
-				type.innerHTML +=urlmanager ("name="+this.name+"&action=status&val=2&ex_val="+this.statePretty, 200, 300, "Enable") + urlmanager ("name="+this.name+"&action=status&val=3&ex_val="+this.statePretty, 200, 300, "Hotspot")
-			} else {
-				type.innerHTML +=urlmanager ("name="+this.name+"&action=status&val=1", 200, 300, "Disable") + urlmanager ("name="+this.name+"&action=status&val=3&ex_val="+this.statePretty, 200, 300, "Hotspot")
-			}
+			thing.appendChild (type);
+
+			var type = document.createElement ("div");
+			type.className ="position";
+			type.innerHTML += urlmanager ("id="+this.id+"&action=manager", 400, 600, "Altro >>")
 			thing.appendChild (type);
 
 			return thing;
 		}
 	}
 
-	this.getLocationHtml = function () {
-		var thing = document.createElement ("div");
-		thing.className = "marker_balloon";
-
-		var f = document.createElement ("div");
-
-		var pos = document.createElement ("div");
-		pos.className = "position";
-		pos.innerHTML = "<b>" + WNMAP_LATITUDE_ + "</b> " + Math.round(this.getPoint().lat()*1000000)/1000000 + "<br/><b>" + WNMAP_LONGITUDE_ + "</b> " + Math.round(this.getPoint().lng()*1000000)/1000000 + "<br/><b>" + WNMAP_ELEVATION_ + "</b> " + this.elevation + " " + WNMAP_AMSL;
-		thing.appendChild (pos);
-		
-		var ip = document.createElement ("div");
-		ip.className = "position";
-		ip.innerHTML = "<b>" + WNMAP_IP_ + "</b> " + this.ip;
-		ip.innerHTML +=urlmanager ("name="+this.name+"&action=ip1", 200, 300, "Modifica")
-		thing.appendChild (ip);
-
-		var manager = document.createElement ("div");
-		manager.className = "position"
-		manager.innerHTML = "<b>Cancella:</b>" + urlmanager ("name="+this.name+"&action=del1", 200, 300, "Cancella nodo")
-		thing.appendChild (manager);
-	
-		return thing;
-	}
 
 	this.select = function () {
 
 		var infoTabs = [
 			new GInfoWindowTab(WNMAP_OVERVIEW_, this.getOverviewHtml()),
-			new GInfoWindowTab(WNMAP_LOCATION_, this.getLocationHtml()),
 			new GInfoWindowTab(WNMAP_DISTANCE_, new DistanceCalculator(this).getContent())
 		];
 

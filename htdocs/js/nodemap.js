@@ -78,17 +78,16 @@ function createMap (containerId)
 			var markersFromXml = xmlDoc.documentElement.getElementsByTagName ("nodes")[0].getElementsByTagName ("node");
 			for (var i = 0; i < markersFromXml.length; i++) {
 
+				var id = markersFromXml[i].getAttribute("id");
 				var name = markersFromXml[i].getAttribute("name");
 				var base64Name = markersFromXml[i].getAttribute("base64Name");
 				var owner = markersFromXml[i].getAttribute("owner");
 				var desc = markersFromXml[i].getAttribute("description");
-				var ip = markersFromXml[i].getAttribute("ip");
 				var state = markersFromXml[i].getAttribute("state");
 				var lng = parseFloat(markersFromXml[i].getAttribute("lng"));
 				var lat = parseFloat(markersFromXml[i].getAttribute("lat"));
-				var ele = parseFloat(markersFromXml[i].getAttribute("elevation"));
 
-				var node = new NodeMarker (name, base64Name, owner, desc, ip, state, lng, lat, ele);
+				var node = new NodeMarker (id, name, base64Name, owner, desc, state, lng, lat);
 
 				markers[node.name] = node;
 			}
@@ -106,14 +105,14 @@ function createMap (containerId)
 					link.point2 = markers [lnks[i].getAttribute("node2")].getPoint();
 					links.push (link);
 				} catch (e) {
-					alert ("ERROR WITH LINK: " + lnks[i].getAttribute("node1")  + " <--> " + lnks[i].getAttribute("node2") + ":\n\n" + e);
+					alert ("ERROR WITH LINK: " + lnks[i].getAttribute("noed1")  + " <--> " + lnks[i].getAttribute("node2") + ":\n\n" + e);
 				}
 			}
 
 
 			// Add local markers
 			//XXX: Move cookie foo to gui.js
-			var markersText = readCookie ("markers");
+			/*var markersText = readCookie ("markers");
 			if (markersText != null) {
 				var savedMarkers = markersText.split ('|');
 				for (var i = 0; i < savedMarkers.length; i++) {
@@ -134,14 +133,14 @@ function createMap (containerId)
 
 							if (bad) { break; }
 
-							var marker = new NodeMarker (name, encode64(name), '', '', '', 'marker', x, y);
+							var marker = new NodeMarker ('', name, encode64(name), '', '', 0, x, y);
 							markers[marker.name] = marker;
 							markerCount ++;
 
 						}
 					}
 				}
-			}
+			}*/
 
 			populateMap ();
 		}
@@ -178,7 +177,7 @@ function populateMap ()
 
 		map.addOverlay (node);
 
-		if (node.state == 'active' | node.state == 'potential' | node.state == 'hotspot') {
+		if (node.state != 0) {
 			if (nodeList != null) {
 				nodeList.innerHTML += '<li onmouseover="getMarker(\'' + node.base64Name + '\').showTooltip();" onmouseout="getMarker(\'' + node.base64Name + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + node.base64Name + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.base64Name + '\').zoomTo();" class="zoomLink">zoom</a></li>';
 			}
@@ -280,7 +279,7 @@ function addMarker (lat, lng)
 
 	markerCount ++;
 	var newMarkerName = "Untitled Marker " + markerCount;
-	var marker = new NodeMarker (newMarkerName, encode64(newMarkerName), '', '', '', 'marker', lng, lat);
+	var marker = new NodeMarker ('', newMarkerName, encode64(newMarkerName), '', '', 0, lng, lat);
 
 	markers[marker.name] = marker;
 	populateMap ();

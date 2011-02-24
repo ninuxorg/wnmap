@@ -33,23 +33,21 @@ $query = "SELECT * FROM " . MYSQL_NODES_TABLE . " WHERE status IN (1, 2, 3) ORDE
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 while ($row = mysql_fetch_assoc($result)) {
+	$id = htmlspecialchars($row['id']);
 	$name = htmlspecialchars($row['nodeName']);
 	$owner = htmlspecialchars($row['userRealName']);
 	$desc = htmlspecialchars ($row['nodeDescription']);
 	$lat = htmlspecialchars($row['lat']);
 	$lng = htmlspecialchars($row['lng']);
-	$ele = htmlspecialchars($row['elevation']);
 	$status = htmlspecialchars($row['status']);
-	$ip = htmlspecialchars($row['nodeIP']);
-
 	if ($status == 1)
 		$state = "potential";
 	else if ($status == 2)
 		$state = "active";
 	else if ($status == 3)
 		$state = "hotspot";
-
-echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" lat=\"$lat\" lng=\"$lng\" elevation = \"$ele\" state=\"$state\" description=\"$desc\" ip=\"$ip\" />\n";
+	
+echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" lat=\"$lat\" lng=\"$lng\" id = \"$id\" state=\"$state\" description=\"$desc\"/>\n";
 }
 
 /* Now push the links */
