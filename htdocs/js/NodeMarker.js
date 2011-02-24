@@ -58,7 +58,7 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 	this.getOverviewHtml = function () {
 		var html = "";
 
-		if (state == 0) {
+		if (state == "marker") {
 			var thing = document.createElement ("div");
 			thing.className = "marker_balloon";
 

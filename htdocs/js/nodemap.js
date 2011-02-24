@@ -183,9 +183,6 @@ function populateMap ()
 		}
 	}
 
-
-	saveMarkers();
-
 	if (firstLoad == true) {
 		if (getQueryVariable("centerlat") != null && getQueryVariable("centerlng") != null && getQueryVariable("zoom") != null) {
 			if (getQueryVariable ("select") != null) {
@@ -225,7 +222,8 @@ function addMarker (nome, lat, lng)
         }
 
 	markerid --;
-	var marker = new NodeMarker (nome, newMarkerName, '', '', 'marker', lng, lat);
+	//NodeMarker (id, name, owner, description, state, lng, lat)
+	var marker = new NodeMarker (markerid, nome, '', '', 'marker', lng, lat);
 
 	markers[marker.id] = marker;
 	populateMap ();
