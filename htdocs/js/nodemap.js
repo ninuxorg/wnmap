@@ -63,7 +63,8 @@ function createMap (containerId)
 	window.addEventListener('DOMMouseScroll', wheelZoom, false);
 	
 	map.enableContinuousZoom();
-	//wap.enableDoubleClickZoom();
+	//we use single-click to add markers
+	map.enableDoubleClickZoom();
 
 	var request = GXmlHttp.create ();
 	request.open ('GET', 'data.php', true);
