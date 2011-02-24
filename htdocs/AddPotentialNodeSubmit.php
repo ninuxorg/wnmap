@@ -38,19 +38,7 @@ if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$"
 	
 	echo INVALID_EMAIL;
 
-} else if ($jabber != "" && eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $jabber) == false) {
-	
-	echo INVALID_JABBER;
-
-} 
-
-else if ($nodeip != "" && eregi("^(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(/[0-9]{1,2}){0,1})([[:space:]]|$))*$", $nodeip) == false) {
-	
-	echo INVALID_IP_;
-
-} 
-
-else if ( tooFarFromCenter($lat, $lng) ) {
+} else if ( tooFarFromCenter($lat, $lng) ) {
 
 	printf(OUT_OF_RANGE, ACCEPTABLE_DISTANCE);
 
@@ -61,10 +49,6 @@ else if ( tooFarFromCenter($lat, $lng) ) {
 } else if ($yourname == "") {
 
 	echo INVALID_NAME_;
-
-} else if ($description == "") {
-
-	echo SPECIFY_DESCRIPTION; 
 
 } else {
 
