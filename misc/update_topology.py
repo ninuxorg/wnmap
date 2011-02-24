@@ -27,9 +27,6 @@ import urllib2
 import MySQLdb
 import sys
 
-# OLSR host 
-TOPOLOGY_URL="http://127.0.0.1:2006/all"
-
 # MySQL 
 DB_HOST = "localhost"
 DB_USER = "wnmap"
@@ -228,11 +225,12 @@ class TopologyParser(object):
 if __name__ == "__main__":
 		try:
 				dbcity = sys.argv[1]
+				topologyurl = sys.argv[2]
 		except Exception:
-				print("Usage: %s <city name>" % (sys.argv[0]))
+				print("Usage: %s <city name> <olsrd txtinfo URL>\nExample: %s roma http://127.0.0.1:2006/all" % (sys.argv[0]), sys.argv[0])
 				sys.exit(1)
 		msr = MySQLWrapper(DB_HOST, DB_USER, DB_PASSWD, DB_NAME, dbcity)
-		tp = TopologyParser(TOPOLOGY_URL, msr)
+		tp = TopologyParser(topologyurl, msr)
 		tp.parse()
 		tp.processAndDraw()
 
