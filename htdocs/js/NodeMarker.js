@@ -13,13 +13,12 @@ var url;
 function urlmanager (get, h, w, linkname) {
 	return "<a href=\"javascript:void(0);\" onclick=\"window.open ('manager.php?" + get + "', 'Manager', 'scrollbars=yes,menubar=no,toolbar=no,status=no,personalbar=no,width=" + w + " ,height=" + h + "' );\">" + linkname + "</a> ";
 }
-function NodeMarker (id, name, base64name, owner, description, state, lng, lat)
+function NodeMarker (id, name, owner, description, state, lng, lat)
 {
 	this.name = name;
 	this.owner = owner;
-	this.base64Name = base64name;
-	this.description = description;
 	this.id = id;
+	this.description = description;
 	this.state = state;
 	this.visible = true;
 	this.tooltip = this.name;
@@ -92,7 +91,7 @@ function NodeMarker (id, name, base64name, owner, description, state, lng, lat)
 			var addActionLink = document.createElement ("a");
 			addActionLink.innerHTML = WNMAP_ADD_THIS + "<br/>";
 
-			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + URLEncode (this.name) + "&ip=" + this.ip ;
+			url = WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + escape(this.name) + "&ip=" + this.ip ;
 			addActionLink.href = "javascript:window.open (url, null,'menubar=no,scrollbars=yes,addressbar=no,locationbar=no,status=no,height=530,width=440'); void(0);";
 			
 

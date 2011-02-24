@@ -32,8 +32,6 @@ function createMap (containerId)
 	}
 
 	embedScript ("js.php?file=NodeMarker");
-	embedScript ("js.php?file=UrlEncode");
-	embedScript ("js.php?file=base64");
 	embedScript ("js.php?file=cookies");
 	embedScript ("js.php?file=DistanceCalculator");
 
@@ -80,14 +78,14 @@ function createMap (containerId)
 
 				var id = markersFromXml[i].getAttribute("id");
 				var name = markersFromXml[i].getAttribute("name");
-				var base64Name = markersFromXml[i].getAttribute("base64Name");
+				var id = markersFromXml[i].getAttribute("id");
 				var owner = markersFromXml[i].getAttribute("owner");
 				var desc = markersFromXml[i].getAttribute("description");
 				var state = markersFromXml[i].getAttribute("state");
 				var lng = parseFloat(markersFromXml[i].getAttribute("lng"));
 				var lat = parseFloat(markersFromXml[i].getAttribute("lat"));
 
-				var node = new NodeMarker (id, name, base64Name, owner, desc, state, lng, lat);
+				var node = new NodeMarker (id, name, owner, desc, state, lng, lat);
 
 				markers[node.name] = node;
 			}
@@ -133,7 +131,7 @@ function createMap (containerId)
 
 							if (bad) { break; }
 
-							var marker = new NodeMarker ('', name, encode64(name), '', '', 0, x, y);
+							var marker = new f ('', name, encode64(name), '', '', 0, x, y);
 							markers[marker.name] = marker;
 							markerCount ++;
 
@@ -179,11 +177,11 @@ function populateMap ()
 
 		if (node.state != 0) {
 			if (nodeList != null) {
-				nodeList.innerHTML += '<li onmouseover="getMarker(\'' + node.base64Name + '\').showTooltip();" onmouseout="getMarker(\'' + node.base64Name + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + node.base64Name + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.base64Name + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+				nodeList.innerHTML += '<li onmouseover="getMarker(\'' + node.id + '\').showTooltip();" onmouseout="getMarker(\'' + node.id + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + node.id + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.id + '\').zoomTo();" class="zoomLink">zoom</a></li>';
 			}
 		} else {
 			if (markerList != null) {
-				markerList.innerHTML += '<li onmouseover="getMarker(\'' + node.base64Name + '\').showTooltip();" onmouseout="getMarker(\'' + node.base64Name + '\').hideTooltip();" class="nodeitem-' + node.state + '"><div style="float: right; padding-right:5px;">(<a href="javascript:getMarker(\'' + node.base64Name + '\').removeMarker();">x</a>)</div><a href="javascript:getMarker(\'' + node.base64Name + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.base64Name + '\').zoomTo();" class="zoomLink">zoom</a></li>';
+				markerList.innerHTML += '<li onmouseover="getMarker(\'' + node.id + '\').showTooltip();" onmouseout="getMarker(\'' + node.id + '\').hideTooltip();" class="nodeitem-' + node.state + '"><div style="float: right; padding-right:5px;">(<a href="javascript:getMarker(\'' + node.id + '\').removeMarker();">x</a>)</div><a href="javascript:getMarker(\'' + node.id + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.id + '\').zoomTo();" class="zoomLink">zoom</a></li>';
 			}
 		}
 	}
@@ -259,9 +257,7 @@ function saveMarkers()
 }
 
 
-function getMarker (b64index) {
-	var index = decode64 (b64index);
-
+function getMarker (id) {
 	return markers[index];
 }
 
@@ -279,9 +275,9 @@ function addMarker (lat, lng)
 
 	markerCount ++;
 	var newMarkerName = "Untitled Marker " + markerCount;
-	var marker = new NodeMarker ('', newMarkerName, encode64(newMarkerName), '', '', 0, lng, lat);
+	var marker = new NodeMarker ('', newMarkerName, '', '', 0, lng, lat);
 
-	markers[marker.name] = marker;
+	markers[marker.id] = marker;
 	populateMap ();
 	marker.select();
 	resizeMe ();
@@ -304,7 +300,7 @@ function renameMarker (oldName, newName) {
 
 	var marker = markers [oldName];
 	marker.name = newName;
-	marker.base64Name = encode64 (newName);
+	marker.id = encode64 (newName);
 
 	markers [newName] = marker;
 	markers [oldName] = null;

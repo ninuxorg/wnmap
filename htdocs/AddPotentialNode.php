@@ -86,9 +86,9 @@ $lon = $_GET["lon"];
 $ele = $_GET["ele"];
 $y = $lat;
 $x = $lon;
-$name = $_GET["name"];
+$name = urldecode($_GET["name"]);
 $ip = $_GET["ip"];
-$addr = base64_decode($_GET["addr"]);
+$addr = $_GET["addr"];
 if ( tooFarFromCenter($y, $x) ) {
         printf(OUT_OF_RANGE, ACCEPTABLE_DISTANCE);
 } else { ?>

@@ -29,7 +29,7 @@ echo "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n
 <nodes>\n";
 
 /* Push the nodes */
-$query = "SELECT * FROM " . MYSQL_NODES_TABLE . " WHERE status IN (1, 2, 3) ORDER BY status DESC, nodename";
+$query = "SELECT * FROM " . MYSQL_NODES_TABLE . " WHERE status IN (1, 2, 3);";
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 while ($row = mysql_fetch_assoc($result)) {
@@ -40,6 +40,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$lat = htmlspecialchars($row['lat']);
 	$lng = htmlspecialchars($row['lng']);
 	$status = htmlspecialchars($row['status']);
+
 	if ($status == 1)
 		$state = "potential";
 	else if ($status == 2)
@@ -47,14 +48,14 @@ while ($row = mysql_fetch_assoc($result)) {
 	else if ($status == 3)
 		$state = "hotspot";
 	
-echo "<node name=\"$name\" base64Name=\"" . base64_encode($name) . "\" owner=\"$owner\" lat=\"$lat\" lng=\"$lng\" id = \"$id\" state=\"$state\" description=\"$desc\"/>\n";
+echo "<node name=\"$name\" owner=\"$owner\" lat=\"$lat\" lng=\"$lng\" id = \"$id\" state=\"$state\" description=\"$desc\"/>\n";
 }
 
 /* Now push the links */
 echo "</nodes>
 	<links>";
 		
-$query = "SELECT * FROM " . MYSQL_LINKS_TABLE . " ORDER BY type DESC";
+$query = "SELECT * FROM " . MYSQL_LINKS_TABLE .";";
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 while ($row = mysql_fetch_assoc($result)) {
