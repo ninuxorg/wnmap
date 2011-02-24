@@ -23,7 +23,7 @@
 #
 
 
-import urllib2
+import os
 import MySQLdb
 import sys
 
@@ -136,10 +136,12 @@ class AliasManager(object):
 
 
 class TopologyParser(object):
-		def __init__(self, topology_url, mysqlwrapper):
+		def __init__(self, topology_url, city, mysqlwrapper):
 				self.mysqlwrapper = mysqlwrapper
-				print ("Retrieving topology...")
-				self.topologylines = urllib2.urlopen(TOPOLOGY_URL).readlines()
+				print ("Retrieving topology from %s" % (topology_url))
+				os.system("wget %s -q -O topology_%s.txt" % (topology_url, city))
+				f = open("topology_%s.txt" % (city))
+				self.topologylines = f.readlines()
 				print ("Done...")
 				self.linklist = list()
 				self.aliasmanager = AliasManager(mysqlwrapper)
@@ -168,7 +170,10 @@ class TopologyParser(object):
 				print ("Parsing MID Information...")
 				while line.find('Table: MID') == -1:
 						i += 1
-						line = self.topologylines[i]
+						try:
+								line = self.topologylines[i]
+						except IndexError:
+								return
 
 				i += 1 # skip the heading line
 				line = self.topologylines[i]
@@ -227,10 +232,10 @@ if __name__ == "__main__":
 				dbcity = sys.argv[1]
 				topologyurl = sys.argv[2]
 		except Exception:
-				print("Usage: %s <city name> <olsrd txtinfo URL>\nExample: %s roma http://127.0.0.1:2006/all" % (sys.argv[0]), sys.argv[0])
+				print("Usage: %s <city name> <olsrd txtinfo URL>\nExample: %s roma http://127.0.0.1:2006/all" % (sys.argv[0], sys.argv[0]))
 				sys.exit(1)
 		msr = MySQLWrapper(DB_HOST, DB_USER, DB_PASSWD, DB_NAME, dbcity)
-		tp = TopologyParser(topologyurl, msr)
+		tp = TopologyParser(topologyurl, dbcity, msr)
 		tp.parse()
 		tp.processAndDraw()
 
