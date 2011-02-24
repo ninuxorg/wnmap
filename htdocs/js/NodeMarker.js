@@ -66,7 +66,7 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 		if (state == "marker") {
 			return "<div class='marker_balloon'> \
 					<div class='title'> \
-					"+ this.name +" \
+					<span>"+ this.name +"</span> \
 					</div> \
 					<ul style='background, #ffffff url(images/add.png) no-repeat 0px 5px'> \
 					<a href='" + WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + escape(this.name) + "' target='_blank'>" +  WNMAP_ADD_THIS "</a> \
@@ -137,11 +137,10 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 
 	this.zoomTo = function () {
 		this.hideTooltip ();
-		map.setCenter (this.getPoint(), 17);
+		map.setCenter (this.getPoint(), 15);
 
 		var infoTabs = [
 			new GInfoWindowTab(WNMAP_OVERVIEW_, this.getOverviewHtml()),
-			new GInfoWindowTab(WNMAP_LOCATION_, this.getLocationHtml()),
 			new GInfoWindowTab(WNMAP_DISTANCE_, new DistanceCalculator(this).getContent())
 		];
 

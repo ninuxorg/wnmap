@@ -88,7 +88,7 @@ function createMap (containerId)
 
 				var node = new NodeMarker (id, name, owner, desc, state, lng, lat);
 
-				markers[node.name] = node;
+				markers[node.id] = node;
 			}
 
 			// Add Links
