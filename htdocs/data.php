@@ -59,19 +59,7 @@ $query = "SELECT * FROM " . MYSQL_LINKS_TABLE .";";
 $result = mysql_query ($query, $connection) or die (mysql_error());
 
 while ($row = mysql_fetch_assoc($result)) {
-	$query = "SELECT nodeName FROM " . MYSQL_NODES_TABLE . " WHERE id = '" . $row['node1'] . "'";
-	$node_result = mysql_query ($query, $connection) or die (mysql_error());
-	$node1row = mysql_fetch_row($node_result);
-	$node1name = htmlspecialchars($node1row[0]);
-
-	$query = "SELECT nodeName FROM " . MYSQL_NODES_TABLE . " WHERE id = '" . $row['node2'] . "'";
-	$node_result = mysql_query ($query, $connection) or die (mysql_error());
-	$node2row = mysql_fetch_row($node_result);
-	$node2name = htmlspecialchars($node2row[0]);
-	$type = htmlspecialchars($row['type']);
-	$quality = htmlspecialchars($row['quality']);
-
-	echo "<link node1=\"" . $node1name . "\" node2=\"" . $node2name . "\" type=\"" . $type . "\" quality=\"" . $quality . "\" />\n";
+	echo "<link node1=\"" . $row['node1'] . "\" node2=\"" . $row['node2'] . "\" type=\"" . $row['type'] . "\" quality=\"" . $row['quality'] . "\" />\n";
 }
 
 echo "</links>";
