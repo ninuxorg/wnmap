@@ -16,7 +16,7 @@ require ("config.php");
 $connection = mysql_connect (MYSQL_HOST, MYSQL_USER, MYSQL_PASS) or die ('Could not connect: ' . mysql_error());
 mysql_select_db (MYSQL_DB) or die ('Could not select database.');
 
-echo "<html><body><table>";
+echo "<html><body>\n<table>\n";
 
 $query = "SELECT COUNT(*) FROM " . MYSQL_NODES_TABLE . " WHERE status=";
 
@@ -26,7 +26,7 @@ $result = mysql_query ($query."1;", $connection) or die (mysql_error());
 while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
 	$num = htmlspecialchars($row[0]);
 	
-	echo "<tr><td>Nodi potenziali</td><td>$num</td></tr>";
+	echo "<tr class='potential'><td>Nodi potenziali</td><td>$num</td></tr>\n";
 }
 
 //active nodes
@@ -35,33 +35,52 @@ $result = mysql_query ($query."2;", $connection) or die (mysql_error());
 while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
 	$num = htmlspecialchars($row[0]);
 	
-	echo "<tr><td>Nodi Attivi</td><td>$num</td></tr>";
+	echo "<tr class='active'><td>Nodi Attivi</td><td>$num</td></tr>\n";
 }
 
-//potential nodes
+//hotspot nodes
 $result = mysql_query ($query."3;", $connection) or die (mysql_error());
 
 while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
 	$num = htmlspecialchars($row[0]);
 	
-	echo "<tr><td>Nodi HotSpot</td><td>$num </td></tr>";
+	echo "<tr class='hotspot'><td>Nodi HotSpot</td><td>$num </td></tr>\n";
 }
 
-echo "</table><h1>Lista indirizzi in uso</h1><table>";
+echo "</table>\n<h1>Lista indirizzi in uso</h1><br>\n<i>In ordine di numero di nodi</i><br>\n";
 
-$query = "SELECT id, nodeName, nodeIP  FROM " . MYSQL_NODES_TABLE . " WHERE status IN (2,3) ORDER by nodeIP";
 
-//lista ips
-$result = mysql_query ($query, $connection) or die (mysql_error());
+//We need to refactor db (network name should be stored in a saparete table)
 
-while ($row = mysql_fetch_array($result, MYSQL_NUM)) {
-	$id = htmlspecialchars($row[0]);
-	$nome = htmlspecialchars($row[1]);
-	$ips = htmlspecialchars($row[2]);
+/* Ninux city fighter. The city that mount more nodes is the winner */
+//$query = "SELECT network, count('network') as num  FROM links ORDER by num";
+$query = "SELECT DISTINCT(network) FROM links";
+
+$q1 = mysql_query ($query, $connection) or die (mysql_error());
 	
-	echo "<tr><td> $id </td><td> $nome </td><td> $ips </td></tr>";
+while ($rq1 = mysql_fetch_array($q1, MYSQL_NUM)) {
+	$net=$rq1[0];	//network city
+
+	echo "<b>Rete di $net:</b><br>\n<table class='ips_". $net ."'>\n ";
+
+	$query = "SELECT DISTINCT(nodes.id), nodeName, nodeIP  FROM " . MYSQL_NODES_TABLE . ",links  WHERE status IN (2,3) AND nodes.id=links.node1 AND network='". $net ."' ORDER by nodeIP";
+	
+	//lista ips per city
+	$q2 = mysql_query ($query, $connection) or die (mysql_error());
+	echo "<table>";
+	while ($rq2 = mysql_fetch_array($q2, MYSQL_NUM)) {
+		$id = htmlspecialchars($rq2[0]);
+		$nome = htmlspecialchars($rq2[1]);
+		$ips = htmlspecialchars($rq2[2]);
+
+		echo "<tr><td> <a class='manager' target=\"popup\" onclick=\"window.open('manager.php?action=manager&id=".$id."','popup','toolbar=no, location=no,status=no,menubar=no,scrollbars=yes,resizable=no, width=420,height=400,left=430,top=23'); return false;\">edit</a> </td><td> $nome </td><td> $ips </td></tr>\n";
+	}
+	echo "</table>";
+
 }
 
 
-echo "</table></body></html>";
+//html end
+echo "</body></html>";
+
 ?>
