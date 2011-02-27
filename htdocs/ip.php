@@ -68,12 +68,22 @@ while ($rq1 = mysql_fetch_array($q1, MYSQL_NUM)) {
 	//lista ips per city
 	$q2 = mysql_query ($query, $connection) or die (mysql_error());
 	echo "<table>";
+	//We should divide each ip and keep reference with node.
+	unset($id);
+	unset($nome);
+	unset($ips);
+	//This shold be made  with database restructure... 
 	while ($rq2 = mysql_fetch_array($q2, MYSQL_NUM)) {
-		$id = htmlspecialchars($rq2[0]);
-		$nome = htmlspecialchars($rq2[1]);
-		$ips = htmlspecialchars($rq2[2]);
+		$ips = explode(" ", $rq2[2]);
+		foreach ($ips as $one_ip) { 
+			$id[] = $rq2[0];
+			$nome[] = $rq2[1];
+			$ip[] = $one_ip;
+		}			 
+	}		
 
-		echo "<tr><td> <a class='manager' target=\"popup\" onclick=\"window.open('manager.php?action=manager&id=".$id."','popup','toolbar=no, location=no,status=no,menubar=no,scrollbars=yes,resizable=no, width=420,height=400,left=430,top=23'); return false;\">edit</a> </td><td> $nome </td><td> $ips </td></tr>\n";
+	for ($i=0; $i < count($id); $i +=1) {
+		echo "<tr><td> <a class='manager' target=\"popup\" onclick=\"window.open('manager.php?action=manager&id=".$id[$i]."','popup','toolbar=no, location=no,status=no,menubar=no,scrollbars=yes,resizable=no, width=420,height=400,left=430,top=23'); return false;\">edit</a> </td><td> $nome[$i] </td><td> $ip[$i] </td></tr>\n";
 	}
 	echo "</table>";
 
