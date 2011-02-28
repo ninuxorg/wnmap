@@ -71,7 +71,7 @@ while ($rq1 = mysql_fetch_array($q1, MYSQL_NUM)) {
 	//We should divide each ip and keep reference with node.
 	unset($id);
 	unset($nome);
-	unset($ips);
+	unset($ip);
 	//This shold be made  with database restructure... 
 	while ($rq2 = mysql_fetch_array($q2, MYSQL_NUM)) {
 		$ips = explode(" ", $rq2[2]);
