@@ -33,12 +33,24 @@ if (isset($_GET["action"])){
 	/* Status change - manager.php?name='+name+'&action=status&val='+new_value */
 	if ($_GET["action"] == "status" ) {
 
-		$query = "UPDATE nodes SET status=" . $val . " WHERE id='". $id ."';";
+		/* retrieve actual status to compare with the new one */
+		$query = "SELECT status, ip FROM nodes WHERE id='". $id ."';";
 		$result = mysql_query ($query, $connection) or die (mysql_error());
+		$row = mysql_fetch_assoc($result);
+		$act_status = htmlspecialchars($row['status']);
+		$ip = htmlspecialchars($row['ip']);
 
-		mail (MANAGEMENT_MAIL, "Node status change", "Il nodo". $id ."è passato allo stato ". $val ." da ". $_GET['ex_val'] ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+		if ($ip == "" && $val != 0 ) {
+			echo "Il tuo nodo non può cambiare status senza un ip valido.";
+		} elseif ($val != $act_status) { 
+			$query = "UPDATE nodes SET status=" . $val . " WHERE id='". $id ."';";
+			$result = mysql_query ($query, $connection) or die (mysql_error());
 
-		echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
+			mail (MANAGEMENT_MAIL, "Node status change", "Il nodo ". $id ." è passato allo stato ". $val ." da ". $act_val ." su richiesta di ". $_SERVER['REMOTE_ADDR'] .".");
+			echo "Lo stato del tuo nodo è stato aggiornato correttamente.<br> Ricarica la pagina del mapserver per vedere le modifiche.<br>";
+		} else {
+			echo "Il tuo nodo è già a questo stato... evito di aggiornare.";
+		}
 	} else 
 	/* Contatta utente */
 	if ($_GET["action"] == "contatti" ) {
