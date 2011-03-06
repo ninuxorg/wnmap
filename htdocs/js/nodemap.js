@@ -36,88 +36,68 @@ function createMap (containerId)
 
 	embedStyle ("themes/map.css");
 
-	map = new GMap2(document.getElementById(containerId));
+	var myLatlng = new google.maps.LatLng(WNMAP_MAP_START_LAT, WNMAP_MAP_START_LON);
+	var myOptions = {
+		zoom: 11,
+		center: myLatlng,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
 
-	if (getQueryVariable ('controls') != "off") {
-		map.addControl(new GLargeMapControl());
-		map.addControl (new GMapTypeControl());
-		map.addControl(new GScaleControl());
-	} else {
-		map.addControl (new TextControl ("Show&nbsp;Ful&nbsp;Map", WNMAP_MAP_URL));
-	}
+	map = new google.maps.Map(document.getElementById(containerId), myOptions);
 
-	map.setCenter(new GLatLng(WNMAP_MAP_START_LAT, WNMAP_MAP_START_LON), parseInt(WNMAP_MAP_START_ZOOM));
-	new GKeyboardHandler(map, window);
-
-	// Set default map type to WNMAP_MAP_START_TYPE
-	eval("var mapType = " + WNMAP_MAP_START_TYPE);
-	map.setMapType (mapType);
-
-	GEvent.addListener (map, 'click', function (marker, point) {
+	google.maps.event.addListener (map, 'click', function (marker, point) {
 		if (!marker) {
 			var nome = prompt ('Inserisci il nome di questo nuovo nodo:', 'nodo_potenziale');
 			addMarker (nome, point.lat(), point.lng());
 		}
 	});
 
-	window.addEventListener('DOMMouseScroll', wheelZoom, false);
+	//window.addEventListener('DOMMouseScroll', wheelZoom, false);
 	
-	map.enableContinuousZoom();
-	//we use single-click to add markers
-	map.enableDoubleClickZoom();
+	$(document).ready(function(){
+		$.ajax({
+			type: "GET",
+			url: "data.php",
+			dataType: "xml",
+			success: function(xml) {
+				$(xml).find('nodes').find('node').each(function(){
 
-	var request = GXmlHttp.create ();
-	request.open ('GET', 'data.php', true);
-	request.onreadystatechange = function () {
-		if (request.readyState == 4) {
+					var id = $(this).attr('id');
+					var name = $(this).attr('name');
+					var owner = $(this).attr('owner');
+					var desc = $(this).attr("description");
+					var state = $(this).attr("state");
+					var lng = parseFloat($(this).attr("lng"));
+					var lat = parseFloat($(this).attr("lat"));
 
-			var xmlDoc = request.responseXML;
-
-			// Add Nodes
-			var markersFromXml = xmlDoc.documentElement.getElementsByTagName ("nodes")[0].getElementsByTagName ("node");
-			for (var i = 0; i < markersFromXml.length; i++) {
-
-				var id = markersFromXml[i].getAttribute("id");
-				var name = markersFromXml[i].getAttribute("name");
-				var id = markersFromXml[i].getAttribute("id");
-				var owner = markersFromXml[i].getAttribute("owner");
-				var desc = markersFromXml[i].getAttribute("description");
-				var state = markersFromXml[i].getAttribute("state");
-				var lng = parseFloat(markersFromXml[i].getAttribute("lng"));
-				var lat = parseFloat(markersFromXml[i].getAttribute("lat"));
-
-				var node = new NodeMarker (id, name, owner, desc, state, lng, lat);
-
-				markers[node.id] = node;
+					var node = new NodeMarker (id, name, owner, desc, state, lng, lat);
+				});
+				/*$(xml).find('links').find('link').each(function(){
+					try {
+						var link = new Object ();
+						link.type = $(this).attr("type");
+						link.quality = $(this).attr("quality");
+						link.node1 = markers [$(this).attr("node1")];
+						link.node2 = markers [$(this).attr("node2")];
+						link.point1 = markers [$(this).attr("node1")].getPoint();
+						link.point2 = markers [$(this).attr("node2")].getPoint();
+						links.push (link);
+					} catch (e) {
+						alert ("ERROR WITH LINK: " + $(this).attr("noed1")  + " <--> " + $(this).attr("node2") + ":\n\n" + e);
+					}
+				});*/
 			}
+		});
+	});
 
-			// Add Links
-			var lnks = xmlDoc.documentElement.getElementsByTagName ("links")[0].getElementsByTagName ("link");
-			for (var i = 0; i < lnks.length; i++) {
-				try {
-					var link = new Object ();
-					link.type = lnks[i].getAttribute("type");
-					link.quality = lnks[i].getAttribute("quality");
-					link.node1 = markers [lnks[i].getAttribute("node1")];
-					link.node2 = markers [lnks[i].getAttribute("node2")];
-					link.point1 = markers [lnks[i].getAttribute("node1")].getPoint();
-					link.point2 = markers [lnks[i].getAttribute("node2")].getPoint();
-					links.push (link);
-				} catch (e) {
-					alert ("ERROR WITH LINK: " + lnks[i].getAttribute("noed1")  + " <--> " + lnks[i].getAttribute("node2") + ":\n\n" + e);
-				}
-			}
+	populateMap ();
 
-			populateMap ();
-		}
-	}
-	request.send (null);
 	return map;
 }
 
 function populateMap ()
 {
-	map.clearOverlays ();
+	//map.clearOverlays ();
 
 	var nodeList = document.getElementById ("nodeList");
 	if (nodeList != null) {
@@ -141,8 +121,9 @@ function populateMap ()
 			continue;
 		}
 
-		map.addOverlay (node);
-
+		node.setMap(map);
+	}
+/*
 		if (node.state != 0) {
 			if (nodeList != null) {
 				nodeList.innerHTML += '<li onmouseover="getMarker(\'' + node.id + '\').showTooltip();" onmouseout="getMarker(\'' + node.id + '\').hideTooltip();" class="nodeitem-' + node.state + '"><a href="javascript:getMarker(\'' + node.id + '\').select();" style="font-weight: bold;">' + node.name + '</a>&nbsp;&nbsp;<a href="javascript:getMarker(\'' + node.id + '\').zoomTo();" class="zoomLink">zoom</a></li>';
@@ -198,6 +179,7 @@ function populateMap ()
 	}
 
 	firstLoad = false;
+*/
 }
 
 
@@ -288,7 +270,7 @@ function wheelZoom(event) {
 	}
 }
 
-
+/*
 
 
 
@@ -331,4 +313,4 @@ function wheelZoom(event) {
       button.style.cursor = "pointer";
       button.style.setProperty ("-moz-opacity", "0.5", "");
     }
-
+*/

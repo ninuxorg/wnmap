@@ -2,6 +2,9 @@
  * NodeMarker.js
  *
  * Authors:
+ *    Claudio Mignanti <c.mignanti@gmail.com>
+ *
+ * Rewrited from the original version by:
  *    Eric Butler <eric@extremeboredom.net>
  *
  * Part of the WNMap Project - http://wnmap.sf.net/
@@ -22,45 +25,46 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 	this.state = state;
 	this.visible = true;
 	this.tooltip = this.name;
-
-	var point = new GLatLng (lat, lng);
-
-	/* Prepare new marker */
-	var icon = new GIcon ();
-	icon.iconSize = new GSize(20, 34);
- 	icon.iconAnchor = new GPoint(9, 34);
-	icon.infoWindowAnchor = new GPoint(20, 1);
-			
+	
 	switch (this.state) {
 		case 'active':
-			this.statePretty = WNMAP_ACTIVE_NODE;
-			icon.image = WNMAP_MAP_URL + "/images/marker_active.png";
+			var statePretty = WNMAP_ACTIVE_NODE;
+			var image = WNMAP_MAP_URL + "/images/marker_active.png";
 			break;
 		case 'potential':
-			this.statePretty = WNMAP_POTENTIAL_NODE;
-			icon.image = WNMAP_MAP_URL + "/images/marker_potential.png";
+			var statePretty = WNMAP_POTENTIAL_NODE;
+			var image = WNMAP_MAP_URL + "/images/marker_potential.png";
 			break;
 		case 'hotspot':
-			this.statePretty = WNMAP_HOTSPOT_NODE;
-			icon.image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
+			var statePretty = WNMAP_HOTSPOT_NODE;
+			var image = WNMAP_MAP_URL + "/images/marker_hotspot.png";
 			break;
 		default:
-			this.statePretty = WNMAP_MARKER; 
-			icon.image = WNMAP_MAP_URL + "/images/marker.png";
+			var statePretty = WNMAP_MARKER; 
+			var image = WNMAP_MAP_URL + "/images/marker.png";
 			//alert(name + state) 
-
 	}
-
 	/* Add the node to the maps */
-
+  	var map_image = new google.maps.MarkerImage(image,
+		new google.maps.Size(20, 34),
+		new google.maps.Point(9,34),
+		new google.maps.Point(20, 1));
 
 	//Enable dragging for marker node AFTER that it was added to the map
 	if (this.state == "marker") {
-		NodeMarker.baseConstructor.call (this, point, {draggable:true});
-		this.enableDragging();
+		var is_draggable=true;
 	} else {
-		NodeMarker.baseConstructor.call (this, point, icon);
+		var is_draggable=false;
 	}
+
+	var marker = new google.maps.Marker({
+		position: new google.maps.LatLng(lat, lng),
+		map: map,
+		icon: image,
+		draggable: is_draggable,
+	});
+
+
 
 	this.getOverviewHtml = function () {
 		if (state == "marker") {
@@ -147,11 +151,6 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 		this.openInfoWindowTabsHtml (infoTabs);
 	}
 
-	// In GMap2, the maps API changed sufficiently to break the original
-	// tooltip code contained here.  As a part of the port to GMap2, I'd
-	// like to thank toEat.com and Robert Aspinall for doing the heavy
-	// lifting in that code.  It showed the way for how to re-implement
-	// tooltips in GMap2.
 	this.showTooltip = function () {
 		if (this.tooltip) {
 			if (!this.tooltipObject) {
@@ -204,12 +203,12 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 		map.closeInfoWindow();
 	}
 
-	GEvent.addListener (this, 'click', this.select);
-	GEvent.addListener (this, 'mouseover', this.showTooltip);
-	GEvent.addListener (this, 'mouseout', this.hideTooltip);
+	google.maps.event.addListener (this, 'click', this.select);
+	//google.maps.event.addListener (this, 'mouseover', this.showTooltip);
+	//google.maps.event.addListener (this, 'mouseout', this.hideTooltip);
 
-	GEvent.addListener (this, 'dragstart', this.onDragStart);
-	GEvent.addListener (this, 'dragend', this.onDragEnd);
+	google.maps.event.addListener (this, 'dragstart', this.onDragStart);
+	google.maps.event.addListener (this, 'dragend', this.onDragEnd);
 
 }
 
@@ -223,4 +222,4 @@ extend = function(subClass, baseClass) {
    subClass.superClass = baseClass.prototype;
 }
 
-extend(NodeMarker, GMarker);
+extend(NodeMarker, google.maps.Marker);

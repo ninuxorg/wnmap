@@ -34,23 +34,18 @@ if (file_exists ("languages/".LANGUAGE.".php")) {
 			echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 
-
-
-echo '<?xml version="1.0" encoding="UTF-8"?>';
-
 ?>
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
-		<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php echo GOOGLE_MAP_KEY;?>" type="text/javascript"></script>
+
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script src="http://code.jquery.com/jquery-1.5.min.js" type="text/javascript"></script>
 		<script src="js.php?file=currentLanguage" type="text/javascript"></script>
 		<script src="js.php?file=nodemap" type="text/javascript"></script>
-		<script src="js.php?file=gui" type="text/javascript"></script>
-		<script src="js.php?file=geocode" type="text/javascript"></script>
 
 		<title><?php echo SITE_TITLE; ?></title>
 
@@ -60,32 +55,21 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     		<link rel="alternate" title="ninux.org map RSS 2.0 feed" type="application/rss+xml" href="rss.php" />
 
 		<script type="text/javascript">
-			function load() {
-				if (GBrowserIsCompatible()) {
-					var map = createMap();
-					initGui();
-					resizeMe();
-					window.onresize = function () {
-						resize();
-					}
+			function initialize() {
+				var map = createMap();
+				//initGui();
+				//resizeMe();
+				window.onresize = function () {
+				//	resize();
 				}
 			}
-
 			function resize() {
-				if (GBrowserIsCompatible()) {
-					resizeMe();
-				}
-			}
-
-			function unload() {
-				if (GBrowserIsCompatible()) {
-					GUnload();
-				}
+				//resizeMe();
 			}
 		</script>
 	</head>
 
-	<body onload="load();" onunload="unload()">
+	<body onload="initialize()">
 		<div id="main">
 			<div id="columns">
 				<div id="mapColumn" style="display:block">
