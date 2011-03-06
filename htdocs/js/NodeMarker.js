@@ -44,11 +44,6 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 			var image = WNMAP_MAP_URL + "/images/marker.png";
 			//alert(name + state) 
 	}
-	/* Add the node to the maps */
-  	var map_image = new google.maps.MarkerImage(image,
-		new google.maps.Size(20, 34),
-		new google.maps.Point(9,34),
-		new google.maps.Point(20, 1));
 
 	//Enable dragging for marker node AFTER that it was added to the map
 	if (this.state == "marker") {
@@ -62,74 +57,69 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 		map: map,
 		icon: image,
 		draggable: is_draggable,
+		title: this.name,
 	});
 
+	/* baloon string */
+	if (state == "marker") {
+		 var contentString = "<div class='marker_balloon'> \
+				<div class='title'> \
+				<span>"+ this.name +"</span> \
+				</div> \
+				<ul style='background, #ffffff url(images/add.png) no-repeat 0px 5px'> \
+				<a href='" + WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + escape(this.name) + "' target='_blank'>" +  WNMAP_ADD_THIS "</a> \
+				</ul> \
+			</div>";
+	} else {
+		var thing = document.createElement ("div");
+		thing.className = "marker_balloon";
+		var title = document.createElement ("div");
+		var titleLabel = document.createElement ("span");
+		titleLabel.innerHTML = "<b>" + WNMAP_NAME_ + "</b> ";
+		title.appendChild (titleLabel);
+		var titleLink = document.createElement ("span");
+		titleLink.innerHTML = this.name;
+		title.appendChild (titleLink);
+		var linkTo = document.createElement ("span");
+		linkTo.innerHTML = ' - <a href="?select=' + this.id + '">' + WNMAP_MAP_LINK_ + '</a>';
+		title.appendChild (linkTo);
+		thing.appendChild (title);
+		var description = document.createElement ("div");
+		var descriptionLabel = document.createElement("span");
+		descriptionLabel.innerHTML = "<b>" + WNMAP_DESCRIPTION_ +"</b> ";
+		description.appendChild (descriptionLabel);
+		var descriptionText = document.createElement("span");
+		descriptionText.innerHTML = this.description;
+		description.appendChild (descriptionText);
 
+		thing.appendChild (description);
+		var owner = document.createElement ("div");
+		owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner + " ";
+		owner.innerHTML += urlmanager ("id="+this.id+"&action=contatti", 400, 600, "Contatta")
+		thing.appendChild (owner);
 
-	this.getOverviewHtml = function () {
-		if (state == "marker") {
-			return "<div class='marker_balloon'> \
-					<div class='title'> \
-					<span>"+ this.name +"</span> \
-					</div> \
-					<ul style='background, #ffffff url(images/add.png) no-repeat 0px 5px'> \
-					<a href='" + WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + escape(this.name) + "' target='_blank'>" +  WNMAP_ADD_THIS "</a> \
-					</ul> \
-				</div>";
-		} else {
-			var thing = document.createElement ("div");
-			thing.className = "marker_balloon";
+		var type = document.createElement ("div");
+		type.className ="position";
+		type.innerHTML ="<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
+		thing.appendChild (type);
+		var type = document.createElement ("div");
+		type.className ="position";
+		type.innerHTML += urlmanager ("id="+this.id+"&action=manager", 400, 600, "Altro >>")
+		thing.appendChild (type);
 
-			var title = document.createElement ("div");
-
-			var titleLabel = document.createElement ("span");
-			titleLabel.innerHTML = "<b>" + WNMAP_NAME_ + "</b> ";
-			title.appendChild (titleLabel);
-
-			var titleLink = document.createElement ("span");
-			titleLink.innerHTML = this.name;
-			title.appendChild (titleLink);
-
-			var linkTo = document.createElement ("span");
-			linkTo.innerHTML = ' - <a href="?select=' + this.id + '">' + WNMAP_MAP_LINK_ + '</a>';
-			title.appendChild (linkTo);
-
-			thing.appendChild (title);
-
-			var description = document.createElement ("div");
-
-			var descriptionLabel = document.createElement("span");
-			descriptionLabel.innerHTML = "<b>" + WNMAP_DESCRIPTION_ +"</b> ";
-			description.appendChild (descriptionLabel);
-
-			var descriptionText = document.createElement("span");
-			descriptionText.innerHTML = this.description;
-			description.appendChild (descriptionText);
-	
-			thing.appendChild (description);
-
-			var owner = document.createElement ("div");
-			owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner + " ";
-			owner.innerHTML += urlmanager ("id="+this.id+"&action=contatti", 400, 600, "Contatta")
-			thing.appendChild (owner);
-
-
-			var type = document.createElement ("div");
-			type.className ="position";
-			type.innerHTML ="<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
-			thing.appendChild (type);
-
-			var type = document.createElement ("div");
-			type.className ="position";
-			type.innerHTML += urlmanager ("id="+this.id+"&action=manager", 400, 600, "Altro >>")
-			thing.appendChild (type);
-
-			return thing;
-		}
+		var contentString = thing;
 	}
 
+	var infowindow = new google.maps.InfoWindow({
+		content: contentString
+	});
+	/* EOF baloon string */
 
-	this.select = function () {
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.open(map, marker);
+	});
+
+/*	this.select = function () {
 
 		var infoTabs = [
 			new GInfoWindowTab(WNMAP_OVERVIEW_, this.getOverviewHtml()),
@@ -138,7 +128,7 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 
 		this.openInfoWindowTabs (infoTabs);
 	}
-
+*/
 	this.zoomTo = function () {
 		this.hideTooltip ();
 		map.setCenter (this.getPoint(), 15);
@@ -203,13 +193,8 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 		map.closeInfoWindow();
 	}
 
-	google.maps.event.addListener (this, 'click', this.select);
-	//google.maps.event.addListener (this, 'mouseover', this.showTooltip);
-	//google.maps.event.addListener (this, 'mouseout', this.hideTooltip);
-
 	google.maps.event.addListener (this, 'dragstart', this.onDragStart);
 	google.maps.event.addListener (this, 'dragend', this.onDragEnd);
-
 }
 
 extend = function(subClass, baseClass) {
