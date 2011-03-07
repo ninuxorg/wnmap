@@ -25,6 +25,8 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 	this.state = state;
 	this.visible = true;
 	this.tooltip = this.name;
+
+	var is_draggable=false;
 	
 	switch (this.state) {
 		case 'active':
@@ -42,14 +44,8 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 		default:
 			var statePretty = WNMAP_MARKER; 
 			var image = WNMAP_MAP_URL + "/images/marker.png";
+			var is_draggable=true;
 			//alert(name + state) 
-	}
-
-	//Enable dragging for marker node AFTER that it was added to the map
-	if (this.state == "marker") {
-		var is_draggable=true;
-	} else {
-		var is_draggable=false;
 	}
 
 	var marker = new google.maps.Marker({
