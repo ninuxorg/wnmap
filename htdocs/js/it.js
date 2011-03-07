@@ -17,37 +17,37 @@ WNMAP_HOTSPOT_NODE = "Nodo hotspot";
 WNMAP_MARKER = "Segnaposto";
 WNMAP_INVALID_STATE = "Stato non valido";
 WNMAP_RENAME = "Rinomina";
-WNMAP_TYPE_ = "Tipo:";
+WNMAP_TYPE = "Tipo:";
 WNMAP_DISTANCE_2_CENTER = "Distanza dal centro:";
 WNMAP_ADD_THIS = "Aggiungi al nostro database come nodo potenziale.";
 WNMAP_REMOVE_MARKER = "Elimina questo segnaposto";
-WNMAP_NAME_ = "Nome";
-WNMAP_MAP_LINK_ = "Collegamento";
-WNMAP_DESCRIPTION_ = "Descrizione:";
-WNMAP_OWNER_ = "Proprietario:";
+WNMAP_NAME = "Nome";
+WNMAP_MAP_LINK = "Collegamento";
+WNMAP_DESCRIPTION = "Descrizione:";
+WNMAP_OWNER = "Proprietario:";
 WNMAP_SEND_MAIL = "Invia e-mail";
 WNMAP_SEND_IM = "Invia messaggio IM";
-WNMAP_LATITUDE_ = "Latitudine:";
-WNMAP_LONGITUDE_ = "Longitudine:";
-WNMAP_ELEVATION_ = "Altitudine:";
+WNMAP_LATITUDE = "Latitudine:";
+WNMAP_LONGITUDE = "Longitudine:";
+WNMAP_ELEVATION = "Altitudine:";
 WNMAP_AMSL = "m s.l.m.";
-WNMAP_STREET_ADDRESS_ = "Indirizzo postale:";
-WNMAP_IP_ = "IP:";
-WNMAP_OVERVIEW_ = "Dati";
-WNMAP_LOCATION_ = "Posizione";
-WNMAP_DISTANCE_ = "Distanza";
+WNMAP_STREET_ADDRESS = "Indirizzo postale:";
+WNMAP_IP = "IP:";
+WNMAP_OVERVIEW = "Dati";
+WNMAP_LOCATION = "Posizione";
+WNMAP_DISTANCE = "Distanza";
 
 // DistanceCalculator.js
 
-WNMAP_SELECT_ = "- seleziona -";
+WNMAP_SELECT = "- seleziona -";
 WNMAP_ACTIVE_NODES = "Nodi attivi";
 WNMAP_POTENTIAL_NODES = "Nodi potenziali";
 WNMAP_MY_MARKERS = "I miei segnaposto";
 WNMAP_CALCULATE_DISTANCE_FROM = "Calcola la distanza da";
-WNMAP_TO_ = "a";
-WNMAP_KM_ = "km";
-WNMAP_METERS_ = "metri";
-WNMAP_MILES_ = "miglia";
-WNMAP_YARDS_ = "iarde";
+WNMAP_TO = "a";
+WNMAP_KM = "km";
+WNMAP_METERS = "metri";
+WNMAP_MILES = "miglia";
+WNMAP_YARDS = "iarde";
 
 
