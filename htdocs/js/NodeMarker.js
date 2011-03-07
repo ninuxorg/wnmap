@@ -4,7 +4,7 @@
  * Authors:
  *    Claudio Mignanti <c.mignanti@gmail.com>
  *
- * Rewrited from the original version by:
+ * Original version written by:
  *    Eric Butler <eric@extremeboredom.net>
  *
  * Part of the WNMap Project - http://wnmap.sf.net/
@@ -69,51 +69,22 @@ function NodeMarker (id, name, owner, description, state, lng, lat)
 				<ul style='background, #ffffff url(images/add.png) no-repeat 0px 5px'> \
 				<a href='" + WNMAP_MAP_URL + "/AddPotentialNode.php?lon=" + this.getPoint().lng() + "&lat=" + this.getPoint().lat() + "&name=" + escape(this.name) + "' target='_blank'>" +  WNMAP_ADD_THIS "</a> \
 				</ul> \
-			</div>";
+			</div>\n</div>";
 	} else {
-		var thing = document.createElement ("div");
-		thing.className = "marker_balloon";
-		var title = document.createElement ("div");
-		var titleLabel = document.createElement ("span");
-		titleLabel.innerHTML = "<b>" + WNMAP_NAME_ + "</b> ";
-		title.appendChild (titleLabel);
-		var titleLink = document.createElement ("span");
-		titleLink.innerHTML = this.name;
-		title.appendChild (titleLink);
-		var linkTo = document.createElement ("span");
-		linkTo.innerHTML = ' - <a href="?select=' + this.id + '">' + WNMAP_MAP_LINK_ + '</a>';
-		title.appendChild (linkTo);
-		thing.appendChild (title);
-		var description = document.createElement ("div");
-		var descriptionLabel = document.createElement("span");
-		descriptionLabel.innerHTML = "<b>" + WNMAP_DESCRIPTION_ +"</b> ";
-		description.appendChild (descriptionLabel);
-		var descriptionText = document.createElement("span");
-		descriptionText.innerHTML = this.description;
-		description.appendChild (descriptionText);
-
-		thing.appendChild (description);
-		var owner = document.createElement ("div");
-		owner.innerHTML = "<b>" + WNMAP_OWNER_ + "</b> " + this.owner + " ";
-		owner.innerHTML += urlmanager ("id="+this.id+"&action=contatti", 400, 600, "Contatta")
-		thing.appendChild (owner);
-
-		var type = document.createElement ("div");
-		type.className ="position";
-		type.innerHTML ="<b>" + WNMAP_TYPE_ + "</b> " + this.statePretty;
-		thing.appendChild (type);
-		var type = document.createElement ("div");
-		type.className ="position";
-		type.innerHTML += urlmanager ("id="+this.id+"&action=manager", 400, 600, "Altro >>")
-		thing.appendChild (type);
-
-		var contentString = thing;
+		var contentString = "<div class='marker_balloon'> \
+					<div> \
+					<span><b>" + WNMAP_NAME + "</b></span> \
+					- <a href='?select=" + this.id + "'>" + WNMAP_MAP_LINK + "</a></div> \
+					<div><b>" + WNMAP_DESCRIPTION + "</b> " + this.description + "</div> \
+					<div><b>" + WNMAP_OWNER + "</b> " + urlmanager ("id=" + this.id
+						+ "&action=contatti", 400, 600, "Contatta") + "</div> \
+					<div>" + urlmanager ("id="+this.id+"&action=manager", 400, 600, "Altro >>") + "</div>\n</div>";
 	}
 
 	var infowindow = new google.maps.InfoWindow({
 		content: contentString
 	});
-	/* EOF baloon string */
+	/* EO baloon string */
 
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.open(map, marker);
