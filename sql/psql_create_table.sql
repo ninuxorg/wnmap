@@ -35,7 +35,7 @@ CREATE TABLE nodes (
   userEmail varchar(100) NOT NULL default '',
   nodeName varchar(100) NOT NULL default '',
   nodeDescription text NOT NULL,
-  nodeIP text NOT NULL,
+  nodeIP inet NOT NULL,
   userWebsite text,
   userJabber text,
   userEmailPublish boolean default NULL,
