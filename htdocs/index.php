@@ -47,6 +47,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
 		<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=<?php echo GOOGLE_MAP_KEY;?>" type="text/javascript"></script>
+		<script type="text/javascript" src="http://topocoding.com/api/getapi_v1.php?key=<?php echo TOPOCODING_KEY;?>"></script> 
 		<script src="js.php?file=currentLanguage" type="text/javascript"></script>
 		<script src="js.php?file=nodemap" type="text/javascript"></script>
 		<script src="js.php?file=gui" type="text/javascript"></script>

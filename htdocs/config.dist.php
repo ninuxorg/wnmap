@@ -45,6 +45,7 @@ define ("MAIL_FROM", "noreply@ninux.org");
 
 // Get this from http://www.google.com/apis/maps/signup.html
 define ("GOOGLE_MAP_KEY", "");
+define ("TOPOCODING_KEY", "");
 
 define ("THEME_NAME", "rightsidebar-swnbluegray");
 
