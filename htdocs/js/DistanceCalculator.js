@@ -5,6 +5,7 @@ function DistanceCalculator (node)
 
 	GEvent.addListener (map, "infowindowclose", function () {
 		map.removeOverlay(overlay);
+		document.getElementById('graph').style.visibility = 'hidden'
 	});
 
 	this.getContent = function()
@@ -89,6 +90,15 @@ function DistanceCalculator (node)
 					} else {
 						result.innerHTML += roundNumber(yards,2) + " " + WNMAP_YARDS_;
 					}
+
+					result.innerHTML += "<div id=\"graph\"></div>";
+
+					//prepare area for the graph
+					var coordinates = new Array();
+					coordinates[ coordinates.length ] = [ node.getPoint().lat(), node.getPoint().lng() ]
+					coordinates[ coordinates.length ] = [ otherMarker.getPoint().lat(), otherMarker.getPoint().lng() ];
+					topoDrawGraph( document.getElementById("graph"), coordinates , 600, 250, 0 );
+					document.getElementById('graph').style.visibility = 'visible'
 
 					overlay = new GPolyline([node.getPoint(), otherMarker.getPoint()], "#FFF73B", 10);
 					map.addOverlay(overlay);
