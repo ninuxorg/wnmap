@@ -34,7 +34,7 @@ function DoNodes ($statusId) {
 	$result = mysql_query ($query, $connection) or die (mysql_error());
 
 	while ($row = mysql_fetch_assoc($result)) {
-		$name = $row['nodeName'];
+		$name = htmlspecialchars ($row['nodeName']);
 		$lat = round($row['lat'], 10);
 		$lng = round($row['lng'], 10);
 	?><Placemark><name><?php echo $name ?></name><Point><coordinates><?php echo $lng;?>,<?php echo $lat; ?>,0.0</coordinates></Point></Placemark><?php

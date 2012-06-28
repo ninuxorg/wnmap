@@ -59,7 +59,7 @@ function DoNodes ($statusId) {
 	$result = mysql_query ($query, $connection) or die (mysql_error());
 
 	while ($row = mysql_fetch_assoc($result)) {
-		$name = $row['nodeName'];
+		$name = htmlspecialchars ($row['nodeName']);
 		$lat = $row['lat'];
 		$lng = $row['lng'];
 		$status = $row['status'];
@@ -88,8 +88,8 @@ function DoLinks() {
 		$lng1 = $row['lng1'];
 		$lat2 = $row['lat2'];
 		$lng2 = $row['lng2'];
-		$name1 = $row['name1'];
-		$name2 = $row['name2'];
+		$name1 = htmlspecialchars ($row['name1']);
+		$name2 = htmlspecialchars ($row['name2']);
 		$qlt = $row['qlt'];
 	?>
 	<Placemark>

@@ -117,7 +117,7 @@ function DoNodes ($statusId) {
 	$result = mysql_query ($query, $connection) or die (mysql_error());
 
 	while ($row = mysql_fetch_assoc($result)) {
-		$name = $row['nodeName'];
+		$name = htmlspecialchars ($row['nodeName']);
 		$lat = $row['lat'];
 		$lng = $row['lng'];
 		$status = $row['status'];
